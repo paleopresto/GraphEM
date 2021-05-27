@@ -1,3 +1,15 @@
+.. image:: https://img.shields.io/github/last-commit/fzhu2e/GraphEM/master
+    :target: https://github.com/fzhu2e/GraphEM
+
+.. image:: https://img.shields.io/github/license/fzhu2e/GraphEM
+    :target: https://github.com/fzhu2e/GraphEM/blob/master/LICENSE
+
+.. image:: https://img.shields.io/pypi/pyversions/GraphEM
+    :target: https://pypi.org/project/GraphEM
+
+.. image:: https://img.shields.io/pypi/v/GraphEM.svg
+    :target: https://pypi.org/project/GraphEM
+
 *******
 GraphEM
 *******
