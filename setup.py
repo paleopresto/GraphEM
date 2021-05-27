@@ -40,15 +40,6 @@ setup(
         'Programming Language :: Python :: 3.8',
     ],
     install_requires=[
-        'termcolor',
-        'pyyaml',
-        'pandas',
-        'cftime',
-        'tqdm',
-        'xarray',
-        'netCDF4',
-        'statsmodels',
-        'seaborn',
-        'pyleoclim',
+        'LMRt',
     ],
 )

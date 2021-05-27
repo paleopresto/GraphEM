@@ -42,7 +42,7 @@
     
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="prev" title="A quickstart of GraphEM" href="tutorial/quickstart.html" /> 
+    <link rel="prev" title="A quickstart of GraphEM" href="tutorial/quickstart-core.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -190,147 +190,10 @@
 <h1>API<a class="headerlink" href="#api" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="graphem">
 <h2>GraphEM<a class="headerlink" href="#graphem" title="Permalink to this headline">¶</a></h2>
-<dl class="py class">
+<dl class="py attribute">
 <dt class="sig sig-object py" id="GraphEM.GraphEM">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">GraphEM.</span></span><span class="sig-name descname"><span class="pre">GraphEM</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.005</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#GraphEM.GraphEM" title="Permalink to this definition">¶</a></dt>
-<dd><p>GraphEM object</p>
-<p>Implementation of the GraphEM algorithm</p>
-<dl class="simple">
-<dt>Reference: D. Guillot. B.Rajaratnam. J.Emile-Geay. “Statistical paleoclimate reconstructions via Markov random fields.” </dt><dd><p>Ann. Appl. Stat. 9 (1) 324 - 352, March 2015.</p>
-</dd>
-</dl>
-<p>tol: convergence tolerence of EM algorithm (default: 5e-3)
-temp_r: reconstructed temperature field
-proxy_r: reconstructed proxy field
-calib: index of calibration period
-Sigma: covariance matrix of the multivariate normal model
-mu: mean of the multivariate normal model</p>
-<p>fit: estimates the GraphEM model
-EM: Implementation of the EM algorithm with a Gaussian graphical model
-fit_Sigma: Used to estimate the covariance matrix of the Gaussian graphical model
-bootstrap: Perform multiple reconstructions via block bootstrap</p>
-<dl class="py method">
-<dt class="sig sig-object py" id="GraphEM.GraphEM.EM">
-<span class="sig-name descname"><span class="pre">EM</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">graph</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">C0</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">M0</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">200</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_iridge</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#GraphEM.GraphEM.EM" title="Permalink to this definition">¶</a></dt>
-<dd><p>Expectation-Maximization (EM) algorithm with Gaussian Graphical Model</p>
-<dl class="simple">
-<dt>X: matrix (n x p), time x space</dt><dd><p>Temperature + Proxy matrix with missing values (np.na)</p>
-</dd>
-<dt>graph: matrix (p x p)</dt><dd><p>Adjacency matrix of the graph</p>
-</dd>
-<dt>C0: matrix (p x p) </dt><dd><p>Initial covariance matrix of the field (Default = [], uses sample covariance matrix)</p>
-</dd>
-<dt>M0: vector (p) </dt><dd><p>Initial mean of the field (Default = [], uses sample mean)</p>
-</dd>
-<dt>maxit: int</dt><dd><p>Maximum number of iteration of the algorithm (Default = 200)</p>
-</dd>
-<dt>use_iridge: boolean</dt><dd><p>If True, uses Ridge regularization to perform regression (Default = False)</p>
-</dd>
-</dl>
-<dl class="simple">
-<dt>X: matrix (n x p)</dt><dd><p>Field with reconstructed values</p>
-</dd>
-<dt>C: matrix (p x p) </dt><dd><p>Estimated covariance matrix of the field</p>
-</dd>
-<dt>M: vector (p)</dt><dd><p>Estimate mean vector of the field</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="GraphEM.GraphEM.bootstrap">
-<span class="sig-name descname"><span class="pre">bootstrap</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">N_boot</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">20</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">blocksize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_proc</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">4</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_graphs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#GraphEM.GraphEM.bootstrap" title="Permalink to this definition">¶</a></dt>
-<dd><p>Block bootstrap method for the GraphEM algorithm</p>
-<dl class="simple">
-<dt>N_boot: int</dt><dd><p>Number of bootstrap samples to use (Default = 20)</p>
-</dd>
-<dt>blocksize: int</dt><dd><p>Size of the blocks used when constructing bootstrap samples (Default = 2)</p>
-</dd>
-<dt>n_proc: int</dt><dd><p>Number of processors available for distributed computing (not currently implemented).</p>
-</dd>
-<dt>save_graphs: boolean</dt><dd><p>Indicated whether or not to save all the graphs estimated via graph_greedy_search (Default = False)</p>
-</dd>
-</dl>
-<dl class="simple">
-<dt>self.temp_r_all: matrix (sample x time x space)</dt><dd><p>Matrix containing the reconstructed temperature field for each bootstrap sample</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="GraphEM.GraphEM.fit">
-<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">temp</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">proxy</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">calib</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">graph</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lonlat</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sp_TT</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sp_TP</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sp_PP</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">N_graph</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">30</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">C0</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">M0</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">200</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bootstrap</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">N_boot</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">20</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">distance</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">graph_method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'neighborhood'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">estimate_graph</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_graphs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#GraphEM.GraphEM.fit" title="Permalink to this definition">¶</a></dt>
-<dd><p>Estimates the parameters of the GraphEM model and reconstruct the missing values of the temperature
-and proxy fields.</p>
-<dl class="simple">
-<dt>temp: matrix (time x space)</dt><dd><p>Temperature field. Missing values stored as “np.na”.</p>
-</dd>
-<dt>proxy: matrix (time x space)</dt><dd><dl class="simple">
-<dt>Proxy data. Missing values stored as “np.na”. The time dimension should be </dt><dd><p>the same as the temperature field.</p>
-</dd>
-</dl>
-</dd>
-<dt>calib: vector</dt><dd><p>Vector of indices representing the calibration period.</p>
-</dd>
-<dt>graph: matrix</dt><dd><p>Adjacency matrix of the temperature+proxy field. (Default = [], estimated via graph_greedy_search)</p>
-</dd>
-<dt>lonlat: matrix ((number of temperature location + number of proxies) x 2). Default = []</dt><dd><p>Matrix containing the (longitude, latitude) of the temperature and proxy locations. Only 
-used if graph_method = ‘neighborhood’.</p>
-</dd>
-<dt>sp_TT: float  </dt><dd><dl class="simple">
-<dt>Target sparsity of the temperature/temperature part of the inverse covariance matrix. Only used </dt><dd><p>when the graph is estimated by glasso. Default (3.0%)</p>
-</dd>
-</dl>
-</dd>
-<dt>sp_TP: float</dt><dd><dl class="simple">
-<dt>Target sparsity of the temperature/proxy part of the inverse covariance matrix. Only used </dt><dd><p>when the graph is estimated by glasso. Default (3.0%)</p>
-</dd>
-</dl>
-</dd>
-<dt>sp_PP: float</dt><dd><dl class="simple">
-<dt>Target sparsity of the proxy/proxy part of the inverse covariance matrix. Only used </dt><dd><p>when the graph is estimated by glasso. Default (3.0%)</p>
-</dd>
-</dl>
-</dd>
-<dt>N_graph: int </dt><dd><dl class="simple">
-<dt>Number of graphs to consider in the graph_greedy_search method (Default = 30). Only used </dt><dd><p>if the graph is estimated using glasso.</p>
-</dd>
-</dl>
-</dd>
-<dt>C0: matrix</dt><dd><p>Initial estimate of the covariance matrix of the temperature+proxy field. (Default = []).</p>
-</dd>
-<dt>M0: vector</dt><dd><p>Initial estimate of the mean vector of the temperature+proxy field. (Default = []).</p>
-</dd>
-<dt>bootstrap: boolean</dt><dd><p>Indicates whether or not to produce multiple estimates of the reconstructed values via bootstrapping. (Default = False)</p>
-</dd>
-<dt>N_boot: int</dt><dd><p>Number of bootstrap samples to use if using the bootstrap method.</p>
-</dd>
-<dt>distance: float</dt><dd><p>Radius of the neighborhood graph. Only used if graph_method = ‘neighborhood’. (Default = 1000 km).</p>
-</dd>
-<dt>graph_method: “neighborhood” or “glasso”</dt><dd><p>Method to use to estimate the graph. Used only if graph = [] or if estimate_graph = True.</p>
-</dd>
-<dt>save_graphs: boolean</dt><dd><p>Indicates whether or not to save all the graphs return by graph_greedy_search (Default = False).</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="GraphEM.GraphEM.fit_Sigma">
-<span class="sig-name descname"><span class="pre">fit_Sigma</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">S</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">graph</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#GraphEM.GraphEM.fit_Sigma" title="Permalink to this definition">¶</a></dt>
-<dd><p>Estimates the covariance matrix of the field using the provided graph</p>
-<dl class="simple">
-<dt>S: matrix</dt><dd><p>Sample covariance matrix</p>
-</dd>
-<dt>graph: matrix</dt><dd><p>Adjacency matrix of the graph</p>
-</dd>
-</dl>
-<dl class="simple">
-<dt>C: matrix</dt><dd><p>Estimated covariance matrix</p>
-</dd>
-</dl>
-</dd></dl>
-
-</dd></dl>
+<span class="sig-prename descclassname"><span class="pre">GraphEM.</span></span><span class="sig-name descname"><span class="pre">GraphEM</span></span><a class="headerlink" href="#GraphEM.GraphEM" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 </div>
 </div>
@@ -341,7 +204,7 @@ used if graph_method = ‘neighborhood’.</p>
           </div>
           <footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="tutorial/quickstart.html" class="btn btn-neutral float-left" title="A quickstart of GraphEM" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="tutorial/quickstart-core.html" class="btn btn-neutral float-left" title="A quickstart of GraphEM" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
 
   <hr/>

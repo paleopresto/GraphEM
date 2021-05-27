@@ -1,0 +1,7 @@
+job_id: 20210527_GraphEM_recon
+job_dirpath: ./
+
+recon_period: [0, 2000]
+
+# Proxy & PSM related
+proxydb_path: pages2k_dataset.pkl
