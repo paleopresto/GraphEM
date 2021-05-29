@@ -7,4 +7,4 @@ Quickstart
 .. toctree::
     :maxdepth: 1
 
-    tutorial/quickstart-core
+    tutorial/quickstart-solver

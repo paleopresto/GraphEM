@@ -25,7 +25,7 @@ from LMRt.utils import (
     global_hemispheric_means,
 )
 
-from .GraphEM import GraphEM
+from .solver import GraphEM
 
 class ReconJob:
     ''' Reconstruction Job

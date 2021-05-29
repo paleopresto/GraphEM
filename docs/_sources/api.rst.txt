@@ -4,5 +4,5 @@ API
 GraphEM
 -------
 
-.. autoclass:: GraphEM.GraphEM
+.. autoclass:: GraphEM.solver.GraphEM
     :members:
