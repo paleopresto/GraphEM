@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>A quickstart of GraphEM &mdash; GraphEM  documentation</title>
+  <title>Reconstruction using GraphEM &mdash; GraphEM  documentation</title>
   
 
   
@@ -43,7 +43,9 @@
 
     
     <link rel="index" title="Index" href="../genindex.html" />
-    <link rel="search" title="Search" href="../search.html" /> 
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="API" href="../api.html" />
+    <link rel="prev" title="A quickstart of the GraphEM solver" href="quickstart_solver.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -89,9 +91,16 @@
             
             
               <p class="caption"><span class="caption-text">Contents</span></p>
-<ul>
+<ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../tutorial.html">Tutorial</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../tutorial.html">Tutorial</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../tutorial.html#quickstart">Quickstart</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="quickstart_solver.html">A quickstart of the GraphEM solver</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Reconstruction using GraphEM</a></li>
+</ul>
+</li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../api.html">API</a></li>
 </ul>
 
@@ -141,7 +150,9 @@
     
       <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
         
-      <li>A quickstart of GraphEM</li>
+          <li><a href="../tutorial.html">Tutorial</a> &raquo;</li>
+        
+      <li>Reconstruction using GraphEM</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -430,10 +441,10 @@ div.rendered_html tbody tr:hover {
     text-align: unset;
 }
 </style>
-<div class="section" id="A-quickstart-of-GraphEM">
-<h1>A quickstart of GraphEM<a class="headerlink" href="#A-quickstart-of-GraphEM" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="Reconstruction-using-GraphEM">
+<h1>Reconstruction using GraphEM<a class="headerlink" href="#Reconstruction-using-GraphEM" title="Permalink to this headline">¶</a></h1>
 <p><strong>Expected time to run through: 10 mins</strong></p>
-<p>This tutorial demonstrates a quickstart of the GraphEM algorithm.</p>
+<p>This tutorial demonstrates how to get a reconstruction using GraphEM, leveraging HadCRUT4 and PAGES2k.</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
@@ -1095,6 +1106,23 @@ Wall time: 7min 34s
 Mean MSE = nan, Mean RE = nan, Mean CE = nan, Mean R2 = nan
 </pre></div></div>
 </div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[47]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="nb">print</span><span class="p">(</span><span class="n">job</span><span class="o">.</span><span class="n">proxydb</span><span class="o">.</span><span class="n">lons</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[43.58, 40.1, 179.2333, 124.833, 40.1, 210.1667, 200.1722, 202.7527, 34.32, 166.99, 197.87, 295.3, 173.0, 34.97, 134.2503, 113.749, 293.0, 34.97, 151.9772, 293.25, 179.23, 39.5, 55.0, 279.83, 153.0, 145.82, 166.04, 283.947, 134.3837, 34.31, 295.01120000000003, 295.3, 299.15, 283.423, 144.8359, 279.25, 113.77, 55.25, 146.0333, 142.1941, 200.1722, 166.9283, 115.5757, 113.965, 45.1, 45.1, 98.52, 179.2333, 43.58, 278.0, 172.0, 43.6195, 337.1117, 167.2, 250.7869, 200.1722, 144.8833, 250.7869, 145.8167, 268.77, 299.15, 298.51]
+</pre></div></div>
+</div>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
@@ -1111,6 +1139,10 @@ Mean MSE = nan, Mean RE = nan, Mean CE = nan, Mean R2 = nan
            
           </div>
           <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="../api.html" class="btn btn-neutral float-right" title="API" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="quickstart_solver.html" class="btn btn-neutral float-left" title="A quickstart of the GraphEM solver" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
 
   <hr/>
 
