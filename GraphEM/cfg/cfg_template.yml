@@ -5,3 +5,14 @@ recon_period: [0, 2000]
 
 # Proxy & PSM related
 proxydb_path: pages2k_dataset.pkl
+
+ptype_list: # proxy types to use
+  ['coral.d18O', 'coral.SrCa', 'coral.calc', 'tree.TRW', 'tree.MXD', 'ice.d18O', 'ice.dD']
+
+anom_period: [1951, 1980]
+
+obs_path:
+  tas: ./data/obs/HadCRUT.5.0.1.0.analysis.anomalies.ensemble_mean.nc
+
+obs_varname:
+  tas: tas_mean
