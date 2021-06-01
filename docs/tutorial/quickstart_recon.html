@@ -13,8 +13,6 @@
   
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
 
   
   
@@ -31,13 +29,12 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-        <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "document", "processHtmlClass": "math|output_area"}}</script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
@@ -445,14 +442,15 @@ div.rendered_html tbody tr:hover {
 <h1>Reconstruction using GraphEM<a class="headerlink" href="#Reconstruction-using-GraphEM" title="Permalink to this headline">¶</a></h1>
 <p><strong>Expected time to run through: 10 mins</strong></p>
 <p>This tutorial demonstrates how to get a reconstruction using GraphEM, leveraging HadCRUT4 and PAGES2k.</p>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[28]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="o">%</span><span class="k">load_ext</span> autoreload
 <span class="o">%</span><span class="k">autoreload</span> 2
 
+<span class="kn">import</span> <span class="nn">LMRt</span>
 <span class="kn">import</span> <span class="nn">GraphEM</span>
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
@@ -461,6 +459,15 @@ div.rendered_html tbody tr:hover {
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span>  <span class="nn">plt</span>
 </pre></div>
 </div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+The autoreload extension is already loaded. To reload it, use:
+  %reload_ext autoreload
+</pre></div></div>
 </div>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
@@ -499,9 +506,7 @@ div.rendered_html tbody tr:hover {
                 &#39;coral.SrCa&#39;,
                 &#39;coral.calc&#39;,
                 &#39;tree.TRW&#39;,
-                &#39;tree.MXD&#39;,
-                &#39;ice.d18O&#39;,
-                &#39;ice.dD&#39;],
+                &#39;tree.MXD&#39;],
  &#39;recon_period&#39;: [0, 2000]}
 </pre></div></div>
 </div>
@@ -621,7 +626,7 @@ Dataset Overview
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[30]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -651,19 +656,20 @@ Dataset Overview
 </pre></div></div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[31]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[25]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">recon_time</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1850</span><span class="p">,</span> <span class="mi">2001</span><span class="p">)</span>
+<span></span><span class="n">recon_time</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1000</span><span class="p">,</span> <span class="mi">2001</span><span class="p">)</span>
 <span class="n">nt</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="n">recon_time</span><span class="p">)</span>
 <span class="n">idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">nt</span><span class="p">)</span>
 <span class="n">calib</span> <span class="o">=</span> <span class="n">idx</span><span class="p">[</span><span class="o">-</span><span class="mi">100</span><span class="p">:]</span>
+<span class="n">nt_tas</span><span class="p">,</span> <span class="n">nlat</span><span class="p">,</span> <span class="n">nlon</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">tas</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[33]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -686,11 +692,11 @@ Dataset Overview
 <div class="highlight"><pre>
 171 2592
 151
-(151, 2592)
+(1001, 2592)
 </pre></div></div>
 </div>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[38]:
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -711,20 +717,12 @@ Dataset Overview
     <span class="n">k</span> <span class="o">+=</span> <span class="mi">1</span>
 
 <span class="n">df_proxy</span> <span class="o">=</span> <span class="n">df_proxy</span><span class="p">[(</span><span class="n">df_proxy</span><span class="o">.</span><span class="n">index</span><span class="o">&gt;=</span><span class="n">recon_time</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">df_proxy</span><span class="o">.</span><span class="n">index</span><span class="o">&lt;=</span><span class="n">recon_time</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])]</span>
-</pre></div>
-</div>
-</div>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[39]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">df_proxy</span>
+<span class="n">df_proxy</span>
 </pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[39]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -771,122 +769,122 @@ Dataset Overview
   </thead>
   <tbody>
     <tr>
-      <th>1850.0</th>
-      <td>-4.323333</td>
-      <td>-4.286</td>
-      <td>-4.78</td>
+      <th>1000.0</th>
       <td>NaN</td>
       <td>NaN</td>
       <td>NaN</td>
       <td>NaN</td>
       <td>NaN</td>
-      <td>-3.456667</td>
-      <td>-4.60</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
       <td>...</td>
       <td>NaN</td>
       <td>NaN</td>
       <td>NaN</td>
-      <td>-4.04500</td>
       <td>NaN</td>
       <td>NaN</td>
       <td>NaN</td>
-      <td>-3.97</td>
+      <td>NaN</td>
+      <td>NaN</td>
       <td>NaN</td>
       <td>NaN</td>
     </tr>
     <tr>
-      <th>1851.0</th>
-      <td>-4.418333</td>
-      <td>-4.366</td>
-      <td>-4.84</td>
+      <th>1001.0</th>
       <td>NaN</td>
       <td>NaN</td>
       <td>NaN</td>
       <td>NaN</td>
       <td>NaN</td>
-      <td>-3.406667</td>
-      <td>-4.59</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
       <td>...</td>
       <td>NaN</td>
       <td>NaN</td>
       <td>NaN</td>
-      <td>-4.31250</td>
       <td>NaN</td>
       <td>NaN</td>
       <td>NaN</td>
-      <td>-4.09</td>
+      <td>NaN</td>
+      <td>NaN</td>
       <td>NaN</td>
       <td>NaN</td>
     </tr>
     <tr>
-      <th>1852.0</th>
-      <td>-4.406667</td>
-      <td>-4.518</td>
-      <td>-4.86</td>
+      <th>1002.0</th>
       <td>NaN</td>
       <td>NaN</td>
-      <td>-4.15</td>
       <td>NaN</td>
       <td>NaN</td>
-      <td>-3.271667</td>
-      <td>-4.66</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
       <td>...</td>
       <td>NaN</td>
       <td>NaN</td>
       <td>NaN</td>
-      <td>-4.20875</td>
       <td>NaN</td>
       <td>NaN</td>
       <td>NaN</td>
-      <td>-4.00</td>
+      <td>NaN</td>
+      <td>NaN</td>
       <td>NaN</td>
       <td>NaN</td>
     </tr>
     <tr>
-      <th>1853.0</th>
-      <td>-4.395000</td>
-      <td>-4.352</td>
-      <td>-4.79</td>
+      <th>1003.0</th>
       <td>NaN</td>
       <td>NaN</td>
-      <td>-4.00</td>
       <td>NaN</td>
       <td>NaN</td>
-      <td>-3.443333</td>
-      <td>-4.69</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
       <td>...</td>
       <td>NaN</td>
       <td>NaN</td>
       <td>NaN</td>
-      <td>-4.14250</td>
       <td>NaN</td>
       <td>NaN</td>
       <td>NaN</td>
-      <td>-4.26</td>
+      <td>NaN</td>
+      <td>NaN</td>
       <td>NaN</td>
       <td>NaN</td>
     </tr>
     <tr>
-      <th>1854.0</th>
-      <td>-4.406667</td>
-      <td>-4.353</td>
-      <td>-4.77</td>
+      <th>1004.0</th>
       <td>NaN</td>
       <td>NaN</td>
-      <td>-4.01</td>
       <td>NaN</td>
       <td>NaN</td>
-      <td>-3.421667</td>
-      <td>-4.80</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
       <td>...</td>
       <td>NaN</td>
       <td>NaN</td>
       <td>NaN</td>
-      <td>-4.24875</td>
       <td>NaN</td>
       <td>NaN</td>
       <td>NaN</td>
-      <td>-4.11</td>
+      <td>NaN</td>
+      <td>NaN</td>
       <td>NaN</td>
       <td>NaN</td>
     </tr>
@@ -930,7 +928,7 @@ Dataset Overview
       <td>-3.093333</td>
       <td>NaN</td>
       <td>NaN</td>
-      <td>-4.78750</td>
+      <td>-4.7875</td>
       <td>NaN</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -1036,11 +1034,11 @@ Dataset Overview
     </tr>
   </tbody>
 </table>
-<p>151 rows × 62 columns</p>
+<p>1001 rows × 62 columns</p>
 </div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[40]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1056,13 +1054,13 @@ Dataset Overview
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-(151, 62)
+(1001, 62)
 (2654, 2)
 2654
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[41]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1070,6 +1068,8 @@ Dataset Overview
 
 <span class="n">G</span> <span class="o">=</span> <span class="n">GraphEM</span><span class="o">.</span><span class="n">solver</span><span class="o">.</span><span class="n">GraphEM</span><span class="p">()</span>
 <span class="n">G</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">temp</span><span class="p">,</span> <span class="n">proxy</span><span class="p">,</span> <span class="n">calib</span><span class="p">,</span> <span class="n">lonlat</span><span class="o">=</span><span class="n">lonlat</span><span class="p">,</span> <span class="n">graph_method</span><span class="o">=</span><span class="s1">&#39;neighborhood&#39;</span><span class="p">)</span>
+
+<span class="n">pd</span><span class="o">.</span><span class="n">to_pickle</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="s1">&#39;./testcases/PAGES2k_HadCRUT/recon/G.pkl&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1083,13 +1083,212 @@ Running GraphEM:
 
 Iter     dXmis     rdXmis
 
-001     0.0454     nan
-CPU times: user 37min 54s, sys: 1min 26s, total: 39min 21s
-Wall time: 7min 34s
+001     0.0850     0.0289
+002     0.1331     0.0452
+003     0.0782     0.0265
+004     0.0580     0.0196
+005     0.0494     0.0167
+006     0.0461     0.0156
+007     0.0448     0.0151
+008     0.0444     0.0150
+009     0.0454     0.0153
+010     0.0459     0.0154
+011     0.0469     0.0157
+012     0.0481     0.0161
+013     0.0497     0.0166
+014     0.0514     0.0171
+015     0.0531     0.0177
+016     0.0546     0.0181
+017     0.0559     0.0185
+018     0.0570     0.0187
+019     0.0580     0.0190
+020     0.0592     0.0193
+021     0.0606     0.0197
+022     0.0622     0.0201
+023     0.0641     0.0206
+024     0.0663     0.0212
+025     0.0688     0.0219
+026     0.0715     0.0226
+027     0.0744     0.0233
+028     0.0777     0.0242
+029     0.0813     0.0251
+030     0.0852     0.0260
+031     0.0892     0.0270
+032     0.0934     0.0280
+033     0.0979     0.0290
+034     0.1020     0.0298
+035     0.1063     0.0307
+036     0.1109     0.0315
+037     0.1155     0.0324
+038     0.1207     0.0332
+039     0.1248     0.0338
+040     0.1294     0.0344
+041     0.1342     0.0350
+042     0.1387     0.0354
+043     0.1427     0.0357
+044     0.1473     0.0361
+045     0.1522     0.0364
+046     0.1551     0.0362
+047     0.1589     0.0363
+048     0.1634     0.0364
+049     0.1684     0.0366
+050     0.1737     0.0368
+051     0.1735     0.0358
+052     0.1766     0.0355
+053     0.1807     0.0355
+054     0.1855     0.0355
+055     0.1906     0.0355
+056     0.1960     0.0356
+057     0.2018     0.0357
+058     0.2078     0.0357
+059     0.2045     0.0342
+060     0.2060     0.0336
+061     0.2095     0.0333
+062     0.2137     0.0331
+063     0.2184     0.0330
+064     0.2236     0.0329
+065     0.2292     0.0329
+066     0.2352     0.0329
+067     0.2414     0.0329
+068     0.2480     0.0329
+069     0.2549     0.0329
+070     0.2620     0.0330
+071     0.2694     0.0330
+072     0.2542     0.0303
+073     0.2536     0.0296
+074     0.2550     0.0291
+075     0.2575     0.0287
+076     0.2607     0.0284
+077     0.2643     0.0282
+078     0.2683     0.0280
+079     0.2726     0.0278
+080     0.2771     0.0276
+081     0.2819     0.0275
+082     0.2870     0.0273
+083     0.2923     0.0272
+084     0.2979     0.0271
+085     0.3036     0.0270
+086     0.3096     0.0270
+087     0.3158     0.0269
+088     0.3222     0.0268
+089     0.3288     0.0267
+090     0.3356     0.0267
+091     0.3426     0.0266
+092     0.3498     0.0266
+093     0.3572     0.0265
+094     0.3123     0.0227
+095     0.2808     0.0204
+096     0.2606     0.0189
+097     0.2487     0.0180
+098     0.2407     0.0173
+099     0.2350     0.0169
+100     0.2308     0.0165
+101     0.2278     0.0162
+102     0.2255     0.0159
+103     0.2237     0.0157
+104     0.2224     0.0156
+105     0.2214     0.0154
+106     0.2208     0.0153
+107     0.2204     0.0151
+108     0.2203     0.0150
+109     0.2205     0.0150
+110     0.2208     0.0149
+111     0.2214     0.0148
+112     0.2220     0.0148
+113     0.2229     0.0147
+114     0.2238     0.0147
+115     0.2248     0.0146
+116     0.2259     0.0146
+117     0.2271     0.0146
+118     0.2284     0.0145
+119     0.2297     0.0145
+120     0.2310     0.0145
+121     0.2324     0.0144
+122     0.2339     0.0144
+123     0.2353     0.0144
+124     0.2368     0.0144
+125     0.2383     0.0143
+126     0.2399     0.0143
+127     0.2414     0.0143
+128     0.2430     0.0143
+129     0.2446     0.0142
+130     0.2462     0.0142
+131     0.2478     0.0142
+132     0.2494     0.0141
+133     0.2510     0.0141
+134     0.2526     0.0141
+135     0.2543     0.0141
+136     0.2559     0.0140
+137     0.2576     0.0140
+138     0.2593     0.0140
+139     0.2610     0.0139
+140     0.2627     0.0139
+141     0.2644     0.0139
+142     0.2662     0.0138
+143     0.2679     0.0138
+144     0.2697     0.0138
+145     0.2715     0.0138
+146     0.2733     0.0137
+147     0.2751     0.0137
+148     0.2770     0.0137
+149     0.2788     0.0136
+150     0.2807     0.0136
+151     0.2826     0.0136
+152     0.2845     0.0136
+153     0.2864     0.0135
+154     0.2883     0.0135
+155     0.2903     0.0135
+156     0.2922     0.0134
+157     0.2942     0.0134
+158     0.2962     0.0134
+159     0.2982     0.0134
+160     0.3002     0.0133
+161     0.3022     0.0133
+162     0.3043     0.0133
+163     0.3063     0.0133
+164     0.3084     0.0132
+165     0.3105     0.0132
+166     0.3126     0.0132
+167     0.3148     0.0132
+168     0.3169     0.0131
+169     0.3191     0.0131
+170     0.3213     0.0131
+171     0.3235     0.0131
+172     0.3258     0.0131
+173     0.3281     0.0130
+174     0.3304     0.0130
+175     0.3328     0.0130
+176     0.3352     0.0130
+177     0.3376     0.0130
+178     0.3401     0.0130
+179     0.3426     0.0129
+180     0.3451     0.0129
+181     0.3477     0.0129
+182     0.3503     0.0129
+183     0.3530     0.0129
+184     0.3557     0.0129
+185     0.3585     0.0129
+186     0.3613     0.0129
+187     0.3641     0.0129
+188     0.3670     0.0128
+189     0.3699     0.0128
+190     0.3729     0.0128
+191     0.3759     0.0128
+192     0.3789     0.0128
+193     0.3821     0.0128
+194     0.3852     0.0128
+195     0.3884     0.0128
+196     0.3917     0.0128
+197     0.3949     0.0128
+198     0.3983     0.0128
+199     0.4017     0.0128
+200     0.4051     0.0128
+CPU times: user 3d 13h 2min 43s, sys: 1h 4min 15s, total: 3d 14h 6min 59s
+Wall time: 5h 29min 37s
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[42]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1122,6 +1321,129 @@ Mean MSE = nan, Mean RE = nan, Mean CE = nan, Mean R2 = nan
 <div class="highlight"><pre>
 [43.58, 40.1, 179.2333, 124.833, 40.1, 210.1667, 200.1722, 202.7527, 34.32, 166.99, 197.87, 295.3, 173.0, 34.97, 134.2503, 113.749, 293.0, 34.97, 151.9772, 293.25, 179.23, 39.5, 55.0, 279.83, 153.0, 145.82, 166.04, 283.947, 134.3837, 34.31, 295.01120000000003, 295.3, 299.15, 283.423, 144.8359, 279.25, 113.77, 55.25, 146.0333, 142.1941, 200.1722, 166.9283, 115.5757, 113.965, 45.1, 45.1, 98.52, 179.2333, 43.58, 278.0, 172.0, 43.6195, 337.1117, 167.2, 250.7869, 200.1722, 144.8833, 250.7869, 145.8167, 268.77, 299.15, 298.51]
 </pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[23]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">np</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">G</span><span class="o">.</span><span class="n">temp_r</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[23]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+(1001, 2592)
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[27]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">recon</span> <span class="o">=</span> <span class="n">G</span><span class="o">.</span><span class="n">temp_r</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="n">nt</span><span class="p">,</span> <span class="n">nlat</span><span class="p">,</span> <span class="n">nlon</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">recon</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+(1001, 36, 72)
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[32]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">nino</span> <span class="o">=</span> <span class="n">LMRt</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">nino_indices</span><span class="p">(</span><span class="n">recon</span><span class="p">,</span> <span class="n">tas</span><span class="o">.</span><span class="n">lat</span><span class="p">,</span> <span class="n">tas</span><span class="o">.</span><span class="n">lon</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">nino</span><span class="p">[</span><span class="s1">&#39;nino3.4&#39;</span><span class="p">]))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+(1001,)
+</pre></div></div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[36]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">ts_recon</span> <span class="o">=</span> <span class="n">LMRt</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">time</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1000</span><span class="p">,</span> <span class="mi">2001</span><span class="p">),</span> <span class="n">value</span><span class="o">=</span><span class="n">nino</span><span class="p">[</span><span class="s1">&#39;nino3.4&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[37]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">scipy.io</span> <span class="kn">import</span> <span class="n">loadmat</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="n">loadmat</span><span class="p">(</span><span class="s1">&#39;./testcases/PAGES2k_HadCRUT/data/obs/NINO34_BC09.mat&#39;</span><span class="p">)</span>
+<span class="n">syr</span><span class="p">,</span> <span class="n">eyr</span> <span class="o">=</span> <span class="mi">1873</span><span class="p">,</span> <span class="mi">2000</span>
+<span class="n">nyr</span> <span class="o">=</span> <span class="n">eyr</span><span class="o">-</span><span class="n">syr</span><span class="o">+</span><span class="mi">1</span>
+<span class="n">nino34</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">nyr</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nyr</span><span class="p">):</span>
+    <span class="n">nino34</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;nino34&#39;</span><span class="p">][</span><span class="n">i</span><span class="o">*</span><span class="mi">12</span><span class="p">:</span><span class="mi">12</span><span class="o">+</span><span class="n">i</span><span class="o">*</span><span class="mi">12</span><span class="p">])</span>
+
+<span class="n">ts_target</span> <span class="o">=</span> <span class="n">LMRt</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">time</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">syr</span><span class="p">,</span> <span class="n">eyr</span><span class="o">+</span><span class="mi">1</span><span class="p">),</span> <span class="n">value</span><span class="o">=</span><span class="n">nino34</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;BC09&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[46]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">ts_hadcrut</span> <span class="o">=</span> <span class="n">LMRt</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span>
+    <span class="n">time</span><span class="o">=</span><span class="n">tas</span><span class="o">.</span><span class="n">time</span><span class="p">,</span>
+    <span class="n">value</span><span class="o">=</span><span class="n">LMRt</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">nino_indices</span><span class="p">(</span><span class="n">tas</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="n">tas</span><span class="o">.</span><span class="n">lat</span><span class="p">,</span> <span class="n">tas</span><span class="o">.</span><span class="n">lon</span><span class="p">)[</span><span class="s1">&#39;nino3.4&#39;</span><span class="p">],</span>
+    <span class="n">label</span><span class="o">=</span><span class="s1">&#39;HadCRUT&#39;</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">ts_hadcrut</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/tutorial_quickstart_recon_23_0.png" src="../_images/tutorial_quickstart_recon_23_0.png" />
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[47]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># plot and validate the NINO3.4</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">ts_recon</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">mute</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="mi">1800</span><span class="p">,</span> <span class="mi">2000</span><span class="p">)</span>
+<span class="n">ts_target</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
+<span class="n">ts_hadcrut</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
+<span class="n">LMRt</span><span class="o">.</span><span class="n">showfig</span><span class="p">(</span><span class="n">fig</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/tutorial_quickstart_recon_24_0.png" src="../_images/tutorial_quickstart_recon_24_0.png" />
+</div>
 </div>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
