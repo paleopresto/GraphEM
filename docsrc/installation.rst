@@ -59,6 +59,11 @@ Taking a clean install as example, first let's create a new environment named :c
     conda create -n GraphEM python=3.8
     conda activate GraphEM
 
+Then install several dependencies that is not able to be installed via :code:`pip`:
+
+.. code-block:: bash
+
+    conda install -c conda-forge cartopy pyspharm jupyterla
 
 Once the above dependencies have been installed, simply
 

@@ -13,6 +13,8 @@
   
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
 
   
   
@@ -29,12 +31,13 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
-        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "document", "processHtmlClass": "math|output_area"}}</script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
@@ -93,7 +96,12 @@
 <li class="toctree-l1 current"><a class="reference internal" href="../tutorial.html">Tutorial</a><ul class="current">
 <li class="toctree-l2 current"><a class="reference internal" href="../tutorial.html#quickstart">Quickstart</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="quickstart_solver.html">A quickstart of the GraphEM solver</a></li>
-<li class="toctree-l3 current"><a class="current reference internal" href="#">Reconstruction using GraphEM</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Reconstruction using GraphEM</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#Low-level-workflow">Low-level workflow</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Top-level-workflow">Top-level workflow</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Validation">Validation</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -460,8 +468,10 @@ div.rendered_html tbody tr:hover {
 </pre></div>
 </div>
 </div>
+<div class="section" id="Low-level-workflow">
+<h2>Low-level workflow<a class="headerlink" href="#Low-level-workflow" title="Permalink to this headline">¶</a></h2>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -470,7 +480,7 @@ div.rendered_html tbody tr:hover {
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -488,6 +498,7 @@ div.rendered_html tbody tr:hover {
 <span class="ansi-cyan-intense-fg ansi-bold">GraphEM: job.load_configs() &gt;&gt;&gt; job.configs[&#34;job_dirpath&#34;] = /Users/fzhu/Github/GraphEM/docsrc/tutorial/testcases/PAGES2k_HadCRUT/recon</span>
 <span class="ansi-green-intense-fg ansi-bold">GraphEM: job.load_configs() &gt;&gt;&gt; /Users/fzhu/Github/GraphEM/docsrc/tutorial/testcases/PAGES2k_HadCRUT/recon created</span>
 {&#39;anom_period&#39;: [1951, 1980],
+ &#39;calib_period&#39;: [1970, 2000],
  &#39;job_dirpath&#39;: &#39;/Users/fzhu/Github/GraphEM/docsrc/tutorial/testcases/PAGES2k_HadCRUT/recon&#39;,
  &#39;job_id&#39;: &#39;LMRt_quickstart&#39;,
  &#39;obs_path&#39;: {&#39;tas&#39;: &#39;./data/obs/HadCRUT.5.0.1.0.analysis.anomalies.ensemble_mean.nc&#39;},
@@ -498,11 +509,11 @@ div.rendered_html tbody tr:hover {
                 &#39;coral.calc&#39;,
                 &#39;tree.TRW&#39;,
                 &#39;tree.MXD&#39;],
- &#39;recon_period&#39;: [0, 2000]}
+ &#39;recon_period&#39;: [1500, 2000]}
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -521,7 +532,7 @@ div.rendered_html tbody tr:hover {
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -539,7 +550,7 @@ div.rendered_html tbody tr:hover {
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -564,7 +575,7 @@ div.rendered_html tbody tr:hover {
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -582,7 +593,7 @@ div.rendered_html tbody tr:hover {
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -616,12 +627,11 @@ Dataset Overview
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">tas</span> <span class="o">=</span> <span class="n">job</span><span class="o">.</span><span class="n">obs</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s1">&#39;tas&#39;</span><span class="p">]</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">tas</span><span class="o">.</span><span class="n">time</span><span class="p">)</span>
+<span></span><span class="n">job</span><span class="o">.</span><span class="n">prep_data</span><span class="p">(</span><span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -630,94 +640,26 @@ Dataset Overview
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-[1850 1851 1852 1853 1854 1855 1856 1857 1858 1859 1860 1861 1862 1863
- 1864 1865 1866 1867 1868 1869 1870 1871 1872 1873 1874 1875 1876 1877
- 1878 1879 1880 1881 1882 1883 1884 1885 1886 1887 1888 1889 1890 1891
- 1892 1893 1894 1895 1896 1897 1898 1899 1900 1901 1902 1903 1904 1905
- 1906 1907 1908 1909 1910 1911 1912 1913 1914 1915 1916 1917 1918 1919
- 1920 1921 1922 1923 1924 1925 1926 1927 1928 1929 1930 1931 1932 1933
- 1934 1935 1936 1937 1938 1939 1940 1941 1942 1943 1944 1945 1946 1947
- 1948 1949 1950 1951 1952 1953 1954 1955 1956 1957 1958 1959 1960 1961
- 1962 1963 1964 1965 1966 1967 1968 1969 1970 1971 1972 1973 1974 1975
- 1976 1977 1978 1979 1980 1981 1982 1983 1984 1985 1986 1987 1988 1989
- 1990 1991 1992 1993 1994 1995 1996 1997 1998 1999 2000 2001 2002 2003
- 2004 2005 2006 2007 2008 2009 2010 2011 2012 2013 2014 2015 2016 2017
- 2018 2019 2020]
+<span class="ansi-green-intense-fg ansi-bold">GraphEM: job.prep_data() &gt;&gt;&gt; job.recon_time created</span>
+<span class="ansi-green-intense-fg ansi-bold">GraphEM: job.prep_data() &gt;&gt;&gt; job.calib_time created</span>
+<span class="ansi-green-intense-fg ansi-bold">GraphEM: job.prep_data() &gt;&gt;&gt; job.calib_idx created</span>
+<span class="ansi-green-intense-fg ansi-bold">GraphEM: job.prep_data() &gt;&gt;&gt; job.temp created</span>
+<span class="ansi-green-intense-fg ansi-bold">GraphEM: job.prep_data() &gt;&gt;&gt; job.df_proxy created</span>
+<span class="ansi-green-intense-fg ansi-bold">GraphEM: job.prep_data() &gt;&gt;&gt; job.proxy created</span>
+<span class="ansi-green-intense-fg ansi-bold">GraphEM: job.prep_data() &gt;&gt;&gt; job.lonlat created</span>
 </pre></div></div>
 </div>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">recon_time</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1500</span><span class="p">,</span> <span class="mi">2001</span><span class="p">)</span>
-<span class="n">nt</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="n">recon_time</span><span class="p">)</span>
-<span class="n">idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">nt</span><span class="p">)</span>
-<span class="n">calib_size</span> <span class="o">=</span> <span class="mi">70</span>
-<span class="n">calib</span> <span class="o">=</span> <span class="n">idx</span><span class="p">[</span><span class="o">-</span><span class="n">calib_size</span><span class="p">:]</span>
-<span class="n">nt_tas</span><span class="p">,</span> <span class="n">nlat</span><span class="p">,</span> <span class="n">nlon</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">tas</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">tas_value</span> <span class="o">=</span> <span class="n">tas</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">tas</span><span class="o">.</span><span class="n">value</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
-<span class="n">nt_tas</span><span class="p">,</span> <span class="n">npos_tas</span> <span class="o">=</span>  <span class="n">np</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">tas_value</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">nt_tas</span><span class="p">,</span> <span class="n">npos_tas</span><span class="p">)</span>
-
-<span class="n">temp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">((</span><span class="n">nt</span><span class="p">,</span> <span class="n">npos_tas</span><span class="p">))</span>
-<span class="n">temp</span><span class="p">[:,:]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
-<span class="n">temp</span><span class="p">[</span><span class="o">-</span><span class="n">calib_size</span><span class="p">:]</span> <span class="o">=</span> <span class="n">tas_value</span><span class="p">[(</span><span class="n">tas</span><span class="o">.</span><span class="n">time</span><span class="o">&gt;</span><span class="n">recon_time</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="n">calib_size</span><span class="p">)</span><span class="o">&amp;</span><span class="p">(</span><span class="n">tas</span><span class="o">.</span><span class="n">time</span><span class="o">&lt;=</span><span class="n">recon_time</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])]</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">temp</span><span class="p">))</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">tas</span><span class="o">.</span><span class="n">time</span><span class="p">[(</span><span class="n">tas</span><span class="o">.</span><span class="n">time</span><span class="o">&gt;</span><span class="n">recon_time</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="n">calib_size</span><span class="p">)</span><span class="o">&amp;</span><span class="p">(</span><span class="n">tas</span><span class="o">.</span><span class="n">time</span><span class="o">&lt;=</span><span class="n">recon_time</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])])</span>
+<span></span><span class="n">job</span><span class="o">.</span><span class="n">df_proxy</span>
 </pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-171 2592
-(501, 2592)
-[1931 1932 1933 1934 1935 1936 1937 1938 1939 1940 1941 1942 1943 1944
- 1945 1946 1947 1948 1949 1950 1951 1952 1953 1954 1955 1956 1957 1958
- 1959 1960 1961 1962 1963 1964 1965 1966 1967 1968 1969 1970 1971 1972
- 1973 1974 1975 1976 1977 1978 1979 1980 1981 1982 1983 1984 1985 1986
- 1987 1988 1989 1990 1991 1992 1993 1994 1995 1996 1997 1998 1999 2000]
-</pre></div></div>
-</div>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[23]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">npos_proxy</span> <span class="o">=</span> <span class="n">job</span><span class="o">.</span><span class="n">proxydb</span><span class="o">.</span><span class="n">nrec</span>
-<span class="n">lonlat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">((</span><span class="n">npos_tas</span><span class="o">+</span><span class="n">npos_proxy</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
-
-<span class="n">k</span> <span class="o">=</span> <span class="mi">0</span>
-<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">tas</span><span class="o">.</span><span class="n">nlon</span><span class="p">):</span>
-    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">tas</span><span class="o">.</span><span class="n">nlat</span><span class="p">):</span>
-        <span class="n">lonlat</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">tas</span><span class="o">.</span><span class="n">lon</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">tas</span><span class="o">.</span><span class="n">lat</span><span class="p">[</span><span class="n">j</span><span class="p">]]</span>
-        <span class="n">k</span> <span class="o">+=</span> <span class="mi">1</span>
-
-<span class="n">df_proxy</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="n">recon_time</span><span class="p">)</span>
-<span class="k">for</span> <span class="n">pid</span><span class="p">,</span> <span class="n">pobj</span> <span class="ow">in</span> <span class="n">job</span><span class="o">.</span><span class="n">proxydb</span><span class="o">.</span><span class="n">records</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-    <span class="n">series</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="n">pobj</span><span class="o">.</span><span class="n">time</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">pobj</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">pid</span><span class="p">)</span>
-    <span class="n">df_proxy</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">df_proxy</span><span class="p">,</span> <span class="n">series</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-    <span class="n">lonlat</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">pobj</span><span class="o">.</span><span class="n">lon</span><span class="p">,</span> <span class="n">pobj</span><span class="o">.</span><span class="n">lat</span><span class="p">]</span>
-    <span class="n">k</span> <span class="o">+=</span> <span class="mi">1</span>
-
-<span class="n">df_proxy</span> <span class="o">=</span> <span class="n">df_proxy</span><span class="p">[(</span><span class="n">df_proxy</span><span class="o">.</span><span class="n">index</span><span class="o">&gt;=</span><span class="n">recon_time</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">df_proxy</span><span class="o">.</span><span class="n">index</span><span class="o">&lt;=</span><span class="n">recon_time</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])]</span>
-<span class="n">df_proxy</span>
-</pre></div>
-</div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[23]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -1033,14 +975,13 @@ Dataset Overview
 </div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[24]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">proxy</span> <span class="o">=</span> <span class="n">df_proxy</span><span class="o">.</span><span class="n">values</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">proxy</span><span class="p">))</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">lonlat</span><span class="p">))</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">npos_tas</span><span class="o">+</span><span class="n">npos_proxy</span><span class="p">)</span>
+<span></span><span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">job</span><span class="o">.</span><span class="n">temp</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">job</span><span class="o">.</span><span class="n">proxy</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">job</span><span class="o">.</span><span class="n">lonlat</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
@@ -1049,22 +990,38 @@ Dataset Overview
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
+(501, 2592)
 (501, 510)
 (3102, 2)
-3102
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[25]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">job</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+<span class="ansi-cyan-intense-fg ansi-bold">LMRt: job.save_job() &gt;&gt;&gt; Prepration data saved to: /Users/fzhu/Github/GraphEM/docsrc/tutorial/testcases/PAGES2k_HadCRUT/recon/job.pkl</span>
+<span class="ansi-cyan-intense-fg ansi-bold">LMRt: job.save_job() &gt;&gt;&gt; job.configs[&#34;prep_savepath&#34;] = /Users/fzhu/Github/GraphEM/docsrc/tutorial/testcases/PAGES2k_HadCRUT/recon/job.pkl</span>
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="o">%%time</span>
 
-<span class="n">G</span> <span class="o">=</span> <span class="n">GraphEM</span><span class="o">.</span><span class="n">solver</span><span class="o">.</span><span class="n">GraphEM</span><span class="p">()</span>
-<span class="n">G</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">temp</span><span class="p">,</span> <span class="n">proxy</span><span class="p">,</span> <span class="n">calib</span><span class="p">,</span> <span class="n">lonlat</span><span class="o">=</span><span class="n">lonlat</span><span class="p">,</span> <span class="n">graph_method</span><span class="o">=</span><span class="s1">&#39;neighborhood&#39;</span><span class="p">)</span>
-
-<span class="n">pd</span><span class="o">.</span><span class="n">to_pickle</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="s1">&#39;./testcases/PAGES2k_HadCRUT/recon/G.pkl&#39;</span><span class="p">)</span>
+<span class="n">save_path</span> <span class="o">=</span> <span class="s1">&#39;./testcases/PAGES2k_HadCRUT/recon/G.pkl&#39;</span>
+<span class="n">job</span><span class="o">.</span><span class="n">run_solver</span><span class="p">(</span><span class="n">save_path</span><span class="o">=</span><span class="n">save_path</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1073,116 +1030,174 @@ Dataset Overview
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-Estimating graph using neighborhood method
-Running GraphEM:
-
-Iter     dXmis     rdXmis
-
-001     0.3008     0.0830
-002     0.2886     0.0816
-003     0.0713     0.0201
-004     0.0635     0.0181
-005     0.0659     0.0189
-006     0.0649     0.0187
-007     0.0560     0.0163
-008     0.0438     0.0128
-009     0.0341     0.0100
-010     0.0293     0.0086
-011     0.0286     0.0084
-012     0.0292     0.0086
-013     0.0304     0.0089
-014     0.0316     0.0093
-015     0.0333     0.0098
-016     0.0350     0.0103
-017     0.0372     0.0109
-018     0.0392     0.0115
-019     0.0405     0.0119
-020     0.0414     0.0122
-021     0.0420     0.0124
-022     0.0410     0.0121
-023     0.0400     0.0118
-024     0.0381     0.0112
-025     0.0366     0.0108
-026     0.0358     0.0105
-027     0.0359     0.0105
-028     0.0357     0.0105
-029     0.0350     0.0103
-030     0.0351     0.0103
-031     0.0347     0.0102
-032     0.0339     0.0099
-033     0.0322     0.0094
-034     0.0323     0.0094
-035     0.0316     0.0092
-036     0.0327     0.0094
-037     0.0324     0.0093
-038     0.0323     0.0092
-039     0.0328     0.0093
-040     0.0315     0.0089
-041     0.0303     0.0085
-042     0.0305     0.0085
-043     0.0285     0.0079
-044     0.0270     0.0075
-045     0.0257     0.0071
-046     0.0245     0.0067
-047     0.0255     0.0070
-048     0.0234     0.0063
-049     0.0221     0.0060
-050     0.0210     0.0057
-051     0.0200     0.0054
-052     0.0191     0.0051
-053     0.0183     0.0049
-CPU times: user 3d 18h 11min 47s, sys: 1h 48min 47s, total: 3d 20h 34s
-Wall time: 6h 8min 33s
+<span class="ansi-green-intense-fg ansi-bold">GraphEM: job.run_solver() &gt;&gt;&gt; job.G created with the existing result at: ./testcases/PAGES2k_HadCRUT/recon/G.pkl</span>
+<span class="ansi-green-intense-fg ansi-bold">GraphEM: job.run_solver() &gt;&gt;&gt; job.recon created</span>
+CPU times: user 1.15 ms, sys: 107 ms, total: 108 ms
+Wall time: 108 ms
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[26]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">np</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">G</span><span class="o">.</span><span class="n">temp_r</span><span class="p">)</span>
+<span></span><span class="n">np</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">job</span><span class="o">.</span><span class="n">recon</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[26]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
 </pre></div>
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-(501, 2592)
-</pre></div></div>
-</div>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[27]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">recon</span> <span class="o">=</span> <span class="n">G</span><span class="o">.</span><span class="n">temp_r</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="n">nt</span><span class="p">,</span> <span class="n">nlat</span><span class="p">,</span> <span class="n">nlon</span><span class="p">))</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">recon</span><span class="p">))</span>
-</pre></div>
-</div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 (501, 36, 72)
 </pre></div></div>
 </div>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[28]:
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">nino</span> <span class="o">=</span> <span class="n">LMRt</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">nino_indices</span><span class="p">(</span><span class="n">recon</span><span class="p">,</span> <span class="n">tas</span><span class="o">.</span><span class="n">lat</span><span class="p">,</span> <span class="n">tas</span><span class="o">.</span><span class="n">lon</span><span class="p">)</span>
-<span class="n">ts_recon</span> <span class="o">=</span> <span class="n">LMRt</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">time</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1500</span><span class="p">,</span> <span class="mi">2001</span><span class="p">),</span> <span class="n">value</span><span class="o">=</span><span class="n">nino</span><span class="p">[</span><span class="s1">&#39;nino3.4&#39;</span><span class="p">])</span>
+<span></span><span class="n">job</span><span class="o">.</span><span class="n">save_recon</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;./testcases/PAGES2k_HadCRUT/recon/recon.nc&#39;</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+<span class="ansi-cyan-intense-fg ansi-bold">LMRt: job.save_recon() &gt;&gt;&gt; Reconstruction saved to: ./testcases/PAGES2k_HadCRUT/recon/recon.nc</span>
+</pre></div></div>
+</div>
+</div>
+<div class="section" id="Top-level-workflow">
+<h2>Top-level workflow<a class="headerlink" href="#Top-level-workflow" title="Permalink to this headline">¶</a></h2>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">job</span> <span class="o">=</span> <span class="n">GraphEM</span><span class="o">.</span><span class="n">ReconJob</span><span class="p">()</span>
+<span class="n">job</span><span class="o">.</span><span class="n">run_cfg</span><span class="p">(</span><span class="s1">&#39;./testcases/PAGES2k_HadCRUT/configs.yml&#39;</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+<span class="ansi-cyan-intense-fg ansi-bold">GraphEM: job.load_configs() &gt;&gt;&gt; loading reconstruction configurations from: ./testcases/PAGES2k_HadCRUT/configs.yml</span>
+<span class="ansi-green-intense-fg ansi-bold">GraphEM: job.load_configs() &gt;&gt;&gt; job.configs created</span>
+<span class="ansi-cyan-intense-fg ansi-bold">GraphEM: job.load_configs() &gt;&gt;&gt; job.configs[&#34;job_dirpath&#34;] = /Users/fzhu/Github/GraphEM/docsrc/tutorial/testcases/PAGES2k_HadCRUT/recon</span>
+<span class="ansi-green-intense-fg ansi-bold">GraphEM: job.load_configs() &gt;&gt;&gt; /Users/fzhu/Github/GraphEM/docsrc/tutorial/testcases/PAGES2k_HadCRUT/recon created</span>
+{&#39;anom_period&#39;: [1951, 1980],
+ &#39;calib_period&#39;: [1970, 2000],
+ &#39;job_dirpath&#39;: &#39;/Users/fzhu/Github/GraphEM/docsrc/tutorial/testcases/PAGES2k_HadCRUT/recon&#39;,
+ &#39;job_id&#39;: &#39;LMRt_quickstart&#39;,
+ &#39;obs_path&#39;: {&#39;tas&#39;: &#39;./data/obs/HadCRUT.5.0.1.0.analysis.anomalies.ensemble_mean.nc&#39;},
+ &#39;obs_varname&#39;: {&#39;lat&#39;: &#39;latitude&#39;, &#39;lon&#39;: &#39;longitude&#39;, &#39;tas&#39;: &#39;tas_mean&#39;},
+ &#39;proxydb_path&#39;: &#39;./data/proxy/pages2k_dataset.pkl&#39;,
+ &#39;ptype_list&#39;: [&#39;coral.d18O&#39;,
+                &#39;coral.SrCa&#39;,
+                &#39;coral.calc&#39;,
+                &#39;tree.TRW&#39;,
+                &#39;tree.MXD&#39;],
+ &#39;recon_period&#39;: [1500, 2000]}
+<span class="ansi-cyan-intense-fg ansi-bold">LMRt: job.load_configs() &gt;&gt;&gt; job.configs[&#34;job_dirpath&#34;] = /Users/fzhu/Github/GraphEM/docsrc/tutorial/testcases/PAGES2k_HadCRUT/recon</span>
+<span class="ansi-green-intense-fg ansi-bold">LMRt: job.load_configs() &gt;&gt;&gt; /Users/fzhu/Github/GraphEM/docsrc/tutorial/testcases/PAGES2k_HadCRUT/recon created</span>
+<span class="ansi-cyan-intense-fg ansi-bold">GraphEM: job.load_proxydb() &gt;&gt;&gt; job.configs[&#34;proxydb_path&#34;] = /Users/fzhu/Github/GraphEM/docsrc/tutorial/testcases/PAGES2k_HadCRUT/data/proxy/pages2k_dataset.pkl</span>
+<span class="ansi-green-intense-fg ansi-bold">GraphEM: job.load_proxydb() &gt;&gt;&gt; 692 records loaded</span>
+<span class="ansi-green-intense-fg ansi-bold">GraphEM: job.load_proxydb() &gt;&gt;&gt; job.proxydb created</span>
+<span class="ansi-cyan-intense-fg ansi-bold">GraphEM: job.seasonalize_proxydb() &gt;&gt;&gt; job.configs[&#34;ptype_season&#34;] = {&#39;coral.d18O&#39;: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], &#39;coral.SrCa&#39;: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], &#39;coral.calc&#39;: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], &#39;tree.TRW&#39;: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], &#39;tree.MXD&#39;: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]}</span>
+<span class="ansi-cyan-intense-fg ansi-bold">GraphEM: job.seasonalize_proxydb() &gt;&gt;&gt; seasonalizing proxy records according to: {&#39;coral.d18O&#39;: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], &#39;coral.SrCa&#39;: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], &#39;coral.calc&#39;: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], &#39;tree.TRW&#39;: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], &#39;tree.MXD&#39;: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]}</span>
+<span class="ansi-green-intense-fg ansi-bold">GraphEM: job.seasonalize_proxydb() &gt;&gt;&gt; 692 records remaining</span>
+<span class="ansi-green-intense-fg ansi-bold">GraphEM: job.seasonalize_proxydb() &gt;&gt;&gt; job.proxydb updated</span>
+<span class="ansi-cyan-intense-fg ansi-bold">GraphEM: job.load_obs() &gt;&gt;&gt; loading instrumental observation fields from: {&#39;tas&#39;: &#39;/Users/fzhu/Github/GraphEM/docsrc/tutorial/testcases/PAGES2k_HadCRUT/data/obs/HadCRUT.5.0.1.0.analysis.anomalies.ensemble_mean.nc&#39;}</span>
+<span class="ansi-green-intense-fg ansi-bold">GraphEM: job.load_obs() &gt;&gt;&gt; job.obs created</span>
+<span class="ansi-cyan-intense-fg ansi-bold">GraphEM: job.seasonalize_obs() &gt;&gt;&gt; job.configs[&#34;obs_season&#34;] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]</span>
+<span class="ansi-black-intense-fg ansi-bold">GraphEM: job.seasonalize_obs() &gt;&gt;&gt; seasonalized obs w/ season [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]</span>
+Dataset Overview
+-----------------------
+
+     Name:  tas
+   Source:  /Users/fzhu/Github/GraphEM/docsrc/tutorial/testcases/PAGES2k_HadCRUT/data/obs/HadCRUT.5.0.1.0.analysis.anomalies.ensemble_mean.nc
+    Shape:  time:171, lat:36, lon:72
+<span class="ansi-green-intense-fg ansi-bold">GraphEM: job.seasonalize_obs() &gt;&gt;&gt; job.obs updated</span>
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+/Users/fzhu/Github/LMRt/LMRt/utils.py:258: RuntimeWarning: Mean of empty slice
+  tmp = np.nanmean(var[inds, ...], axis=0)
+100%|██████████| 72/72 [00:00&lt;00:00, 22026.98it/s]
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+
+<span class="ansi-green-intense-fg ansi-bold">GraphEM: job.prep_data() &gt;&gt;&gt; job.recon_time created</span>
+<span class="ansi-green-intense-fg ansi-bold">GraphEM: job.prep_data() &gt;&gt;&gt; job.calib_time created</span>
+<span class="ansi-green-intense-fg ansi-bold">GraphEM: job.prep_data() &gt;&gt;&gt; job.calib_idx created</span>
+<span class="ansi-green-intense-fg ansi-bold">GraphEM: job.prep_data() &gt;&gt;&gt; job.temp created</span>
+<span class="ansi-cyan-intense-fg ansi-bold">GraphEM: job.prep_data() &gt;&gt;&gt; Preparing proxy and lonlat</span>
+<span class="ansi-green-intense-fg ansi-bold">GraphEM: job.prep_data() &gt;&gt;&gt; job.df_proxy created</span>
+<span class="ansi-green-intense-fg ansi-bold">GraphEM: job.prep_data() &gt;&gt;&gt; job.proxy created</span>
+<span class="ansi-green-intense-fg ansi-bold">GraphEM: job.prep_data() &gt;&gt;&gt; job.lonlat created</span>
+<span class="ansi-cyan-intense-fg ansi-bold">LMRt: job.save_job() &gt;&gt;&gt; Prepration data saved to: /Users/fzhu/Github/GraphEM/docsrc/tutorial/testcases/PAGES2k_HadCRUT/recon/job.pkl</span>
+<span class="ansi-cyan-intense-fg ansi-bold">LMRt: job.save_job() &gt;&gt;&gt; job.configs[&#34;prep_savepath&#34;] = /Users/fzhu/Github/GraphEM/docsrc/tutorial/testcases/PAGES2k_HadCRUT/recon/job.pkl</span>
+<span class="ansi-cyan-intense-fg ansi-bold">LMRt: job.run_cfg() &gt;&gt;&gt; G will be saved to: /Users/fzhu/Github/GraphEM/docsrc/tutorial/testcases/PAGES2k_HadCRUT/recon/G.pkl</span>
+<span class="ansi-green-intense-fg ansi-bold">GraphEM: job.run_solver() &gt;&gt;&gt; job.G created with the existing result at: /Users/fzhu/Github/GraphEM/docsrc/tutorial/testcases/PAGES2k_HadCRUT/recon/G.pkl</span>
+<span class="ansi-green-intense-fg ansi-bold">GraphEM: job.run_solver() &gt;&gt;&gt; job.recon created</span>
+<span class="ansi-cyan-intense-fg ansi-bold">LMRt: job.run_cfg() &gt;&gt;&gt; recon. will be saved to: /Users/fzhu/Github/GraphEM/docsrc/tutorial/testcases/PAGES2k_HadCRUT/recon/recon.nc</span>
+<span class="ansi-cyan-intense-fg ansi-bold">LMRt: job.save_recon() &gt;&gt;&gt; Reconstruction saved to: /Users/fzhu/Github/GraphEM/docsrc/tutorial/testcases/PAGES2k_HadCRUT/recon/recon.nc</span>
+</pre></div></div>
+</div>
+</div>
+<div class="section" id="Validation">
+<h2>Validation<a class="headerlink" href="#Validation" title="Permalink to this headline">¶</a></h2>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="k">with</span> <span class="n">xr</span><span class="o">.</span><span class="n">open_dataset</span><span class="p">(</span><span class="s1">&#39;./testcases/PAGES2k_HadCRUT/recon/recon.nc&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">ds</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">ds</span><span class="p">)</span>
+    <span class="n">recon</span> <span class="o">=</span> <span class="n">ds</span><span class="p">[</span><span class="s1">&#39;recon&#39;</span><span class="p">]</span>
+    <span class="n">lat</span> <span class="o">=</span> <span class="n">ds</span><span class="p">[</span><span class="s1">&#39;lat&#39;</span><span class="p">]</span>
+    <span class="n">lon</span> <span class="o">=</span> <span class="n">ds</span><span class="p">[</span><span class="s1">&#39;lon&#39;</span><span class="p">]</span>
+    <span class="n">year</span> <span class="o">=</span> <span class="n">ds</span><span class="p">[</span><span class="s1">&#39;year&#39;</span><span class="p">]</span>
+
+<span class="n">nino</span> <span class="o">=</span> <span class="n">LMRt</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">nino_indices</span><span class="p">(</span><span class="n">recon</span><span class="p">,</span> <span class="n">lat</span><span class="p">,</span> <span class="n">lon</span><span class="p">)</span>
+<span class="n">ts_recon</span> <span class="o">=</span> <span class="n">LMRt</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">time</span><span class="o">=</span><span class="n">year</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="n">nino</span><span class="p">[</span><span class="s1">&#39;nino3.4&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+&lt;xarray.Dataset&gt;
+Dimensions:  (lat: 36, lon: 72, year: 501)
+Coordinates:
+  * year     (year) int64 1500 1501 1502 1503 1504 ... 1996 1997 1998 1999 2000
+  * lat      (lat) float64 -87.5 -82.5 -77.5 -72.5 -67.5 ... 72.5 77.5 82.5 87.5
+  * lon      (lon) float64 2.5 7.5 12.5 17.5 22.5 ... 342.5 347.5 352.5 357.5
+Data variables:
+    recon    (year, lat, lon) float64 ...
+</pre></div></div>
+</div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[29]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1200,11 +1215,12 @@ Wall time: 6h 8min 33s
 </div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[30]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">ts_hadcrut</span> <span class="o">=</span> <span class="n">LMRt</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span>
+<span></span><span class="n">tas</span> <span class="o">=</span> <span class="n">job</span><span class="o">.</span><span class="n">obs</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s1">&#39;tas&#39;</span><span class="p">]</span>
+<span class="n">ts_hadcrut</span> <span class="o">=</span> <span class="n">LMRt</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span>
     <span class="n">time</span><span class="o">=</span><span class="n">tas</span><span class="o">.</span><span class="n">time</span><span class="p">,</span>
     <span class="n">value</span><span class="o">=</span><span class="n">LMRt</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">nino_indices</span><span class="p">(</span><span class="n">tas</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="n">tas</span><span class="o">.</span><span class="n">lat</span><span class="p">,</span> <span class="n">tas</span><span class="o">.</span><span class="n">lon</span><span class="p">)[</span><span class="s1">&#39;nino3.4&#39;</span><span class="p">],</span>
     <span class="n">label</span><span class="o">=</span><span class="s1">&#39;HadCRUT&#39;</span><span class="p">,</span>
@@ -1213,7 +1229,7 @@ Wall time: 6h 8min 33s
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[35]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1231,7 +1247,7 @@ Wall time: 6h 8min 33s
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/tutorial_quickstart_recon_21_0.png" src="../_images/tutorial_quickstart_recon_21_0.png" />
+<img alt="../_images/tutorial_quickstart_recon_24_0.png" src="../_images/tutorial_quickstart_recon_24_0.png" />
 </div>
 </div>
 <div class="nbinput nblast docutils container">
@@ -1241,6 +1257,7 @@ Wall time: 6h 8min 33s
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span>
 </pre></div>
+</div>
 </div>
 </div>
 </div>

@@ -1,7 +1,8 @@
 job_id: 20210527_GraphEM_recon
 job_dirpath: ./
 
-recon_period: [0, 2000]
+recon_period: [1500, 2000]
+calib_period: [1970, 2000
 
 # Proxy & PSM related
 proxydb_path: pages2k_dataset.pkl
@@ -16,3 +17,5 @@ obs_path:
 
 obs_varname:
   tas: tas_mean
+  lat: latitude
+  lon: longitude

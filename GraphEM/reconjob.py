@@ -174,7 +174,7 @@ class ReconJob:
 
         varname_dict: dict
             a dict to map variable names, e.g. {'tas': 'sst'} means 'tas' is named 'sst' in the input NetCDF file
-        
+
         '''
         if path_dict is None:
             obs_path = cfg_abspath(self.cfg_path, self.configs['obs_path'])
@@ -226,3 +226,161 @@ class ReconJob:
 
         self.obs = ds
         if verbose: p_success(f'GraphEM: job.seasonalize_obs() >>> job.obs updated')
+
+    def prep_data(self, recon_period=None, calib_period=None, verbose=False):
+        if recon_period is None:
+            recon_period = self.configs['recon_period']
+        else:
+            self.configs['recon_period'] = recon_period
+            if verbose: p_header(f'GraphEM: job.prep_data() >>> job.configs["recon_period"] = {recon_period}')
+
+        if calib_period is None:
+            calib_period = self.configs['calib_period']
+        else:
+            self.configs['calib_period'] = calib_period
+            if verbose: p_header(f'GraphEM: job.prep_data() >>> job.configs["calib_period"] = {calib_period}')
+
+        recon_time = np.arange(recon_period[0], recon_period[1]+1)
+        calib_time = np.arange(calib_period[0], calib_period[1]+1)
+        self.recon_time = recon_time
+        self.calib_time = calib_time
+        if verbose: p_success(f'GraphEM: job.prep_data() >>> job.recon_time created')
+        if verbose: p_success(f'GraphEM: job.prep_data() >>> job.calib_time created')
+
+        tas = self.obs.fields['tas']
+        tas_nt = np.shape(tas.value)[0]
+        tas_2d = tas.value.reshape(tas_nt, -1)
+        tas_npos = np.shape(tas_2d)[-1]
+
+        nt = np.size(recon_time)
+        temp = np.ndarray((nt, tas_npos))
+        temp[:] = np.nan
+
+        temp_calib_idx = [list(recon_time).index(t) for t in calib_time]
+        self.calib_idx = temp_calib_idx
+        if verbose: p_success(f'GraphEM: job.prep_data() >>> job.calib_idx created')
+
+        tas_calib_idx = [list(tas.time).index(t) for t in calib_time]
+        temp[temp_calib_idx] = tas_2d[tas_calib_idx]
+
+        self.temp = temp
+        if verbose: p_success(f'GraphEM: job.prep_data() >>> job.temp created')
+
+        lonlat = np.ndarray((tas_npos+self.proxydb.nrec, 2))
+
+        k = 0
+        for i in range(tas.nlon):
+            for j in range(tas.nlat):
+                lonlat[k] = [tas.lon[i], tas.lat[j]]
+                k += 1
+
+        df_proxy = pd.DataFrame(index=recon_time)
+        for pid, pobj in self.proxydb.records.items():
+            series = pd.Series(index=pobj.time, data=pobj.value, name=pid)
+            df_proxy = pd.concat([df_proxy, series], axis=1)
+            lonlat[k] = [pobj.lon, pobj.lat]
+            k += 1
+
+        mask = (df_proxy.index>=recon_time[0]) & (df_proxy.index<=recon_time[-1])
+        df_proxy = df_proxy[mask]
+
+        self.df_proxy = df_proxy
+        self.proxy = df_proxy.values
+        if verbose: p_success(f'GraphEM: job.prep_data() >>> job.df_proxy created')
+        if verbose: p_success(f'GraphEM: job.prep_data() >>> job.proxy created')
+
+        self.lonlat = lonlat
+        if verbose: p_success(f'GraphEM: job.prep_data() >>> job.lonlat created')
+
+    def run_solver(self, save_path=None, verbose=False):
+        if save_path is not None:
+            if os.path.exists(save_path):
+                self.G = pd.read_pickle(save_path)
+                if verbose: p_success(f'GraphEM: job.run_solver() >>> job.G created with the existing result at: {save_path}')
+            else:
+                G = GraphEM()
+                G.fit(self.temp, self.proxy, self.calib_idx, lonlat=self.lonlat, graph_method='neighborhoood')
+                self.G = G
+                pd.to_pickle(self.G, save_path)
+                if verbose: p_success(f'GraphEM: job.run_solver() >>> job.G created and saved to: {save_path}')
+
+        nt = np.shape(self.temp)[0]
+        _, nlat, nlon = np.shape(self.obs.fields['tas'].value)
+        self.recon = self.G.temp_r.reshape((nt, nlat, nlon))
+        if verbose: p_success(f'GraphEM: job.run_solver() >>> job.recon created')
+
+    def save(self, prep_savepath=None, verbose=False):
+        if prep_savepath is None:
+            prep_savepath = os.path.join(self.configs['job_dirpath'], f'job.pkl')
+
+        pd.to_pickle(self, prep_savepath)
+        self.configs['prep_savepath'] = prep_savepath
+
+        if verbose:
+            p_header(f'LMRt: job.save_job() >>> Prepration data saved to: {prep_savepath}')
+            p_header(f'LMRt: job.save_job() >>> job.configs["prep_savepath"] = {prep_savepath}')
+
+    def save_recon(self, save_path, compress_dict={'zlib': True, 'least_significant_digit': 1}, verbose=False):
+        output_dict = {}
+        output_dict['recon'] = (('year', 'lat', 'lon'), self.recon)
+
+        ds = xr.Dataset(
+            data_vars=output_dict,
+            coords={
+                'year': self.recon_time,
+                'lat': self.obs.fields['tas'].lat,
+                'lon': self.obs.fields['tas'].lon,
+            }
+        )
+
+        if compress_dict is not None:
+            encoding_dict = {}
+            for k in output_dict.keys():
+                encoding_dict[k] = compress_dict
+
+            ds.to_netcdf(save_path, encoding=encoding_dict)
+        else:
+            ds.to_netcdf(save_path)
+
+        if verbose: p_header(f'LMRt: job.save_recon() >>> Reconstruction saved to: {save_path}')
+
+
+    def run_cfg(self, cfg_path, job_dirpath=None, save_G_path=None, save_recon_path=None,
+                verbose=False, obs_varname=None):
+        self.load_configs(cfg_path, verbose=verbose)
+
+        if job_dirpath is None:
+            if os.path.isabs(self.configs['job_dirpath']):
+                job_dirpath = self.configs['job_dirpath']
+            else:
+                job_dirpath = cfg_abspath(self.cfg_path, self.configs['job_dirpath'])
+        else:
+            job_dirpath = cwd_abspath(job_dirpath)
+
+        self.configs['job_dirpath'] = job_dirpath
+        os.makedirs(job_dirpath, exist_ok=True)
+        if verbose:
+            p_header(f'LMRt: job.load_configs() >>> job.configs["job_dirpath"] = {job_dirpath}')
+            p_success(f'LMRt: job.load_configs() >>> {job_dirpath} created')
+
+        self.load_proxydb(verbose=verbose)
+        self.seasonalize_proxydb(verbose=verbose)
+
+        if obs_varname is None:
+            obs_varname = self.configs['obs_varname']
+
+        self.load_obs(varname_dict=obs_varname, verbose=verbose)
+        self.seasonalize_obs(verbose=verbose)
+
+        self.prep_data(verbose=verbose)
+        self.save(verbose=verbose)
+
+        if save_G_path is None:
+            save_G_path = os.path.join(job_dirpath, 'G.pkl')
+            p_header(f'LMRt: job.run_cfg() >>> G will be saved to: {save_G_path}')
+        self.run_solver(save_path=save_G_path, verbose=verbose)
+
+        if save_recon_path is None:
+            save_recon_path = os.path.join(job_dirpath, 'recon.nc')
+            p_header(f'LMRt: job.run_cfg() >>> recon. will be saved to: {save_recon_path}')
+        self.save_recon(save_path=save_recon_path, verbose=verbose)

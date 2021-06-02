@@ -13,6 +13,8 @@
   
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
 
   
   
@@ -29,6 +31,7 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
         <script src="_static/doctools.js"></script>
@@ -240,6 +243,10 @@ which conda  <span class="c1"># should return a path under &lt;base-path&gt;</sp
 <p>Taking a clean install as example, first let’s create a new environment named <code class="code docutils literal notranslate"><span class="pre">GraphEM</span></code> via <code class="code docutils literal notranslate"><span class="pre">conda</span></code></p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>conda create -n GraphEM <span class="nv">python</span><span class="o">=</span><span class="m">3</span>.8
 conda activate GraphEM
+</pre></div>
+</div>
+<p>Then install several dependencies that is not able to be installed via <code class="code docutils literal notranslate"><span class="pre">pip</span></code>:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>conda install -c conda-forge cartopy pyspharm jupyterla
 </pre></div>
 </div>
 <p>Once the above dependencies have been installed, simply</p>
