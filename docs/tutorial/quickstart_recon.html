@@ -97,6 +97,7 @@
 <li class="toctree-l2 current"><a class="reference internal" href="../tutorial.html#quickstart">Quickstart</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="quickstart_solver.html">A quickstart of the GraphEM solver</a></li>
 <li class="toctree-l3 current"><a class="current reference internal" href="#">Reconstruction using GraphEM</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#Test-data-preparation">Test data preparation</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#Low-level-workflow">Low-level workflow</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#Top-level-workflow">Top-level workflow</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#Validation">Validation</a></li>
@@ -450,6 +451,11 @@ div.rendered_html tbody tr:hover {
 <h1>Reconstruction using GraphEM<a class="headerlink" href="#Reconstruction-using-GraphEM" title="Permalink to this headline">¶</a></h1>
 <p><strong>Expected time to run through: 10 mins</strong></p>
 <p>This tutorial demonstrates how to get a reconstruction using GraphEM, leveraging HadCRUT4 and PAGES2k.</p>
+<div class="section" id="Test-data-preparation">
+<h2>Test data preparation<a class="headerlink" href="#Test-data-preparation" title="Permalink to this headline">¶</a></h2>
+<p>To go through this tutorial, please prepare test data following the steps:</p>
+<p>Download the test case named “PAGES2k_HadCRUT” with this <a class="reference external" href="https://drive.google.com/drive/folders/12V0Ny4eO2HKU40-Iy5Jiw2SAfVNzXXcd?usp=sharing">link</a>. Create a directory named “testcases” in the same directory where this notebook sits. Put the unzipped direcotry “PAGES2k_HadCRUT” into “testcases”.</p>
+<p>Below, we first load some useful packages, including our <code class="docutils literal notranslate"><span class="pre">GraphEM</span></code>.</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
@@ -466,6 +472,7 @@ div.rendered_html tbody tr:hover {
 <span class="kn">import</span> <span class="nn">xarray</span> <span class="k">as</span> <span class="nn">xr</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span>  <span class="nn">plt</span>
 </pre></div>
+</div>
 </div>
 </div>
 <div class="section" id="Low-level-workflow">
@@ -1247,7 +1254,7 @@ Data variables:
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/tutorial_quickstart_recon_24_0.png" src="../_images/tutorial_quickstart_recon_24_0.png" />
+<img alt="../_images/tutorial_quickstart_recon_25_0.png" src="../_images/tutorial_quickstart_recon_25_0.png" />
 </div>
 </div>
 <div class="nbinput nblast docutils container">

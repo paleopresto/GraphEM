@@ -17,6 +17,21 @@
    ]
   },
   {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Test data preparation\n",
+    "\n",
+    "To go through this tutorial, please prepare test data following the steps:\n",
+    "\n",
+    "Download the test case named “PAGES2k_HadCRUT” with this [link](https://drive.google.com/drive/folders/12V0Ny4eO2HKU40-Iy5Jiw2SAfVNzXXcd?usp=sharing).\n",
+    "Create a directory named “testcases” in the same directory where this notebook sits.\n",
+    "Put the unzipped direcotry “PAGES2k_HadCRUT” into “testcases”.\n",
+    "\n",
+    "Below, we first load some useful packages, including our `GraphEM`."
+   ]
+  },
+  {
    "cell_type": "code",
    "execution_count": 1,
    "metadata": {},
