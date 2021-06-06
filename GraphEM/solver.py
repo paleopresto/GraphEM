@@ -9,12 +9,12 @@ from .GraphEstimation import neighbor_graph
 class GraphEM(object):
 	'''
 	GraphEM object
-	
+
 	Implementation of the GraphEM algorithm
-	
-	Reference: D. Guillot. B.Rajaratnam. J.Emile-Geay. "Statistical paleoclimate reconstructions via Markov random fields." 
+
+	Reference: D. Guillot. B.Rajaratnam. J.Emile-Geay. "Statistical paleoclimate reconstructions via Markov random fields."
 	           Ann. Appl. Stat. 9 (1) 324 - 352, March 2015.
-	
+
 	Attributes
 	----------
 	tol: convergence tolerence of EM algorithm (default: 5e-3)
@@ -23,7 +23,7 @@ class GraphEM(object):
 	calib: index of calibration period
 	Sigma: covariance matrix of the multivariate normal model
 	mu: mean of the multivariate normal model
-	
+
 	Methods
 	-------
 	fit: estimates the GraphEM model
@@ -33,7 +33,7 @@ class GraphEM(object):
 	'''
 	def __init__(self, tol=5e-3):
 		''' Initializes the GraphEM object'''
-		
+
 		self.tol = tol
 		self.temp_r = []
 		self.proxy_r = []
@@ -43,35 +43,35 @@ class GraphEM(object):
 
 	def fit(self, temp, proxy, calib, graph=[], lonlat=[], sp_TT=3.0, sp_TP=3.0, sp_PP=3.0, N_graph=30, C0=[], M0=[], maxit=200,
 		bootstrap = False, N_boot = 20, distance = 1000, graph_method = 'neighborhood', estimate_graph = True, save_graphs = False):
-		''' 
+		'''
 		Estimates the parameters of the GraphEM model and reconstruct the missing values of the temperature
-		and proxy fields. 
-		
+		and proxy fields.
+
 		Parameters
 		----------
 		temp: matrix (time x space)
 			Temperature field. Missing values stored as "np.na".
 		proxy: matrix (time x space)
-			Proxy data. Missing values stored as "np.na". The time dimension should be 
-						the same as the temperature field. 
+			Proxy data. Missing values stored as "np.na". The time dimension should be
+						the same as the temperature field.
 		calib: vector
 			Vector of indices representing the calibration period.
 		graph: matrix
 			Adjacency matrix of the temperature+proxy field. (Default = [], estimated via graph_greedy_search)
 		lonlat: matrix ((number of temperature location + number of proxies) x 2). Default = []
-			Matrix containing the (longitude, latitude) of the temperature and proxy locations. Only 
+			Matrix containing the (longitude, latitude) of the temperature and proxy locations. Only
 			used if graph_method = 'neighborhood'.
-		sp_TT: float  
-			Target sparsity of the temperature/temperature part of the inverse covariance matrix. Only used 
+		sp_TT: float
+			Target sparsity of the temperature/temperature part of the inverse covariance matrix. Only used
 			   when the graph is estimated by glasso. Default (3.0%)
 		sp_TP: float
-			Target sparsity of the temperature/proxy part of the inverse covariance matrix. Only used 
+			Target sparsity of the temperature/proxy part of the inverse covariance matrix. Only used
 			   when the graph is estimated by glasso. Default (3.0%)
 		sp_PP: float
-			Target sparsity of the proxy/proxy part of the inverse covariance matrix. Only used 
+			Target sparsity of the proxy/proxy part of the inverse covariance matrix. Only used
 			   when the graph is estimated by glasso. Default (3.0%)
-		N_graph: int 
-			Number of graphs to consider in the graph_greedy_search method (Default = 30). Only used 
+		N_graph: int
+			Number of graphs to consider in the graph_greedy_search method (Default = 30). Only used
 		         if the graph is estimated using glasso.
 		C0: matrix
 			Initial estimate of the covariance matrix of the temperature+proxy field. (Default = []).
@@ -87,9 +87,9 @@ class GraphEM(object):
 			Method to use to estimate the graph. Used only if graph = [] or if estimate_graph = True.
 		save_graphs: boolean
 			Indicates whether or not to save all the graphs return by graph_greedy_search (Default = False).
-		
+
 		'''
-	
+
 		if ~bootstrap:
 			self.temp = temp
 			self.proxy = proxy
@@ -131,7 +131,7 @@ class GraphEM(object):
 						[self.graph, self.sparsity] = graph_greedy_search(temp[calib,:], proxy[calib,:], sp_TT, sp_TP, sp_PP, N_graph)
 				else:
 					return "Error: graph can't be generated! Please choose a graph option."
-                
+
 			else:
 				if graph == []:
 					return "Error: you need to specify a graph if estimate_graph = False."
@@ -141,11 +141,11 @@ class GraphEM(object):
 			self.proxy_r = X[:,ind_P]
 			self.Sigma = C
 			self.mu = M
-                
+
 	def EM(self, X, graph, C0 = [], M0 = [], maxit = 200, use_iridge = False):
 		'''
 		Expectation-Maximization (EM) algorithm with Gaussian Graphical Model
-		
+
 		Parameters
 		----------
 		X: matrix (n x p), time x space

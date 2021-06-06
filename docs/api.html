@@ -196,7 +196,7 @@
 <dd><p>GraphEM object</p>
 <p>Implementation of the GraphEM algorithm</p>
 <dl class="simple">
-<dt>Reference: D. Guillot. B.Rajaratnam. J.Emile-Geay. “Statistical paleoclimate reconstructions via Markov random fields.” </dt><dd><p>Ann. Appl. Stat. 9 (1) 324 - 352, March 2015.</p>
+<dt>Reference: D. Guillot. B.Rajaratnam. J.Emile-Geay. “Statistical paleoclimate reconstructions via Markov random fields.”</dt><dd><p>Ann. Appl. Stat. 9 (1) 324 - 352, March 2015.</p>
 </dd>
 </dl>
 <p>tol: convergence tolerence of EM algorithm (default: 5e-3)
@@ -266,7 +266,7 @@ and proxy fields.</p>
 <dt>temp: matrix (time x space)</dt><dd><p>Temperature field. Missing values stored as “np.na”.</p>
 </dd>
 <dt>proxy: matrix (time x space)</dt><dd><dl class="simple">
-<dt>Proxy data. Missing values stored as “np.na”. The time dimension should be </dt><dd><p>the same as the temperature field.</p>
+<dt>Proxy data. Missing values stored as “np.na”. The time dimension should be</dt><dd><p>the same as the temperature field.</p>
 </dd>
 </dl>
 </dd>
@@ -274,26 +274,26 @@ and proxy fields.</p>
 </dd>
 <dt>graph: matrix</dt><dd><p>Adjacency matrix of the temperature+proxy field. (Default = [], estimated via graph_greedy_search)</p>
 </dd>
-<dt>lonlat: matrix ((number of temperature location + number of proxies) x 2). Default = []</dt><dd><p>Matrix containing the (longitude, latitude) of the temperature and proxy locations. Only 
+<dt>lonlat: matrix ((number of temperature location + number of proxies) x 2). Default = []</dt><dd><p>Matrix containing the (longitude, latitude) of the temperature and proxy locations. Only
 used if graph_method = ‘neighborhood’.</p>
 </dd>
-<dt>sp_TT: float  </dt><dd><dl class="simple">
-<dt>Target sparsity of the temperature/temperature part of the inverse covariance matrix. Only used </dt><dd><p>when the graph is estimated by glasso. Default (3.0%)</p>
+<dt>sp_TT: float</dt><dd><dl class="simple">
+<dt>Target sparsity of the temperature/temperature part of the inverse covariance matrix. Only used</dt><dd><p>when the graph is estimated by glasso. Default (3.0%)</p>
 </dd>
 </dl>
 </dd>
 <dt>sp_TP: float</dt><dd><dl class="simple">
-<dt>Target sparsity of the temperature/proxy part of the inverse covariance matrix. Only used </dt><dd><p>when the graph is estimated by glasso. Default (3.0%)</p>
+<dt>Target sparsity of the temperature/proxy part of the inverse covariance matrix. Only used</dt><dd><p>when the graph is estimated by glasso. Default (3.0%)</p>
 </dd>
 </dl>
 </dd>
 <dt>sp_PP: float</dt><dd><dl class="simple">
-<dt>Target sparsity of the proxy/proxy part of the inverse covariance matrix. Only used </dt><dd><p>when the graph is estimated by glasso. Default (3.0%)</p>
+<dt>Target sparsity of the proxy/proxy part of the inverse covariance matrix. Only used</dt><dd><p>when the graph is estimated by glasso. Default (3.0%)</p>
 </dd>
 </dl>
 </dd>
-<dt>N_graph: int </dt><dd><dl class="simple">
-<dt>Number of graphs to consider in the graph_greedy_search method (Default = 30). Only used </dt><dd><p>if the graph is estimated using glasso.</p>
+<dt>N_graph: int</dt><dd><dl class="simple">
+<dt>Number of graphs to consider in the graph_greedy_search method (Default = 30). Only used</dt><dd><p>if the graph is estimated using glasso.</p>
 </dd>
 </dl>
 </dd>
