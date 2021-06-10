@@ -3,7 +3,7 @@ from distutils.core import setup, Extension
 from distutils import sysconfig
 from Cython.Distutils import build_ext
 import os
-__version__ = '0.1.0'
+__version__ = '0.1.1'
 
 with open('README.rst', 'r') as fh:
     long_description = fh.read()
@@ -35,7 +35,6 @@ setup(
     ext_modules=[quiclib],
     keywords='GraphEM',
     classifiers=[
-        'License :: OSI Approved :: GPL-3.0 License',
         'Natural Language :: English',
         'Programming Language :: Python :: 3.8',
     ],
