@@ -1,0 +1,21 @@
+job_id: GraphEM_tutorial
+job_dirpath: ./recon
+
+recon_period: [850, 1849]
+calib_period: [1750, 1849]
+
+# Proxy & PSM related
+proxydb_path: ./data/proxy/pseudoproxy_dataset.pkl
+
+ptype_list: # proxy types to use
+  ['coral.d18O']
+
+anom_period: [1951, 1980]
+
+obs_path:
+  tas: ./data/obs/iCESM_subset.nc
+
+obs_varname:
+  tas: tas
+  lat: lat
+  lon: lon

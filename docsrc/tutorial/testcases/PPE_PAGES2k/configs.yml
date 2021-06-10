@@ -1,0 +1,23 @@
+job_id: GraphEM_tutorial
+job_dirpath: ./recon
+
+recon_period: [1000, 2000]
+calib_period: [1900, 2000]
+
+# Proxy & PSM related
+# proxydb_path: ./data/proxy/pseudoPAGES2k_dataset_tas_wn.pkl
+proxydb_path: ./data/proxy/pseudoPAGES2k_dataset_tas_wn_full_temporal_availability.pkl
+
+ptype_list: 'all'
+
+anom_period: [1951, 1980]
+
+obs_regrid_ntrunc: 21
+
+obs_path:
+  tas: ./data/obs/iCESM_ann.nc
+
+obs_varname:
+  tas: tas
+  lat: lat
+  lon: lon

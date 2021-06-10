@@ -1,0 +1,21 @@
+job_id: GraphEM_tutorial
+job_dirpath: ./recon
+
+recon_period: [1500, 2000]
+calib_period: [1930, 2000]
+
+# Proxy & PSM related
+proxydb_path: ./data/proxy/pages2k_dataset.pkl
+
+ptype_list: # proxy types to use
+  ['coral.d18O', 'coral.SrCa', 'coral.calc', 'tree.TRW', 'tree.MXD']
+
+anom_period: [1951, 1980]
+
+obs_path:
+  tas: ./data/obs/HadCRUT.5.0.1.0.analysis.anomalies.ensemble_mean.nc
+
+obs_varname:
+  tas: tas_mean
+  lat: latitude
+  lon: longitude

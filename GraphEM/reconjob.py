@@ -114,7 +114,7 @@ class ReconJob:
         self.proxydb = proxydb
         if verbose: p_success(f'GraphEM: job.load_proxydb() >>> job.proxydb created')
 
-    def filter_proxydb(self, ptype_list=None, dt=1, pids=None, verbose=False):
+    def filter_proxydb(self, ptype_list=None, dt=None, pids=None, verbose=False):
         if ptype_list is None:
             ptype_list = self.configs['ptype_list']
         else:
@@ -122,10 +122,13 @@ class ReconJob:
             if verbose: p_header(f'GraphEM: job.filter_proxydb() >>> job.configs["ptype_list"] = {ptype_list}')
 
         proxydb = self.proxydb.copy()
-        if verbose: p_header(f'GraphEM: job.filter_proxydb() >>> filtering proxy records according to: {ptype_list}')
-        proxydb.filter_ptype(ptype_list, inplace=True)
+        if ptype_list != 'all':
+            if verbose: p_header(f'GraphEM: job.filter_proxydb() >>> filtering proxy records according to: {ptype_list}')
+            proxydb.filter_ptype(ptype_list, inplace=True)
 
-        proxydb.filter_dt(dt, inplace=True)
+        if dt is not None:
+            if verbose: p_header(f'GraphEM: job.filter_proxydb() >>> filtering proxy records according to: dt={dt}')
+            proxydb.filter_dt(dt, inplace=True)
 
         if pids is not None:
             self.configs['assim_pids'] = pids
@@ -226,6 +229,20 @@ class ReconJob:
 
         self.obs = ds
         if verbose: p_success(f'GraphEM: job.seasonalize_obs() >>> job.obs updated')
+
+    def regrid_obs(self, ntrunc=None, verbose=False):
+        if ntrunc is None:
+            ntrunc = self.configs['obs_regrid_ntrunc']
+        self.configs['obs_regrid_ntrunc'] = ntrunc
+
+        ds = self.obs.copy()
+        ds.regrid(self.configs['obs_regrid_ntrunc'], inplace=True)
+        if verbose:
+            p_hint('LMRt: job.regrid_obs() >>> regridded obs')
+            print(ds)
+
+        self.obs = ds
+        if verbose: p_success(f'LMRt: job.regrid_obs() >>> job.obs updated')
 
     def prep_data(self, recon_period=None, calib_period=None, verbose=False):
         if recon_period is None:

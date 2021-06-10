@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>A Pseudoproxy Experiment with GraphEM &mdash; GraphEM  documentation</title>
+  <title>A Pseudoproxy Experiment with GraphEM and pseudoPAGES2k &mdash; GraphEM  documentation</title>
   
 
   
@@ -44,8 +44,8 @@
     
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="A Pseudoproxy Experiment with GraphEM and pseudoPAGES2k" href="quickstart_ppe_pages2k.html" />
-    <link rel="prev" title="A quickstart of the GraphEM solver" href="quickstart_solver.html" /> 
+    <link rel="next" title="Reconstruction using GraphEM" href="quickstart_recon.html" />
+    <link rel="prev" title="A Pseudoproxy Experiment with GraphEM" href="quickstart_ppe.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -96,13 +96,13 @@
 <li class="toctree-l1 current"><a class="reference internal" href="../tutorial.html">Tutorial</a><ul class="current">
 <li class="toctree-l2 current"><a class="reference internal" href="../tutorial.html#quickstart">Quickstart</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="quickstart_solver.html">A quickstart of the GraphEM solver</a></li>
-<li class="toctree-l3 current"><a class="current reference internal" href="#">A Pseudoproxy Experiment with GraphEM</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="quickstart_ppe.html">A Pseudoproxy Experiment with GraphEM</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">A Pseudoproxy Experiment with GraphEM and pseudoPAGES2k</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#Test-data-preparation">Test data preparation</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#Reconstruction">Reconstruction</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#Validation">Validation</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="quickstart_ppe_pages2k.html">A Pseudoproxy Experiment with GraphEM and pseudoPAGES2k</a></li>
 <li class="toctree-l3"><a class="reference internal" href="quickstart_recon.html">Reconstruction using GraphEM</a></li>
 </ul>
 </li>
@@ -159,13 +159,13 @@
         
           <li><a href="../tutorial.html">Tutorial</a> &raquo;</li>
         
-      <li>A Pseudoproxy Experiment with GraphEM</li>
+      <li>A Pseudoproxy Experiment with GraphEM and pseudoPAGES2k</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
           
-            <a href="../_sources/tutorial/quickstart_ppe.ipynb.txt" rel="nofollow"> View page source</a>
+            <a href="../_sources/tutorial/quickstart_ppe_pages2k.ipynb.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -448,33 +448,14 @@ div.rendered_html tbody tr:hover {
     text-align: unset;
 }
 </style>
-<div class="section" id="A-Pseudoproxy-Experiment-with-GraphEM">
-<h1>A Pseudoproxy Experiment with GraphEM<a class="headerlink" href="#A-Pseudoproxy-Experiment-with-GraphEM" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="A-Pseudoproxy-Experiment-with-GraphEM-and-pseudoPAGES2k">
+<h1>A Pseudoproxy Experiment with GraphEM and pseudoPAGES2k<a class="headerlink" href="#A-Pseudoproxy-Experiment-with-GraphEM-and-pseudoPAGES2k" title="Permalink to this headline">¶</a></h1>
 <p><strong>Expected time to run through: 10 mins</strong></p>
-<p>This tutorial demonstrates how to get a reconstruction using GraphEM, leveraging a simple pseudoproxy dataset generated from a subset of iCESM gridded dataset. The pseudoproxy are generated based on the original iCESM simulated <code class="docutils literal notranslate"><span class="pre">tas</span></code> plus white noise with <code class="docutils literal notranslate"><span class="pre">SNR=1</span></code>, using below code block:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># gen pseudoproxy</span>
-
-<span class="n">SNR</span> <span class="o">=</span> <span class="mi">1</span>
-
-<span class="n">pp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">tas_sub</span><span class="p">)</span>
-<span class="n">nt</span><span class="p">,</span> <span class="n">nlat</span><span class="p">,</span> <span class="n">nlon</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">pp</span><span class="p">)</span>
-
-<span class="n">k</span> <span class="o">=</span> <span class="mi">0</span>
-<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nlat</span><span class="p">):</span>
-    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nlon</span><span class="p">):</span>
-        <span class="n">tas_std</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">tas_sub</span><span class="p">[:,</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">])</span>
-        <span class="n">noise_std</span> <span class="o">=</span> <span class="n">tas_std</span> <span class="o">/</span> <span class="n">SNR</span>
-
-        <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="n">k</span><span class="p">)</span>
-        <span class="n">pp</span><span class="p">[:,</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span> <span class="o">+=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">noise_std</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">nt</span><span class="p">)</span>
-
-        <span class="n">k</span> <span class="o">+=</span> <span class="mi">1</span>
-</pre></div>
-</div>
+<p>This tutorial demonstrates how to get a reconstruction using GraphEM, leveraging a simple pseudoproxy dataset generated from iCESM gridded, with the realistic spatiotemporal availability of the PAGES2kv2 dataset. The pseudoproxy are generated based on the original iCESM simulated <code class="docutils literal notranslate"><span class="pre">tas</span></code> plus white noise with <code class="docutils literal notranslate"><span class="pre">SNR=1</span></code>, using below code block:</p>
 <div class="section" id="Test-data-preparation">
 <h2>Test data preparation<a class="headerlink" href="#Test-data-preparation" title="Permalink to this headline">¶</a></h2>
 <p>To go through this tutorial, please prepare test data following the steps:</p>
-<p>Download the test case named “PPE” with this <a class="reference external" href="https://drive.google.com/drive/folders/1QpXqFgCBA4QMb7vqGIWxptkhWTJp0e8c?usp=sharing">link</a>. Create a directory named “testcases” in the same directory where this notebook sits. Put the unzipped direcotry “PPE” into “testcases”.</p>
+<p>Download the test case named “PPE_PAGES2k” with this <a class="reference external" href="https://drive.google.com/drive/folders/1_h6o_gDR6xLX50c_Ad-lzRoWwHlAgBnK?usp=sharing">link</a>. Create a directory named “testcases” in the same directory where this notebook sits. Put the unzipped direcotry “PPE_PAGES2k” into “testcases”.</p>
 <p>Below, we first load some useful packages, including our <code class="docutils literal notranslate"><span class="pre">GraphEM</span></code>.</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
@@ -511,7 +492,7 @@ div.rendered_html tbody tr:hover {
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">job</span><span class="o">.</span><span class="n">load_configs</span><span class="p">(</span><span class="s1">&#39;./testcases/PPE/configs.yml&#39;</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span></span><span class="n">job</span><span class="o">.</span><span class="n">load_configs</span><span class="p">(</span><span class="s1">&#39;./testcases/PPE_PAGES2k/configs.yml&#39;</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -520,19 +501,20 @@ div.rendered_html tbody tr:hover {
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-<span class="ansi-cyan-intense-fg ansi-bold">GraphEM: job.load_configs() &gt;&gt;&gt; loading reconstruction configurations from: ./testcases/PPE/configs.yml</span>
+<span class="ansi-cyan-intense-fg ansi-bold">GraphEM: job.load_configs() &gt;&gt;&gt; loading reconstruction configurations from: ./testcases/PPE_PAGES2k/configs.yml</span>
 <span class="ansi-green-intense-fg ansi-bold">GraphEM: job.load_configs() &gt;&gt;&gt; job.configs created</span>
-<span class="ansi-cyan-intense-fg ansi-bold">GraphEM: job.load_configs() &gt;&gt;&gt; job.configs[&#34;job_dirpath&#34;] = /Users/fzhu/Github/GraphEM/docsrc/tutorial/testcases/PPE/recon</span>
-<span class="ansi-green-intense-fg ansi-bold">GraphEM: job.load_configs() &gt;&gt;&gt; /Users/fzhu/Github/GraphEM/docsrc/tutorial/testcases/PPE/recon created</span>
+<span class="ansi-cyan-intense-fg ansi-bold">GraphEM: job.load_configs() &gt;&gt;&gt; job.configs[&#34;job_dirpath&#34;] = /Users/fzhu/Github/GraphEM/docsrc/tutorial/testcases/PPE_PAGES2k/recon</span>
+<span class="ansi-green-intense-fg ansi-bold">GraphEM: job.load_configs() &gt;&gt;&gt; /Users/fzhu/Github/GraphEM/docsrc/tutorial/testcases/PPE_PAGES2k/recon created</span>
 {&#39;anom_period&#39;: [1951, 1980],
- &#39;calib_period&#39;: [1750, 1849],
- &#39;job_dirpath&#39;: &#39;/Users/fzhu/Github/GraphEM/docsrc/tutorial/testcases/PPE/recon&#39;,
- &#39;job_id&#39;: &#39;LMRt_quickstart&#39;,
- &#39;obs_path&#39;: {&#39;tas&#39;: &#39;./data/obs/iCESM_subset.nc&#39;},
+ &#39;calib_period&#39;: [1900, 2000],
+ &#39;job_dirpath&#39;: &#39;/Users/fzhu/Github/GraphEM/docsrc/tutorial/testcases/PPE_PAGES2k/recon&#39;,
+ &#39;job_id&#39;: &#39;GraphEM_tutorial&#39;,
+ &#39;obs_path&#39;: {&#39;tas&#39;: &#39;./data/obs/iCESM_ann.nc&#39;},
+ &#39;obs_regrid_ntrunc&#39;: 21,
  &#39;obs_varname&#39;: {&#39;lat&#39;: &#39;lat&#39;, &#39;lon&#39;: &#39;lon&#39;, &#39;tas&#39;: &#39;tas&#39;},
- &#39;proxydb_path&#39;: &#39;./data/proxy/pseudoproxy_dataset.pkl&#39;,
- &#39;ptype_list&#39;: [&#39;coral.d18O&#39;],
- &#39;recon_period&#39;: [850, 1849]}
+ &#39;proxydb_path&#39;: &#39;./data/proxy/pseudoPAGES2k_dataset_tas_wn_full_temporal_availability.pkl&#39;,
+ &#39;ptype_list&#39;: &#39;all&#39;,
+ &#39;recon_period&#39;: [1000, 2000]}
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
@@ -549,8 +531,8 @@ div.rendered_html tbody tr:hover {
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-<span class="ansi-cyan-intense-fg ansi-bold">GraphEM: job.load_proxydb() &gt;&gt;&gt; job.configs[&#34;proxydb_path&#34;] = /Users/fzhu/Github/GraphEM/docsrc/tutorial/testcases/PPE/data/proxy/pseudoproxy_dataset.pkl</span>
-<span class="ansi-green-intense-fg ansi-bold">GraphEM: job.load_proxydb() &gt;&gt;&gt; 100 records loaded</span>
+<span class="ansi-cyan-intense-fg ansi-bold">GraphEM: job.load_proxydb() &gt;&gt;&gt; job.configs[&#34;proxydb_path&#34;] = /Users/fzhu/Github/GraphEM/docsrc/tutorial/testcases/PPE_PAGES2k/data/proxy/pseudoPAGES2k_dataset_tas_wn_full_temporal_availability.pkl</span>
+<span class="ansi-green-intense-fg ansi-bold">GraphEM: job.load_proxydb() &gt;&gt;&gt; 692 records loaded</span>
 <span class="ansi-green-intense-fg ansi-bold">GraphEM: job.load_proxydb() &gt;&gt;&gt; job.proxydb created</span>
 </pre></div></div>
 </div>
@@ -559,7 +541,7 @@ div.rendered_html tbody tr:hover {
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">job</span><span class="o">.</span><span class="n">filter_proxydb</span><span class="p">(</span><span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">job</span><span class="o">.</span><span class="n">proxydb</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -567,10 +549,8 @@ div.rendered_html tbody tr:hover {
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<div class="highlight"><pre>
-<span class="ansi-cyan-intense-fg ansi-bold">GraphEM: job.filter_proxydb() &gt;&gt;&gt; filtering proxy records according to: [&#39;coral.d18O&#39;]</span>
-<span class="ansi-green-intense-fg ansi-bold">GraphEM: job.filter_proxydb() &gt;&gt;&gt; 100 records remaining</span>
-</pre></div></div>
+<img alt="../_images/tutorial_quickstart_ppe_pages2k_8_0.png" src="../_images/tutorial_quickstart_ppe_pages2k_8_0.png" />
+</div>
 </div>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
@@ -578,6 +558,7 @@ div.rendered_html tbody tr:hover {
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="n">job</span><span class="o">.</span><span class="n">load_obs</span><span class="p">(</span><span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">job</span><span class="o">.</span><span class="n">obs</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -586,9 +567,14 @@ div.rendered_html tbody tr:hover {
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-<span class="ansi-cyan-intense-fg ansi-bold">GraphEM: job.load_obs() &gt;&gt;&gt; loading instrumental observation fields from: {&#39;tas&#39;: &#39;/Users/fzhu/Github/GraphEM/docsrc/tutorial/testcases/PPE/data/obs/iCESM_subset.nc&#39;}</span>
-Time axis not overlap with the reference period [1951, 1980]; use its own time period as reference [850.00, 1849.00].
+<span class="ansi-cyan-intense-fg ansi-bold">GraphEM: job.load_obs() &gt;&gt;&gt; loading instrumental observation fields from: {&#39;tas&#39;: &#39;/Users/fzhu/Github/GraphEM/docsrc/tutorial/testcases/PPE_PAGES2k/data/obs/iCESM_ann.nc&#39;}</span>
 <span class="ansi-green-intense-fg ansi-bold">GraphEM: job.load_obs() &gt;&gt;&gt; job.obs created</span>
+Dataset Overview
+-----------------------
+
+     Name:  tas
+   Source:  /Users/fzhu/Github/GraphEM/docsrc/tutorial/testcases/PPE_PAGES2k/data/obs/iCESM_ann.nc
+    Shape:  time:1156, lat:96, lon:144
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
@@ -596,7 +582,8 @@ Time axis not overlap with the reference period [1951, 1980]; use its own time p
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="nb">print</span><span class="p">(</span><span class="n">job</span><span class="o">.</span><span class="n">obs</span><span class="p">)</span>
+<span></span><span class="c1"># regrid obs to make the problem size smaller</span>
+<span class="n">job</span><span class="o">.</span><span class="n">regrid_obs</span><span class="p">(</span><span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -605,12 +592,14 @@ Time axis not overlap with the reference period [1951, 1980]; use its own time p
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
+<span class="ansi-black-intense-fg ansi-bold">LMRt: job.regrid_obs() &gt;&gt;&gt; regridded obs</span>
 Dataset Overview
 -----------------------
 
      Name:  tas
-   Source:  /Users/fzhu/Github/GraphEM/docsrc/tutorial/testcases/PPE/data/obs/iCESM_subset.nc
-    Shape:  time:1000, lat:10, lon:10
+   Source:  /Users/fzhu/Github/GraphEM/docsrc/tutorial/testcases/PPE_PAGES2k/data/obs/iCESM_ann.nc
+    Shape:  time:1156, lat:22, lon:33
+<span class="ansi-green-intense-fg ansi-bold">LMRt: job.regrid_obs() &gt;&gt;&gt; job.obs updated</span>
 </pre></div></div>
 </div>
 <p>Since the loaded iCESM simulation and the pseudoproxy dataset are already annualized, we can skip the <code class="docutils literal notranslate"><span class="pre">.seasonalize()</span></code> steps and run <code class="docutils literal notranslate"><span class="pre">.prep_data()</span></code> directly.</p>
@@ -669,149 +658,149 @@ Dataset Overview
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>pp_000</th>
-      <th>pp_001</th>
-      <th>pp_002</th>
-      <th>pp_003</th>
-      <th>pp_004</th>
-      <th>pp_005</th>
-      <th>pp_006</th>
-      <th>pp_007</th>
-      <th>pp_008</th>
-      <th>pp_009</th>
+      <th>NAm_153</th>
+      <th>Asi_245</th>
+      <th>NAm_165</th>
+      <th>Asi_178</th>
+      <th>Asi_174</th>
+      <th>Eur_016</th>
+      <th>Asi_198</th>
+      <th>NAm_145</th>
+      <th>Arc_070</th>
+      <th>Arc_071</th>
       <th>...</th>
-      <th>pp_090</th>
-      <th>pp_091</th>
-      <th>pp_092</th>
-      <th>pp_093</th>
-      <th>pp_094</th>
-      <th>pp_095</th>
-      <th>pp_096</th>
-      <th>pp_097</th>
-      <th>pp_098</th>
-      <th>pp_099</th>
+      <th>Asi_119</th>
+      <th>Ocn_153</th>
+      <th>NAm_074</th>
+      <th>Asi_026</th>
+      <th>Ocn_169</th>
+      <th>Asi_201</th>
+      <th>Asi_179</th>
+      <th>Arc_014</th>
+      <th>Ocn_071</th>
+      <th>Ocn_072</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <th>850.0</th>
-      <td>300.751783</td>
-      <td>300.699385</td>
-      <td>299.718651</td>
-      <td>300.717691</td>
-      <td>299.793416</td>
-      <td>299.939352</td>
-      <td>299.472350</td>
-      <td>300.551011</td>
-      <td>299.553801</td>
-      <td>299.413664</td>
+      <th>1000.0</th>
+      <td>1.991316</td>
+      <td>1.076783</td>
+      <td>0.410502</td>
+      <td>-0.173932</td>
+      <td>0.202598</td>
+      <td>1.351549</td>
+      <td>-0.460631</td>
+      <td>1.628941</td>
+      <td>1.370160</td>
+      <td>1.164753</td>
       <td>...</td>
-      <td>299.249156</td>
-      <td>299.027787</td>
-      <td>299.182322</td>
-      <td>299.526141</td>
-      <td>299.161496</td>
-      <td>298.628304</td>
-      <td>298.802706</td>
-      <td>298.107757</td>
-      <td>298.818966</td>
-      <td>298.544758</td>
+      <td>0.808244</td>
+      <td>0.282663</td>
+      <td>1.117257</td>
+      <td>0.799945</td>
+      <td>0.155647</td>
+      <td>-0.931838</td>
+      <td>-0.086837</td>
+      <td>-0.035836</td>
+      <td>-0.421204</td>
+      <td>0.792450</td>
     </tr>
     <tr>
-      <th>851.0</th>
-      <td>300.496749</td>
-      <td>300.009875</td>
-      <td>300.193606</td>
-      <td>300.365040</td>
-      <td>300.347096</td>
-      <td>299.853183</td>
-      <td>300.380611</td>
-      <td>299.650771</td>
-      <td>300.502845</td>
-      <td>299.614965</td>
+      <th>1001.0</th>
+      <td>1.474484</td>
+      <td>-0.308733</td>
+      <td>0.249446</td>
+      <td>0.598656</td>
+      <td>-0.056904</td>
+      <td>0.137913</td>
+      <td>0.376916</td>
+      <td>-3.876324</td>
+      <td>-1.509714</td>
+      <td>2.864117</td>
       <td>...</td>
-      <td>299.103565</td>
-      <td>298.778987</td>
-      <td>299.141563</td>
-      <td>299.335989</td>
-      <td>299.410467</td>
-      <td>298.670001</td>
-      <td>298.838717</td>
-      <td>298.689713</td>
-      <td>299.370283</td>
-      <td>299.494514</td>
+      <td>0.542854</td>
+      <td>-0.138603</td>
+      <td>2.097570</td>
+      <td>0.012348</td>
+      <td>-0.525504</td>
+      <td>-1.882890</td>
+      <td>0.717570</td>
+      <td>1.830759</td>
+      <td>-1.086185</td>
+      <td>-0.031783</td>
     </tr>
     <tr>
-      <th>852.0</th>
-      <td>300.902166</td>
-      <td>300.334244</td>
-      <td>299.602851</td>
-      <td>300.671260</td>
-      <td>300.102458</td>
-      <td>301.886292</td>
-      <td>300.641600</td>
-      <td>300.462630</td>
-      <td>299.210613</td>
-      <td>299.595454</td>
+      <th>1002.0</th>
+      <td>-1.749010</td>
+      <td>0.078419</td>
+      <td>-1.069865</td>
+      <td>-1.118535</td>
+      <td>-0.339929</td>
+      <td>-0.475327</td>
+      <td>2.033267</td>
+      <td>0.087343</td>
+      <td>0.360542</td>
+      <td>-2.410067</td>
       <td>...</td>
-      <td>299.289380</td>
-      <td>299.249218</td>
-      <td>299.134434</td>
-      <td>299.942948</td>
-      <td>298.988984</td>
-      <td>299.277950</td>
-      <td>298.905532</td>
-      <td>298.840735</td>
-      <td>299.414093</td>
-      <td>299.140887</td>
+      <td>-0.461850</td>
+      <td>-0.454381</td>
+      <td>-1.528630</td>
+      <td>0.882063</td>
+      <td>-0.135203</td>
+      <td>-0.621540</td>
+      <td>-0.043420</td>
+      <td>-0.330917</td>
+      <td>-0.577220</td>
+      <td>-0.124923</td>
     </tr>
     <tr>
-      <th>853.0</th>
-      <td>301.729269</td>
-      <td>300.347924</td>
-      <td>301.572955</td>
-      <td>299.850196</td>
-      <td>301.104819</td>
-      <td>300.567805</td>
-      <td>300.145062</td>
-      <td>300.817268</td>
-      <td>299.709402</td>
-      <td>300.448917</td>
+      <th>1003.0</th>
+      <td>0.217035</td>
+      <td>1.674967</td>
+      <td>-1.750278</td>
+      <td>-0.575866</td>
+      <td>0.136504</td>
+      <td>0.781710</td>
+      <td>1.011006</td>
+      <td>2.542533</td>
+      <td>-1.087626</td>
+      <td>-0.919410</td>
       <td>...</td>
-      <td>299.573146</td>
-      <td>299.649931</td>
-      <td>298.838391</td>
-      <td>299.710779</td>
-      <td>300.040319</td>
-      <td>299.609617</td>
-      <td>299.473822</td>
-      <td>299.656169</td>
-      <td>299.019936</td>
-      <td>299.719184</td>
+      <td>0.031054</td>
+      <td>0.438249</td>
+      <td>1.705930</td>
+      <td>-0.225784</td>
+      <td>0.544517</td>
+      <td>-0.056655</td>
+      <td>0.483183</td>
+      <td>-0.960525</td>
+      <td>0.207954</td>
+      <td>0.649017</td>
     </tr>
     <tr>
-      <th>854.0</th>
-      <td>301.378359</td>
-      <td>300.997108</td>
-      <td>299.769165</td>
-      <td>300.429641</td>
-      <td>300.280460</td>
-      <td>300.495473</td>
-      <td>298.998074</td>
-      <td>299.858000</td>
-      <td>298.895901</td>
-      <td>299.967372</td>
+      <th>1004.0</th>
+      <td>0.209092</td>
+      <td>0.179273</td>
+      <td>1.226517</td>
+      <td>-0.167719</td>
+      <td>0.824626</td>
+      <td>-0.052601</td>
+      <td>2.230018</td>
+      <td>1.007028</td>
+      <td>-1.957817</td>
+      <td>2.547536</td>
       <td>...</td>
-      <td>300.078972</td>
-      <td>300.040279</td>
-      <td>299.551374</td>
-      <td>300.088576</td>
-      <td>298.790187</td>
-      <td>299.790875</td>
-      <td>299.441056</td>
-      <td>299.184892</td>
-      <td>299.035147</td>
-      <td>299.345002</td>
+      <td>-0.124999</td>
+      <td>-0.354393</td>
+      <td>-0.472327</td>
+      <td>0.725839</td>
+      <td>-0.056934</td>
+      <td>1.691067</td>
+      <td>-0.086595</td>
+      <td>-1.855176</td>
+      <td>0.066563</td>
+      <td>-0.316830</td>
     </tr>
     <tr>
       <th>...</th>
@@ -838,128 +827,128 @@ Dataset Overview
       <td>...</td>
     </tr>
     <tr>
-      <th>1845.0</th>
-      <td>300.370235</td>
-      <td>300.113197</td>
-      <td>300.144971</td>
-      <td>299.726555</td>
-      <td>299.921271</td>
-      <td>300.382517</td>
-      <td>299.913085</td>
-      <td>299.789860</td>
-      <td>299.300107</td>
-      <td>299.261318</td>
+      <th>1996.0</th>
+      <td>0.451554</td>
+      <td>-0.012429</td>
+      <td>-0.483565</td>
+      <td>-1.308976</td>
+      <td>-0.431576</td>
+      <td>-0.061208</td>
+      <td>2.699160</td>
+      <td>3.148305</td>
+      <td>1.170936</td>
+      <td>-0.781837</td>
       <td>...</td>
-      <td>299.482236</td>
-      <td>299.063248</td>
-      <td>299.152310</td>
-      <td>298.784250</td>
-      <td>298.994037</td>
-      <td>298.300974</td>
-      <td>299.091353</td>
-      <td>298.409069</td>
-      <td>298.584221</td>
-      <td>298.305443</td>
+      <td>0.033587</td>
+      <td>0.786702</td>
+      <td>0.344960</td>
+      <td>-0.690816</td>
+      <td>0.565884</td>
+      <td>0.758542</td>
+      <td>-0.395638</td>
+      <td>0.221436</td>
+      <td>0.532183</td>
+      <td>0.780281</td>
     </tr>
     <tr>
-      <th>1846.0</th>
-      <td>299.985712</td>
-      <td>298.994364</td>
-      <td>300.207191</td>
-      <td>299.883894</td>
-      <td>300.684450</td>
-      <td>300.181971</td>
-      <td>300.745885</td>
-      <td>299.919197</td>
-      <td>298.775608</td>
-      <td>299.324020</td>
+      <th>1997.0</th>
+      <td>0.593906</td>
+      <td>-0.391556</td>
+      <td>1.189919</td>
+      <td>-0.983018</td>
+      <td>-0.086014</td>
+      <td>0.744214</td>
+      <td>1.883391</td>
+      <td>-0.916550</td>
+      <td>-1.326753</td>
+      <td>0.781728</td>
       <td>...</td>
-      <td>299.544706</td>
-      <td>299.056843</td>
-      <td>299.350263</td>
-      <td>299.165946</td>
-      <td>299.459059</td>
-      <td>299.227588</td>
-      <td>299.156746</td>
-      <td>299.367724</td>
-      <td>299.111197</td>
-      <td>298.400678</td>
+      <td>-0.087708</td>
+      <td>0.080720</td>
+      <td>-0.069768</td>
+      <td>-0.437823</td>
+      <td>-0.329610</td>
+      <td>-0.499093</td>
+      <td>-0.083515</td>
+      <td>-1.862747</td>
+      <td>-0.084249</td>
+      <td>-0.521903</td>
     </tr>
     <tr>
-      <th>1847.0</th>
-      <td>300.292753</td>
-      <td>300.177510</td>
-      <td>300.033955</td>
-      <td>300.236235</td>
-      <td>299.559872</td>
-      <td>299.877648</td>
-      <td>299.141349</td>
-      <td>299.497879</td>
-      <td>299.952182</td>
-      <td>299.577197</td>
+      <th>1998.0</th>
+      <td>1.543173</td>
+      <td>-0.586401</td>
+      <td>0.886359</td>
+      <td>0.631522</td>
+      <td>0.272213</td>
+      <td>0.101556</td>
+      <td>-0.464913</td>
+      <td>0.124083</td>
+      <td>3.749645</td>
+      <td>2.468217</td>
       <td>...</td>
-      <td>299.724081</td>
-      <td>300.424495</td>
-      <td>299.179294</td>
-      <td>299.375003</td>
-      <td>299.475237</td>
-      <td>299.947260</td>
-      <td>300.159204</td>
-      <td>299.223168</td>
-      <td>299.384652</td>
-      <td>299.483399</td>
+      <td>-0.591060</td>
+      <td>0.393950</td>
+      <td>1.165156</td>
+      <td>0.295951</td>
+      <td>-0.324858</td>
+      <td>0.856186</td>
+      <td>0.527396</td>
+      <td>2.117025</td>
+      <td>0.006060</td>
+      <td>0.662496</td>
     </tr>
     <tr>
-      <th>1848.0</th>
-      <td>299.823016</td>
-      <td>300.400975</td>
-      <td>300.223044</td>
-      <td>300.913630</td>
-      <td>300.261049</td>
-      <td>300.159285</td>
-      <td>299.311807</td>
-      <td>299.449942</td>
-      <td>299.660750</td>
-      <td>298.979497</td>
+      <th>1999.0</th>
+      <td>1.311804</td>
+      <td>-0.147377</td>
+      <td>0.121918</td>
+      <td>0.649256</td>
+      <td>-0.359322</td>
+      <td>-0.908425</td>
+      <td>0.380988</td>
+      <td>2.338570</td>
+      <td>2.703852</td>
+      <td>0.715449</td>
       <td>...</td>
-      <td>299.829125</td>
-      <td>299.592597</td>
-      <td>300.013318</td>
-      <td>299.155958</td>
-      <td>299.107011</td>
-      <td>299.086289</td>
-      <td>299.878042</td>
-      <td>299.307766</td>
-      <td>299.593688</td>
-      <td>298.706442</td>
+      <td>0.381650</td>
+      <td>0.259597</td>
+      <td>0.473400</td>
+      <td>0.211626</td>
+      <td>-0.041561</td>
+      <td>-0.057345</td>
+      <td>-0.231382</td>
+      <td>0.319323</td>
+      <td>1.100090</td>
+      <td>0.053861</td>
     </tr>
     <tr>
-      <th>1849.0</th>
-      <td>300.161352</td>
-      <td>300.159181</td>
-      <td>300.246488</td>
-      <td>299.820504</td>
-      <td>299.517483</td>
-      <td>299.951131</td>
-      <td>299.332212</td>
-      <td>299.316922</td>
-      <td>299.630661</td>
-      <td>299.881939</td>
+      <th>2000.0</th>
+      <td>-0.256298</td>
+      <td>-0.598022</td>
+      <td>-0.027015</td>
+      <td>0.985057</td>
+      <td>1.122260</td>
+      <td>1.475932</td>
+      <td>1.167360</td>
+      <td>0.226961</td>
+      <td>1.167712</td>
+      <td>-0.492571</td>
       <td>...</td>
-      <td>299.587589</td>
-      <td>298.878817</td>
-      <td>298.997188</td>
-      <td>298.895755</td>
-      <td>299.134630</td>
-      <td>299.284257</td>
-      <td>299.369434</td>
-      <td>299.400078</td>
-      <td>299.026855</td>
-      <td>299.096824</td>
+      <td>-0.081461</td>
+      <td>0.500858</td>
+      <td>0.639752</td>
+      <td>-0.158313</td>
+      <td>-0.036536</td>
+      <td>0.374727</td>
+      <td>-0.002639</td>
+      <td>1.969362</td>
+      <td>0.640155</td>
+      <td>0.180584</td>
     </tr>
   </tbody>
 </table>
-<p>1000 rows × 100 columns</p>
+<p>1001 rows × 692 columns</p>
 </div></div>
 </div>
 <div class="nbinput docutils container">
@@ -978,9 +967,9 @@ Dataset Overview
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-(1000, 100)
-(1000, 100)
-(200, 2)
+(1001, 726)
+(1001, 692)
+(1418, 2)
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
@@ -997,8 +986,8 @@ Dataset Overview
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-<span class="ansi-cyan-intense-fg ansi-bold">LMRt: job.save_job() &gt;&gt;&gt; Prepration data saved to: /Users/fzhu/Github/GraphEM/docsrc/tutorial/testcases/PPE/recon/job.pkl</span>
-<span class="ansi-cyan-intense-fg ansi-bold">LMRt: job.save_job() &gt;&gt;&gt; job.configs[&#34;prep_savepath&#34;] = /Users/fzhu/Github/GraphEM/docsrc/tutorial/testcases/PPE/recon/job.pkl</span>
+<span class="ansi-cyan-intense-fg ansi-bold">LMRt: job.save_job() &gt;&gt;&gt; Prepration data saved to: /Users/fzhu/Github/GraphEM/docsrc/tutorial/testcases/PPE_PAGES2k/recon/job.pkl</span>
+<span class="ansi-cyan-intense-fg ansi-bold">LMRt: job.save_job() &gt;&gt;&gt; job.configs[&#34;prep_savepath&#34;] = /Users/fzhu/Github/GraphEM/docsrc/tutorial/testcases/PPE_PAGES2k/recon/job.pkl</span>
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
@@ -1008,7 +997,8 @@ Dataset Overview
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="o">%%time</span>
 
-<span class="n">save_path</span> <span class="o">=</span> <span class="s1">&#39;./testcases/PPE/recon/G.pkl&#39;</span>
+<span class="c1"># need to remove G.pkl if the previous run is problematic</span>
+<span class="n">save_path</span> <span class="o">=</span> <span class="s1">&#39;./testcases/PPE_PAGES2k/recon/G.pkl&#39;</span>
 <span class="n">job</span><span class="o">.</span><span class="n">run_solver</span><span class="p">(</span><span class="n">save_path</span><span class="o">=</span><span class="n">save_path</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -1023,45 +1013,107 @@ Running GraphEM:
 
 Iter     dXmis     rdXmis
 
-001     0.0514     3.1516
-002     0.4586     8.5151
-003     0.0562     0.1136
-004     0.0292     0.0566
-005     0.0149     0.0287
-006     0.0123     0.0235
-007     0.0107     0.0203
-008     0.0092     0.0174
-009     0.0081     0.0152
-010     0.0073     0.0137
-011     0.0067     0.0126
-012     0.0063     0.0117
-013     0.0059     0.0110
-014     0.0055     0.0103
-015     0.0053     0.0098
-016     0.0050     0.0094
-017     0.0048     0.0090
-018     0.0047     0.0087
-019     0.0045     0.0084
-020     0.0044     0.0082
-021     0.0043     0.0079
-022     0.0041     0.0077
-023     0.0040     0.0075
-024     0.0039     0.0072
-025     0.0038     0.0070
-026     0.0036     0.0068
-027     0.0035     0.0065
-028     0.0034     0.0063
-029     0.0033     0.0061
-030     0.0032     0.0059
-031     0.0031     0.0057
-032     0.0030     0.0055
-033     0.0029     0.0053
-034     0.0028     0.0051
-035     0.0027     0.0050
-<span class="ansi-green-intense-fg ansi-bold">GraphEM: job.run_solver() &gt;&gt;&gt; job.G created and saved to: ./testcases/PPE/recon/G.pkl</span>
+001     0.0982     0.7515
+002     0.1367     0.8326
+003     0.1295     0.7656
+004     0.1024     0.3950
+005     0.0741     0.2227
+006     0.0617     0.1605
+007     0.0534     0.1254
+008     0.0474     0.1023
+009     0.0437     0.0877
+010     0.0414     0.0778
+011     0.0401     0.0711
+012     0.0394     0.0662
+013     0.0389     0.0621
+014     0.0388     0.0591
+015     0.0389     0.0565
+016     0.0391     0.0544
+017     0.0398     0.0531
+018     0.0405     0.0517
+019     0.0416     0.0509
+020     0.0424     0.0499
+021     0.0430     0.0486
+022     0.0434     0.0472
+023     0.0435     0.0456
+024     0.0438     0.0443
+025     0.0433     0.0422
+026     0.0428     0.0404
+027     0.0423     0.0386
+028     0.0417     0.0370
+029     0.0405     0.0349
+030     0.0397     0.0332
+031     0.0388     0.0317
+032     0.0380     0.0303
+033     0.0366     0.0284
+034     0.0355     0.0270
+035     0.0353     0.0262
+036     0.0338     0.0247
+037     0.0321     0.0229
+038     0.0315     0.0221
+039     0.0309     0.0213
+040     0.0302     0.0205
+041     0.0285     0.0190
+042     0.0284     0.0187
+043     0.0270     0.0175
+044     0.0270     0.0173
+045     0.0256     0.0162
+046     0.0248     0.0154
+047     0.0253     0.0155
+048     0.0239     0.0145
+049     0.0232     0.0139
+050     0.0226     0.0134
+051     0.0222     0.0130
+052     0.0230     0.0133
+053     0.0217     0.0125
+054     0.0210     0.0120
+055     0.0205     0.0116
+056     0.0201     0.0113
+057     0.0198     0.0110
+058     0.0209     0.0115
+059     0.0195     0.0106
+060     0.0188     0.0102
+061     0.0183     0.0098
+062     0.0180     0.0096
+063     0.0177     0.0093
+064     0.0174     0.0091
+065     0.0171     0.0089
+066     0.0169     0.0087
+067     0.0167     0.0086
+068     0.0165     0.0084
+069     0.0183     0.0093
+070     0.0165     0.0083
+071     0.0158     0.0079
+072     0.0154     0.0076
+073     0.0150     0.0074
+074     0.0148     0.0073
+075     0.0146     0.0071
+076     0.0144     0.0070
+077     0.0142     0.0069
+078     0.0141     0.0068
+079     0.0139     0.0067
+080     0.0138     0.0066
+081     0.0136     0.0065
+082     0.0135     0.0064
+083     0.0134     0.0063
+084     0.0133     0.0062
+085     0.0132     0.0061
+086     0.0131     0.0060
+087     0.0129     0.0060
+088     0.0128     0.0059
+089     0.0160     0.0073
+090     0.0137     0.0062
+091     0.0147     0.0067
+092     0.0136     0.0062
+093     0.0142     0.0064
+094     0.0123     0.0055
+095     0.0117     0.0052
+096     0.0114     0.0051
+097     0.0112     0.0050
+<span class="ansi-green-intense-fg ansi-bold">GraphEM: job.run_solver() &gt;&gt;&gt; job.G created and saved to: ./testcases/PPE_PAGES2k/recon/G.pkl</span>
 <span class="ansi-green-intense-fg ansi-bold">GraphEM: job.run_solver() &gt;&gt;&gt; job.recon created</span>
-CPU times: user 18.2 s, sys: 3.42 s, total: 21.6 s
-Wall time: 3.45 s
+CPU times: user 3h 50min 7s, sys: 3min 52s, total: 3h 54min
+Wall time: 31min 37s
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
@@ -1069,7 +1121,7 @@ Wall time: 3.45 s
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">job</span><span class="o">.</span><span class="n">save_recon</span><span class="p">(</span><span class="s1">&#39;./testcases/PPE/recon/recon.nc&#39;</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span></span><span class="n">job</span><span class="o">.</span><span class="n">save_recon</span><span class="p">(</span><span class="s1">&#39;./testcases/PPE_PAGES2k/recon/recon.nc&#39;</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1078,7 +1130,7 @@ Wall time: 3.45 s
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-<span class="ansi-cyan-intense-fg ansi-bold">LMRt: job.save_recon() &gt;&gt;&gt; Reconstruction saved to: ./testcases/PPE/recon/recon.nc</span>
+<span class="ansi-cyan-intense-fg ansi-bold">LMRt: job.save_recon() &gt;&gt;&gt; Reconstruction saved to: ./testcases/PPE_PAGES2k/recon/recon.nc</span>
 </pre></div></div>
 </div>
 </div>
@@ -1089,7 +1141,7 @@ Wall time: 3.45 s
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="k">with</span> <span class="n">xr</span><span class="o">.</span><span class="n">open_dataset</span><span class="p">(</span><span class="s1">&#39;./testcases/PPE/recon/recon.nc&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">ds</span><span class="p">:</span>
+<span></span><span class="k">with</span> <span class="n">xr</span><span class="o">.</span><span class="n">open_dataset</span><span class="p">(</span><span class="s1">&#39;./testcases/PPE_PAGES2k/recon/recon.nc&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">ds</span><span class="p">:</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">ds</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -1100,34 +1152,43 @@ Wall time: 3.45 s
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 &lt;xarray.Dataset&gt;
-Dimensions:  (lat: 10, lon: 10, year: 1000)
+Dimensions:  (lat: 22, lon: 33, year: 1001)
 Coordinates:
-  * year     (year) int64 850 851 852 853 854 855 ... 1845 1846 1847 1848 1849
-  * lat      (lat) float32 -4.737 -2.842 -0.9474 0.9474 ... 8.526 10.42 12.32
-  * lon      (lon) float32 162.5 165.0 167.5 170.0 ... 177.5 180.0 182.5 185.0
+  * year     (year) int64 1000 1001 1002 1003 1004 ... 1996 1997 1998 1999 2000
+  * lat      (lat) float64 -85.91 -77.73 -69.55 -61.36 ... 69.55 77.73 85.91
+  * lon      (lon) float64 0.0 10.91 21.82 32.73 ... 316.4 327.3 338.2 349.1
 Data variables:
     recon    (year, lat, lon) float64 ...
 </pre></div></div>
 </div>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">target</span> <span class="o">=</span> <span class="n">job</span><span class="o">.</span><span class="n">obs</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s1">&#39;tas&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value</span>
+<span></span><span class="n">target</span> <span class="o">=</span> <span class="n">job</span><span class="o">.</span><span class="n">obs</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s1">&#39;tas&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value</span><span class="p">[:</span><span class="mi">1001</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">target</span><span class="p">))</span>
 </pre></div>
 </div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+(1001, 22, 33)
+</pre></div></div>
 </div>
 <div class="section" id="Mean-Statistics">
 <h3>Mean Statistics<a class="headerlink" href="#Mean-Statistics" title="Permalink to this headline">¶</a></h3>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[76]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="n">nt</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="n">ds</span><span class="p">[</span><span class="s1">&#39;year&#39;</span><span class="p">])</span>
 <span class="n">temp_r</span> <span class="o">=</span> <span class="n">job</span><span class="o">.</span><span class="n">recon</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="n">nt</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">))</span>
-<span class="n">V</span> <span class="o">=</span> <span class="n">GraphEM</span><span class="o">.</span><span class="n">solver</span><span class="o">.</span><span class="n">verif_stats</span><span class="p">(</span><span class="n">temp_r</span><span class="p">,</span><span class="n">target</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="n">nt</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)),</span> <span class="n">job</span><span class="o">.</span><span class="n">calib_idx</span><span class="p">)</span>
+<span class="n">V</span> <span class="o">=</span> <span class="n">GraphEM</span><span class="o">.</span><span class="n">solver</span><span class="o">.</span><span class="n">verif_stats</span><span class="p">(</span><span class="n">temp_r</span><span class="p">,</span> <span class="n">target</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="n">nt</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)),</span> <span class="n">job</span><span class="o">.</span><span class="n">calib_idx</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">V</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -1137,14 +1198,14 @@ Data variables:
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-Mean MSE = 0.0206, Mean RE = 0.9000, Mean CE = 0.8999, Mean R2 = 0.9022
+Mean MSE = 5.5593, Mean RE = -5.1086, Mean CE = -5.7476, Mean R2 = 0.0014
 </pre></div></div>
 </div>
 </div>
 <div class="section" id="Map-of-CE">
 <h3>Map of CE<a class="headerlink" href="#Map-of-CE" title="Permalink to this headline">¶</a></h3>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1158,11 +1219,11 @@ Mean MSE = 0.0206, Mean RE = 0.9000, Mean CE = 0.8999, Mean R2 = 0.9022
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-(10, 10)
+(22, 33)
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[73]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[23]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1225,14 +1286,14 @@ Mean MSE = 0.0206, Mean RE = 0.9000, Mean CE = 0.8999, Mean R2 = 0.9022
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/tutorial_quickstart_ppe_25_0.png" src="../_images/tutorial_quickstart_ppe_25_0.png" />
+<img alt="../_images/tutorial_quickstart_ppe_pages2k_25_0.png" src="../_images/tutorial_quickstart_ppe_pages2k_25_0.png" />
 </div>
 </div>
 </div>
 <div class="section" id="Mean-timeseries">
 <h3>Mean timeseries<a class="headerlink" href="#Mean-timeseries" title="Permalink to this headline">¶</a></h3>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[79]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[24]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1241,7 +1302,7 @@ Mean MSE = 0.0206, Mean RE = 0.9000, Mean CE = 0.8999, Mean R2 = 0.9022
 </div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[81]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[25]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1254,12 +1315,12 @@ Mean MSE = 0.0206, Mean RE = 0.9000, Mean CE = 0.8999, Mean R2 = 0.9022
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[87]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[30]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">m_target</span> <span class="o">=</span> <span class="n">geo_mean</span><span class="p">(</span><span class="n">job</span><span class="o">.</span><span class="n">obs</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s1">&#39;tas&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="n">job</span><span class="o">.</span><span class="n">obs</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s1">&#39;tas&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">lat</span><span class="p">)</span>
-<span class="n">ts_target</span> <span class="o">=</span> <span class="n">pyleo</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">time</span><span class="o">=</span><span class="n">job</span><span class="o">.</span><span class="n">obs</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s1">&#39;tas&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">time</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="n">m_target</span><span class="p">)</span>
+<span></span><span class="n">m_target</span> <span class="o">=</span> <span class="n">geo_mean</span><span class="p">(</span><span class="n">job</span><span class="o">.</span><span class="n">obs</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s1">&#39;tas&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value</span><span class="p">[:</span><span class="mi">1001</span><span class="p">],</span> <span class="n">job</span><span class="o">.</span><span class="n">obs</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s1">&#39;tas&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">lat</span><span class="p">)</span>
+<span class="n">ts_target</span> <span class="o">=</span> <span class="n">pyleo</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">time</span><span class="o">=</span><span class="n">job</span><span class="o">.</span><span class="n">obs</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s1">&#39;tas&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">time</span><span class="p">[:</span><span class="mi">1001</span><span class="p">],</span> <span class="n">value</span><span class="o">=</span><span class="n">m_target</span><span class="p">)</span>
 
 <span class="n">m_recon</span> <span class="o">=</span> <span class="n">geo_mean</span><span class="p">(</span><span class="n">ds</span><span class="p">[</span><span class="s1">&#39;recon&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">ds</span><span class="p">[</span><span class="s1">&#39;lat&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
 <span class="n">ts_recon</span> <span class="o">=</span> <span class="n">pyleo</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">time</span><span class="o">=</span><span class="n">ds</span><span class="p">[</span><span class="s1">&#39;year&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="n">m_recon</span><span class="p">)</span>
@@ -1276,7 +1337,7 @@ Mean MSE = 0.0206, Mean RE = 0.9000, Mean CE = 0.8999, Mean R2 = 0.9022
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/tutorial_quickstart_ppe_29_0.png" src="../_images/tutorial_quickstart_ppe_29_0.png" />
+<img alt="../_images/tutorial_quickstart_ppe_pages2k_29_0.png" src="../_images/tutorial_quickstart_ppe_pages2k_29_0.png" />
 </div>
 </div>
 <div class="nbinput nblast docutils container">
@@ -1298,8 +1359,8 @@ Mean MSE = 0.0206, Mean RE = 0.9000, Mean CE = 0.8999, Mean R2 = 0.9022
           </div>
           <footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="quickstart_ppe_pages2k.html" class="btn btn-neutral float-right" title="A Pseudoproxy Experiment with GraphEM and pseudoPAGES2k" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
-        <a href="quickstart_solver.html" class="btn btn-neutral float-left" title="A quickstart of the GraphEM solver" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="quickstart_recon.html" class="btn btn-neutral float-right" title="Reconstruction using GraphEM" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="quickstart_ppe.html" class="btn btn-neutral float-left" title="A Pseudoproxy Experiment with GraphEM" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
 
   <hr/>
