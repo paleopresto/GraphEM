@@ -6,7 +6,8 @@ calib_period: [1900, 2000]
 
 # Proxy & PSM related
 # proxydb_path: ./data/proxy/pseudoPAGES2k_dataset_tas_wn.pkl
-proxydb_path: ./data/proxy/pseudoPAGES2k_dataset_tas_wn_full_temporal_availability.pkl
+# proxydb_path: ./data/proxy/pseudoPAGES2k_dataset_tas_wn_full_temporal_availability.pkl
+proxydb_path: ./data/proxy/pseudoPAGES2k_dataset_tas_wn_SNR10_full_temporal_availability.pkl
 
 ptype_list: 'all'
 

@@ -451,7 +451,7 @@ div.rendered_html tbody tr:hover {
 <div class="section" id="A-Pseudoproxy-Experiment-with-GraphEM-and-pseudoPAGES2k">
 <h1>A Pseudoproxy Experiment with GraphEM and pseudoPAGES2k<a class="headerlink" href="#A-Pseudoproxy-Experiment-with-GraphEM-and-pseudoPAGES2k" title="Permalink to this headline">¶</a></h1>
 <p><strong>Expected time to run through: 10 mins</strong></p>
-<p>This tutorial demonstrates how to get a reconstruction using GraphEM, leveraging a simple pseudoproxy dataset generated from iCESM gridded, with the realistic spatiotemporal availability of the PAGES2kv2 dataset. The pseudoproxy are generated based on the original iCESM simulated <code class="docutils literal notranslate"><span class="pre">tas</span></code> plus white noise with <code class="docutils literal notranslate"><span class="pre">SNR=1</span></code>, using below code block:</p>
+<p>This tutorial demonstrates how to get a reconstruction using GraphEM, leveraging a simple pseudoproxy dataset generated from iCESM gridded, with the realistic spatiotemporal availability of the PAGES2kv2 dataset. The pseudoproxy are generated based on the original iCESM simulated <code class="docutils literal notranslate"><span class="pre">tas</span></code> plus white noise with <code class="docutils literal notranslate"><span class="pre">SNR=10</span></code>, using below code block:</p>
 <div class="section" id="Test-data-preparation">
 <h2>Test data preparation<a class="headerlink" href="#Test-data-preparation" title="Permalink to this headline">¶</a></h2>
 <p>To go through this tutorial, please prepare test data following the steps:</p>
@@ -488,7 +488,7 @@ div.rendered_html tbody tr:hover {
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -512,13 +512,13 @@ div.rendered_html tbody tr:hover {
  &#39;obs_path&#39;: {&#39;tas&#39;: &#39;./data/obs/iCESM_ann.nc&#39;},
  &#39;obs_regrid_ntrunc&#39;: 21,
  &#39;obs_varname&#39;: {&#39;lat&#39;: &#39;lat&#39;, &#39;lon&#39;: &#39;lon&#39;, &#39;tas&#39;: &#39;tas&#39;},
- &#39;proxydb_path&#39;: &#39;./data/proxy/pseudoPAGES2k_dataset_tas_wn_full_temporal_availability.pkl&#39;,
+ &#39;proxydb_path&#39;: &#39;./data/proxy/pseudoPAGES2k_dataset_tas_wn_SNR10_full_temporal_availability.pkl&#39;,
  &#39;ptype_list&#39;: &#39;all&#39;,
  &#39;recon_period&#39;: [1000, 2000]}
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -531,13 +531,13 @@ div.rendered_html tbody tr:hover {
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-<span class="ansi-cyan-intense-fg ansi-bold">GraphEM: job.load_proxydb() &gt;&gt;&gt; job.configs[&#34;proxydb_path&#34;] = /Users/fzhu/Github/GraphEM/docsrc/tutorial/testcases/PPE_PAGES2k/data/proxy/pseudoPAGES2k_dataset_tas_wn_full_temporal_availability.pkl</span>
+<span class="ansi-cyan-intense-fg ansi-bold">GraphEM: job.load_proxydb() &gt;&gt;&gt; job.configs[&#34;proxydb_path&#34;] = /Users/fzhu/Github/GraphEM/docsrc/tutorial/testcases/PPE_PAGES2k/data/proxy/pseudoPAGES2k_dataset_tas_wn_SNR10_full_temporal_availability.pkl</span>
 <span class="ansi-green-intense-fg ansi-bold">GraphEM: job.load_proxydb() &gt;&gt;&gt; 692 records loaded</span>
 <span class="ansi-green-intense-fg ansi-bold">GraphEM: job.load_proxydb() &gt;&gt;&gt; job.proxydb created</span>
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -553,7 +553,7 @@ div.rendered_html tbody tr:hover {
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -578,7 +578,7 @@ Dataset Overview
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -604,7 +604,7 @@ Dataset Overview
 </div>
 <p>Since the loaded iCESM simulation and the pseudoproxy dataset are already annualized, we can skip the <code class="docutils literal notranslate"><span class="pre">.seasonalize()</span></code> steps and run <code class="docutils literal notranslate"><span class="pre">.prep_data()</span></code> directly.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -627,7 +627,7 @@ Dataset Overview
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -636,7 +636,7 @@ Dataset Overview
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -684,123 +684,123 @@ Dataset Overview
   <tbody>
     <tr>
       <th>1000.0</th>
-      <td>1.991316</td>
-      <td>1.076783</td>
-      <td>0.410502</td>
-      <td>-0.173932</td>
-      <td>0.202598</td>
-      <td>1.351549</td>
-      <td>-0.460631</td>
-      <td>1.628941</td>
-      <td>1.370160</td>
-      <td>1.164753</td>
+      <td>2.049447</td>
+      <td>1.206348</td>
+      <td>-0.028154</td>
+      <td>0.354423</td>
+      <td>0.164291</td>
+      <td>0.700894</td>
+      <td>0.420136</td>
+      <td>1.610386</td>
+      <td>1.250028</td>
+      <td>1.241505</td>
       <td>...</td>
-      <td>0.808244</td>
-      <td>0.282663</td>
-      <td>1.117257</td>
-      <td>0.799945</td>
-      <td>0.155647</td>
-      <td>-0.931838</td>
-      <td>-0.086837</td>
-      <td>-0.035836</td>
-      <td>-0.421204</td>
-      <td>0.792450</td>
+      <td>0.828330</td>
+      <td>0.074526</td>
+      <td>1.969163</td>
+      <td>0.165617</td>
+      <td>0.331053</td>
+      <td>-0.578854</td>
+      <td>0.188152</td>
+      <td>1.255906</td>
+      <td>0.304311</td>
+      <td>0.425676</td>
     </tr>
     <tr>
       <th>1001.0</th>
-      <td>1.474484</td>
-      <td>-0.308733</td>
-      <td>0.249446</td>
-      <td>0.598656</td>
-      <td>-0.056904</td>
-      <td>0.137913</td>
-      <td>0.376916</td>
-      <td>-3.876324</td>
-      <td>-1.509714</td>
-      <td>2.864117</td>
+      <td>0.014990</td>
+      <td>0.708525</td>
+      <td>0.246777</td>
+      <td>-0.057988</td>
+      <td>-0.127694</td>
+      <td>-0.077910</td>
+      <td>0.477898</td>
+      <td>-1.579350</td>
+      <td>-1.453855</td>
+      <td>1.689047</td>
       <td>...</td>
-      <td>0.542854</td>
-      <td>-0.138603</td>
-      <td>2.097570</td>
-      <td>0.012348</td>
-      <td>-0.525504</td>
-      <td>-1.882890</td>
-      <td>0.717570</td>
-      <td>1.830759</td>
-      <td>-1.086185</td>
-      <td>-0.031783</td>
+      <td>0.986828</td>
+      <td>-0.319637</td>
+      <td>1.589055</td>
+      <td>0.146957</td>
+      <td>-0.345228</td>
+      <td>-0.449773</td>
+      <td>0.128710</td>
+      <td>1.697772</td>
+      <td>-0.457480</td>
+      <td>-0.352040</td>
     </tr>
     <tr>
       <th>1002.0</th>
-      <td>-1.749010</td>
-      <td>0.078419</td>
-      <td>-1.069865</td>
-      <td>-1.118535</td>
-      <td>-0.339929</td>
-      <td>-0.475327</td>
-      <td>2.033267</td>
-      <td>0.087343</td>
-      <td>0.360542</td>
-      <td>-2.410067</td>
+      <td>-1.114598</td>
+      <td>-0.355595</td>
+      <td>-0.903415</td>
+      <td>-0.370463</td>
+      <td>-0.170471</td>
+      <td>0.018887</td>
+      <td>0.820904</td>
+      <td>0.335598</td>
+      <td>0.658790</td>
+      <td>-1.006825</td>
       <td>...</td>
-      <td>-0.461850</td>
-      <td>-0.454381</td>
-      <td>-1.528630</td>
-      <td>0.882063</td>
-      <td>-0.135203</td>
-      <td>-0.621540</td>
-      <td>-0.043420</td>
-      <td>-0.330917</td>
-      <td>-0.577220</td>
-      <td>-0.124923</td>
+      <td>-0.571258</td>
+      <td>-0.268028</td>
+      <td>-2.308910</td>
+      <td>0.313561</td>
+      <td>-0.265528</td>
+      <td>-0.357028</td>
+      <td>0.152346</td>
+      <td>-0.037280</td>
+      <td>-0.357438</td>
+      <td>-0.312209</td>
     </tr>
     <tr>
       <th>1003.0</th>
-      <td>0.217035</td>
-      <td>1.674967</td>
-      <td>-1.750278</td>
-      <td>-0.575866</td>
-      <td>0.136504</td>
-      <td>0.781710</td>
-      <td>1.011006</td>
-      <td>2.542533</td>
-      <td>-1.087626</td>
-      <td>-0.919410</td>
+      <td>0.921028</td>
+      <td>0.761262</td>
+      <td>-0.241008</td>
+      <td>-0.612394</td>
+      <td>-0.198821</td>
+      <td>0.600541</td>
+      <td>0.038012</td>
+      <td>1.649567</td>
+      <td>0.484537</td>
+      <td>-0.694430</td>
       <td>...</td>
-      <td>0.031054</td>
-      <td>0.438249</td>
-      <td>1.705930</td>
-      <td>-0.225784</td>
-      <td>0.544517</td>
-      <td>-0.056655</td>
-      <td>0.483183</td>
-      <td>-0.960525</td>
-      <td>0.207954</td>
-      <td>0.649017</td>
+      <td>0.332292</td>
+      <td>0.469818</td>
+      <td>1.270690</td>
+      <td>-0.172501</td>
+      <td>0.210101</td>
+      <td>-0.619913</td>
+      <td>-0.157362</td>
+      <td>-0.393430</td>
+      <td>0.248620</td>
+      <td>0.292726</td>
     </tr>
     <tr>
       <th>1004.0</th>
-      <td>0.209092</td>
-      <td>0.179273</td>
-      <td>1.226517</td>
-      <td>-0.167719</td>
-      <td>0.824626</td>
-      <td>-0.052601</td>
-      <td>2.230018</td>
-      <td>1.007028</td>
-      <td>-1.957817</td>
-      <td>2.547536</td>
+      <td>0.292958</td>
+      <td>-0.005126</td>
+      <td>0.781568</td>
+      <td>-0.169216</td>
+      <td>0.314034</td>
+      <td>-0.194410</td>
+      <td>0.990756</td>
+      <td>-0.391326</td>
+      <td>-1.263733</td>
+      <td>1.176845</td>
       <td>...</td>
-      <td>-0.124999</td>
-      <td>-0.354393</td>
-      <td>-0.472327</td>
-      <td>0.725839</td>
-      <td>-0.056934</td>
-      <td>1.691067</td>
-      <td>-0.086595</td>
-      <td>-1.855176</td>
-      <td>0.066563</td>
-      <td>-0.316830</td>
+      <td>0.160528</td>
+      <td>-0.084175</td>
+      <td>0.971972</td>
+      <td>0.342813</td>
+      <td>-0.134291</td>
+      <td>1.254460</td>
+      <td>0.379938</td>
+      <td>1.061491</td>
+      <td>-0.126194</td>
+      <td>-0.164533</td>
     </tr>
     <tr>
       <th>...</th>
@@ -828,123 +828,123 @@ Dataset Overview
     </tr>
     <tr>
       <th>1996.0</th>
-      <td>0.451554</td>
-      <td>-0.012429</td>
-      <td>-0.483565</td>
-      <td>-1.308976</td>
-      <td>-0.431576</td>
-      <td>-0.061208</td>
-      <td>2.699160</td>
-      <td>3.148305</td>
-      <td>1.170936</td>
-      <td>-0.781837</td>
+      <td>0.596161</td>
+      <td>0.397911</td>
+      <td>-0.213472</td>
+      <td>-0.375964</td>
+      <td>0.110367</td>
+      <td>-0.175807</td>
+      <td>1.092398</td>
+      <td>2.554041</td>
+      <td>2.983670</td>
+      <td>-0.233084</td>
       <td>...</td>
-      <td>0.033587</td>
-      <td>0.786702</td>
-      <td>0.344960</td>
-      <td>-0.690816</td>
-      <td>0.565884</td>
-      <td>0.758542</td>
-      <td>-0.395638</td>
-      <td>0.221436</td>
-      <td>0.532183</td>
-      <td>0.780281</td>
+      <td>0.086505</td>
+      <td>0.938570</td>
+      <td>-0.516218</td>
+      <td>0.099238</td>
+      <td>0.489292</td>
+      <td>0.470537</td>
+      <td>-0.122144</td>
+      <td>-0.671030</td>
+      <td>0.416049</td>
+      <td>0.440858</td>
     </tr>
     <tr>
       <th>1997.0</th>
-      <td>0.593906</td>
-      <td>-0.391556</td>
-      <td>1.189919</td>
-      <td>-0.983018</td>
-      <td>-0.086014</td>
-      <td>0.744214</td>
-      <td>1.883391</td>
-      <td>-0.916550</td>
-      <td>-1.326753</td>
-      <td>0.781728</td>
+      <td>0.708165</td>
+      <td>-0.204674</td>
+      <td>0.940863</td>
+      <td>-0.811482</td>
+      <td>-0.402413</td>
+      <td>0.229789</td>
+      <td>1.386490</td>
+      <td>0.106067</td>
+      <td>-0.278486</td>
+      <td>-0.677213</td>
       <td>...</td>
-      <td>-0.087708</td>
-      <td>0.080720</td>
-      <td>-0.069768</td>
-      <td>-0.437823</td>
-      <td>-0.329610</td>
-      <td>-0.499093</td>
-      <td>-0.083515</td>
-      <td>-1.862747</td>
-      <td>-0.084249</td>
-      <td>-0.521903</td>
+      <td>-0.236382</td>
+      <td>0.109457</td>
+      <td>-0.916285</td>
+      <td>-0.319777</td>
+      <td>-0.009780</td>
+      <td>0.513189</td>
+      <td>-0.707492</td>
+      <td>-1.106939</td>
+      <td>-0.174881</td>
+      <td>-0.218647</td>
     </tr>
     <tr>
       <th>1998.0</th>
-      <td>1.543173</td>
-      <td>-0.586401</td>
-      <td>0.886359</td>
-      <td>0.631522</td>
-      <td>0.272213</td>
-      <td>0.101556</td>
-      <td>-0.464913</td>
-      <td>0.124083</td>
-      <td>3.749645</td>
-      <td>2.468217</td>
+      <td>0.502749</td>
+      <td>-0.240407</td>
+      <td>1.346490</td>
+      <td>0.595868</td>
+      <td>0.373318</td>
+      <td>0.085835</td>
+      <td>0.838359</td>
+      <td>0.328611</td>
+      <td>1.795783</td>
+      <td>2.179380</td>
       <td>...</td>
-      <td>-0.591060</td>
-      <td>0.393950</td>
-      <td>1.165156</td>
-      <td>0.295951</td>
-      <td>-0.324858</td>
-      <td>0.856186</td>
-      <td>0.527396</td>
-      <td>2.117025</td>
-      <td>0.006060</td>
-      <td>0.662496</td>
+      <td>-0.454328</td>
+      <td>0.489631</td>
+      <td>0.177895</td>
+      <td>0.388473</td>
+      <td>0.009699</td>
+      <td>0.821627</td>
+      <td>0.307725</td>
+      <td>1.840054</td>
+      <td>-0.005446</td>
+      <td>0.060198</td>
     </tr>
     <tr>
       <th>1999.0</th>
-      <td>1.311804</td>
-      <td>-0.147377</td>
-      <td>0.121918</td>
-      <td>0.649256</td>
-      <td>-0.359322</td>
-      <td>-0.908425</td>
-      <td>0.380988</td>
-      <td>2.338570</td>
-      <td>2.703852</td>
-      <td>0.715449</td>
+      <td>1.476074</td>
+      <td>-0.101115</td>
+      <td>0.071156</td>
+      <td>0.010010</td>
+      <td>0.215712</td>
+      <td>-0.452304</td>
+      <td>-0.450495</td>
+      <td>2.144862</td>
+      <td>1.877791</td>
+      <td>-0.456210</td>
       <td>...</td>
-      <td>0.381650</td>
-      <td>0.259597</td>
-      <td>0.473400</td>
-      <td>0.211626</td>
-      <td>-0.041561</td>
-      <td>-0.057345</td>
-      <td>-0.231382</td>
-      <td>0.319323</td>
-      <td>1.100090</td>
-      <td>0.053861</td>
+      <td>0.340616</td>
+      <td>0.543951</td>
+      <td>0.590506</td>
+      <td>0.229498</td>
+      <td>0.373771</td>
+      <td>0.036311</td>
+      <td>-0.097946</td>
+      <td>-0.597891</td>
+      <td>0.509028</td>
+      <td>0.404405</td>
     </tr>
     <tr>
       <th>2000.0</th>
-      <td>-0.256298</td>
-      <td>-0.598022</td>
-      <td>-0.027015</td>
-      <td>0.985057</td>
-      <td>1.122260</td>
-      <td>1.475932</td>
-      <td>1.167360</td>
-      <td>0.226961</td>
-      <td>1.167712</td>
-      <td>-0.492571</td>
+      <td>-0.227916</td>
+      <td>-0.418627</td>
+      <td>0.600212</td>
+      <td>1.064158</td>
+      <td>0.782957</td>
+      <td>1.423108</td>
+      <td>1.178986</td>
+      <td>-0.110369</td>
+      <td>1.205325</td>
+      <td>-0.306477</td>
       <td>...</td>
-      <td>-0.081461</td>
-      <td>0.500858</td>
-      <td>0.639752</td>
-      <td>-0.158313</td>
-      <td>-0.036536</td>
-      <td>0.374727</td>
-      <td>-0.002639</td>
-      <td>1.969362</td>
-      <td>0.640155</td>
-      <td>0.180584</td>
+      <td>-0.156622</td>
+      <td>0.445898</td>
+      <td>0.449710</td>
+      <td>0.121985</td>
+      <td>0.304760</td>
+      <td>1.010402</td>
+      <td>0.186142</td>
+      <td>1.766690</td>
+      <td>0.499660</td>
+      <td>0.453703</td>
     </tr>
   </tbody>
 </table>
@@ -952,7 +952,7 @@ Dataset Overview
 </div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -973,7 +973,7 @@ Dataset Overview
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -991,7 +991,7 @@ Dataset Overview
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1013,111 +1013,148 @@ Running GraphEM:
 
 Iter     dXmis     rdXmis
 
-001     0.0982     0.7515
-002     0.1367     0.8326
-003     0.1295     0.7656
-004     0.1024     0.3950
-005     0.0741     0.2227
-006     0.0617     0.1605
-007     0.0534     0.1254
-008     0.0474     0.1023
-009     0.0437     0.0877
-010     0.0414     0.0778
-011     0.0401     0.0711
-012     0.0394     0.0662
-013     0.0389     0.0621
-014     0.0388     0.0591
-015     0.0389     0.0565
-016     0.0391     0.0544
-017     0.0398     0.0531
-018     0.0405     0.0517
-019     0.0416     0.0509
-020     0.0424     0.0499
-021     0.0430     0.0486
-022     0.0434     0.0472
-023     0.0435     0.0456
-024     0.0438     0.0443
-025     0.0433     0.0422
-026     0.0428     0.0404
-027     0.0423     0.0386
-028     0.0417     0.0370
-029     0.0405     0.0349
-030     0.0397     0.0332
-031     0.0388     0.0317
-032     0.0380     0.0303
-033     0.0366     0.0284
-034     0.0355     0.0270
-035     0.0353     0.0262
-036     0.0338     0.0247
-037     0.0321     0.0229
-038     0.0315     0.0221
-039     0.0309     0.0213
-040     0.0302     0.0205
-041     0.0285     0.0190
-042     0.0284     0.0187
-043     0.0270     0.0175
-044     0.0270     0.0173
-045     0.0256     0.0162
-046     0.0248     0.0154
-047     0.0253     0.0155
-048     0.0239     0.0145
-049     0.0232     0.0139
-050     0.0226     0.0134
-051     0.0222     0.0130
-052     0.0230     0.0133
-053     0.0217     0.0125
-054     0.0210     0.0120
-055     0.0205     0.0116
-056     0.0201     0.0113
-057     0.0198     0.0110
-058     0.0209     0.0115
-059     0.0195     0.0106
-060     0.0188     0.0102
-061     0.0183     0.0098
-062     0.0180     0.0096
-063     0.0177     0.0093
-064     0.0174     0.0091
-065     0.0171     0.0089
-066     0.0169     0.0087
-067     0.0167     0.0086
-068     0.0165     0.0084
-069     0.0183     0.0093
-070     0.0165     0.0083
-071     0.0158     0.0079
-072     0.0154     0.0076
-073     0.0150     0.0074
-074     0.0148     0.0073
-075     0.0146     0.0071
-076     0.0144     0.0070
-077     0.0142     0.0069
-078     0.0141     0.0068
-079     0.0139     0.0067
-080     0.0138     0.0066
-081     0.0136     0.0065
-082     0.0135     0.0064
-083     0.0134     0.0063
-084     0.0133     0.0062
-085     0.0132     0.0061
-086     0.0131     0.0060
-087     0.0129     0.0060
-088     0.0128     0.0059
-089     0.0160     0.0073
-090     0.0137     0.0062
-091     0.0147     0.0067
-092     0.0136     0.0062
-093     0.0142     0.0064
-094     0.0123     0.0055
-095     0.0117     0.0052
-096     0.0114     0.0051
-097     0.0112     0.0050
+001     0.0876     0.6708
+002     0.1984     1.2501
+003     0.1871     0.7930
+004     0.1302     0.3500
+005     0.0969     0.2112
+006     0.0723     0.1384
+007     0.0618     0.1082
+008     0.0575     0.0937
+009     0.0552     0.0844
+010     0.0530     0.0765
+011     0.0506     0.0694
+012     0.0487     0.0636
+013     0.0472     0.0590
+014     0.0464     0.0555
+015     0.0459     0.0527
+016     0.0456     0.0504
+017     0.0457     0.0486
+018     0.0453     0.0464
+019     0.0446     0.0441
+020     0.0443     0.0424
+021     0.0435     0.0402
+022     0.0428     0.0383
+023     0.0420     0.0365
+024     0.0409     0.0345
+025     0.0401     0.0329
+026     0.0397     0.0318
+027     0.0387     0.0301
+028     0.0375     0.0285
+029     0.0369     0.0274
+030     0.0359     0.0261
+031     0.0349     0.0248
+032     0.0335     0.0233
+033     0.0329     0.0225
+034     0.0317     0.0213
+035     0.0309     0.0204
+036     0.0307     0.0199
+037     0.0297     0.0190
+038     0.0291     0.0183
+039     0.0292     0.0180
+040     0.0281     0.0171
+041     0.0275     0.0165
+042     0.0270     0.0160
+043     0.0274     0.0160
+044     0.0263     0.0152
+045     0.0257     0.0146
+046     0.0252     0.0142
+047     0.0248     0.0138
+048     0.0245     0.0135
+049     0.0242     0.0132
+050     0.0239     0.0129
+051     0.0247     0.0132
+052     0.0235     0.0124
+053     0.0230     0.0120
+054     0.0227     0.0117
+055     0.0224     0.0115
+056     0.0222     0.0113
+057     0.0221     0.0111
+058     0.0219     0.0109
+059     0.0218     0.0108
+060     0.0217     0.0106
+061     0.0216     0.0105
+062     0.0230     0.0111
+063     0.0218     0.0104
+064     0.0222     0.0105
+065     0.0210     0.0099
+066     0.0206     0.0096
+067     0.0204     0.0094
+068     0.0202     0.0093
+069     0.0200     0.0091
+070     0.0198     0.0090
+071     0.0196     0.0088
+072     0.0195     0.0087
+073     0.0193     0.0086
+074     0.0192     0.0085
+075     0.0191     0.0083
+076     0.0189     0.0082
+077     0.0188     0.0081
+078     0.0187     0.0080
+079     0.0186     0.0079
+080     0.0208     0.0088
+081     0.0194     0.0082
+082     0.0197     0.0083
+083     0.0194     0.0081
+084     0.0194     0.0080
+085     0.0174     0.0071
+086     0.0169     0.0069
+087     0.0167     0.0068
+088     0.0166     0.0067
+089     0.0165     0.0066
+090     0.0164     0.0066
+091     0.0163     0.0065
+092     0.0162     0.0064
+093     0.0162     0.0064
+094     0.0161     0.0063
+095     0.0161     0.0063
+096     0.0161     0.0062
+097     0.0160     0.0062
+098     0.0160     0.0062
+099     0.0160     0.0061
+100     0.0160     0.0061
+101     0.0160     0.0060
+102     0.0160     0.0060
+103     0.0160     0.0060
+104     0.0160     0.0059
+105     0.0160     0.0059
+106     0.0159     0.0059
+107     0.0159     0.0059
+108     0.0160     0.0058
+109     0.0160     0.0058
+110     0.0160     0.0058
+111     0.0160     0.0058
+112     0.0160     0.0057
+113     0.0160     0.0057
+114     0.0160     0.0057
+115     0.0160     0.0057
+116     0.0160     0.0056
+117     0.0160     0.0056
+118     0.0160     0.0056
+119     0.0160     0.0056
+120     0.0160     0.0055
+121     0.0214     0.0074
+122     0.0189     0.0065
+123     0.0162     0.0055
+124     0.0209     0.0071
+125     0.0191     0.0065
+126     0.0198     0.0067
+127     0.0195     0.0065
+128     0.0196     0.0066
+129     0.0196     0.0065
+130     0.0196     0.0065
+131     0.0153     0.0051
+132     0.0210     0.0069
+133     0.0193     0.0063
+134     0.0151     0.0049
 <span class="ansi-green-intense-fg ansi-bold">GraphEM: job.run_solver() &gt;&gt;&gt; job.G created and saved to: ./testcases/PPE_PAGES2k/recon/G.pkl</span>
 <span class="ansi-green-intense-fg ansi-bold">GraphEM: job.run_solver() &gt;&gt;&gt; job.recon created</span>
-CPU times: user 3h 50min 7s, sys: 3min 52s, total: 3h 54min
-Wall time: 31min 37s
+CPU times: user 3h 8min 32s, sys: 4min 1s, total: 3h 12min 34s
+Wall time: 26min 47s
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1137,7 +1174,7 @@ Wall time: 31min 37s
 <div class="section" id="Validation">
 <h2>Validation<a class="headerlink" href="#Validation" title="Permalink to this headline">¶</a></h2>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1162,11 +1199,12 @@ Data variables:
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">target</span> <span class="o">=</span> <span class="n">job</span><span class="o">.</span><span class="n">obs</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s1">&#39;tas&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value</span><span class="p">[:</span><span class="mi">1001</span><span class="p">]</span>
+<span></span><span class="n">mask</span> <span class="o">=</span> <span class="p">(</span><span class="n">job</span><span class="o">.</span><span class="n">obs</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s1">&#39;tas&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">time</span> <span class="o">&gt;=</span> <span class="mi">1000</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">job</span><span class="o">.</span><span class="n">obs</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s1">&#39;tas&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">time</span> <span class="o">&lt;=</span> <span class="mi">2000</span><span class="p">)</span>
+<span class="n">target</span> <span class="o">=</span> <span class="n">job</span><span class="o">.</span><span class="n">obs</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s1">&#39;tas&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">target</span><span class="p">))</span>
 </pre></div>
 </div>
@@ -1182,7 +1220,7 @@ Data variables:
 <div class="section" id="Mean-Statistics">
 <h3>Mean Statistics<a class="headerlink" href="#Mean-Statistics" title="Permalink to this headline">¶</a></h3>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1198,14 +1236,14 @@ Data variables:
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-Mean MSE = 5.5593, Mean RE = -5.1086, Mean CE = -5.7476, Mean R2 = 0.0014
+Mean MSE = 9.1880, Mean RE = -8.3778, Mean CE = -10.2311, Mean R2 = 0.1016
 </pre></div></div>
 </div>
 </div>
 <div class="section" id="Map-of-CE">
 <h3>Map of CE<a class="headerlink" href="#Map-of-CE" title="Permalink to this headline">¶</a></h3>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[23]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1223,7 +1261,7 @@ Mean MSE = 5.5593, Mean RE = -5.1086, Mean CE = -5.7476, Mean R2 = 0.0014
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[23]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[24]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1232,10 +1270,10 @@ Mean MSE = 5.5593, Mean RE = -5.1086, Mean CE = -5.7476, Mean R2 = 0.0014
 <span class="kn">import</span> <span class="nn">cartopy.feature</span> <span class="k">as</span> <span class="nn">cfeature</span>
 <span class="kn">from</span> <span class="nn">cartopy.mpl.ticker</span> <span class="kn">import</span> <span class="n">LongitudeFormatter</span><span class="p">,</span> <span class="n">LatitudeFormatter</span>
 
-<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">[</span><span class="mi">8</span><span class="p">,</span> <span class="mi">8</span><span class="p">])</span>
 <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="n">projection</span><span class="o">=</span><span class="n">ccrs</span><span class="o">.</span><span class="n">PlateCarree</span><span class="p">(</span><span class="n">central_longitude</span><span class="o">=</span><span class="mi">180</span><span class="p">))</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Coefficient of Efficiency&#39;</span><span class="p">)</span>
-<span class="n">latlon_range</span> <span class="o">=</span> <span class="p">[</span><span class="mi">50</span><span class="p">,</span> <span class="mi">300</span><span class="p">,</span> <span class="o">-</span><span class="mi">45</span><span class="p">,</span> <span class="mi">45</span><span class="p">]</span>
+<span class="n">latlon_range</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">360</span><span class="p">,</span> <span class="o">-</span><span class="mi">90</span><span class="p">,</span> <span class="mi">90</span><span class="p">]</span>
 <span class="n">transform</span><span class="o">=</span><span class="n">ccrs</span><span class="o">.</span><span class="n">PlateCarree</span><span class="p">()</span>
 
 <span class="n">ax</span><span class="o">.</span><span class="n">set_extent</span><span class="p">(</span><span class="n">latlon_range</span><span class="p">,</span> <span class="n">crs</span><span class="o">=</span><span class="n">transform</span><span class="p">)</span>
@@ -1254,11 +1292,11 @@ Mean MSE = 5.5593, Mean RE = -5.1086, Mean CE = -5.7476, Mean R2 = 0.0014
 <span class="n">ax</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">(</span><span class="n">lon_ticks</span><span class="p">[</span><span class="n">mask_lon</span><span class="p">],</span> <span class="n">crs</span><span class="o">=</span><span class="n">ccrs</span><span class="o">.</span><span class="n">PlateCarree</span><span class="p">())</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_yticks</span><span class="p">(</span><span class="n">lat_ticks</span><span class="p">[</span><span class="n">mask_lat</span><span class="p">],</span> <span class="n">crs</span><span class="o">=</span><span class="n">ccrs</span><span class="o">.</span><span class="n">PlateCarree</span><span class="p">())</span>
 
-<span class="n">levels</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">21</span><span class="p">)</span>
-<span class="n">cbar_labels</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">11</span><span class="p">)</span>
+<span class="n">levels</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">21</span><span class="p">)</span>
+<span class="n">cbar_labels</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">11</span><span class="p">)</span>
 <span class="n">cbar_title</span> <span class="o">=</span> <span class="s1">&#39;CE&#39;</span>
 <span class="n">extend</span> <span class="o">=</span> <span class="s1">&#39;both&#39;</span>
-<span class="n">cmap</span> <span class="o">=</span> <span class="s1">&#39;Reds&#39;</span>
+<span class="n">cmap</span> <span class="o">=</span> <span class="s1">&#39;RdBu_r&#39;</span>
 <span class="n">cbar_pad</span><span class="o">=</span><span class="mf">0.1</span>
 <span class="n">cbar_orientation</span><span class="o">=</span><span class="s1">&#39;horizontal&#39;</span>
 <span class="n">cbar_aspect</span><span class="o">=</span><span class="mi">10</span>
@@ -1293,7 +1331,7 @@ Mean MSE = 5.5593, Mean RE = -5.1086, Mean CE = -5.7476, Mean R2 = 0.0014
 <div class="section" id="Mean-timeseries">
 <h3>Mean timeseries<a class="headerlink" href="#Mean-timeseries" title="Permalink to this headline">¶</a></h3>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[24]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[25]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1302,7 +1340,7 @@ Mean MSE = 5.5593, Mean RE = -5.1086, Mean CE = -5.7476, Mean R2 = 0.0014
 </div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[25]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[26]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1315,12 +1353,12 @@ Mean MSE = 5.5593, Mean RE = -5.1086, Mean CE = -5.7476, Mean R2 = 0.0014
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[30]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[27]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">m_target</span> <span class="o">=</span> <span class="n">geo_mean</span><span class="p">(</span><span class="n">job</span><span class="o">.</span><span class="n">obs</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s1">&#39;tas&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value</span><span class="p">[:</span><span class="mi">1001</span><span class="p">],</span> <span class="n">job</span><span class="o">.</span><span class="n">obs</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s1">&#39;tas&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">lat</span><span class="p">)</span>
-<span class="n">ts_target</span> <span class="o">=</span> <span class="n">pyleo</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">time</span><span class="o">=</span><span class="n">job</span><span class="o">.</span><span class="n">obs</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s1">&#39;tas&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">time</span><span class="p">[:</span><span class="mi">1001</span><span class="p">],</span> <span class="n">value</span><span class="o">=</span><span class="n">m_target</span><span class="p">)</span>
+<span></span><span class="n">m_target</span> <span class="o">=</span> <span class="n">geo_mean</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="n">job</span><span class="o">.</span><span class="n">obs</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s1">&#39;tas&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">lat</span><span class="p">)</span>
+<span class="n">ts_target</span> <span class="o">=</span> <span class="n">pyleo</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">time</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1000</span><span class="p">,</span> <span class="mi">2001</span><span class="p">),</span> <span class="n">value</span><span class="o">=</span><span class="n">m_target</span><span class="p">)</span>
 
 <span class="n">m_recon</span> <span class="o">=</span> <span class="n">geo_mean</span><span class="p">(</span><span class="n">ds</span><span class="p">[</span><span class="s1">&#39;recon&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">ds</span><span class="p">[</span><span class="s1">&#39;lat&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
 <span class="n">ts_recon</span> <span class="o">=</span> <span class="n">pyleo</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">time</span><span class="o">=</span><span class="n">ds</span><span class="p">[</span><span class="s1">&#39;year&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="n">m_recon</span><span class="p">)</span>
