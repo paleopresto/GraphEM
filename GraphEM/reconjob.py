@@ -115,6 +115,8 @@ class ReconJob:
         if verbose: p_success(f'GraphEM: job.load_proxydb() >>> job.proxydb created')
 
     def filter_proxydb(self, ptype_list=None, dt=None, pids=None, verbose=False):
+        ''' Filter the proxy database by proxy types and/or time resolution
+        '''
         if ptype_list is None:
             ptype_list = self.configs['ptype_list']
         else:
@@ -142,6 +144,8 @@ class ReconJob:
         self.proxydb = proxydb
 
     def seasonalize_proxydb(self, ptype_season=None, verbose=False):
+        ''' Seasonalize the proxy database
+        '''
         if ptype_season is None:
             if 'ptype_season' not in self.configs:
                 ptype_season = {}
@@ -210,6 +214,8 @@ class ReconJob:
         if verbose: p_success(f'GraphEM: job.load_obs() >>> job.obs created')
 
     def seasonalize_obs(self, season=None, verbose=False):
+        ''' Seasonalize the instrumental observations
+        '''
         if season is None:
             if 'obs_season' not in self.configs:
                 season = list(range(1, 13))
@@ -231,6 +237,8 @@ class ReconJob:
         if verbose: p_success(f'GraphEM: job.seasonalize_obs() >>> job.obs updated')
 
     def regrid_obs(self, ntrunc=None, verbose=False):
+        ''' Regrid the instrumental observations
+        '''
         if ntrunc is None:
             ntrunc = self.configs['obs_regrid_ntrunc']
         self.configs['obs_regrid_ntrunc'] = ntrunc
@@ -245,6 +253,8 @@ class ReconJob:
         if verbose: p_success(f'LMRt: job.regrid_obs() >>> job.obs updated')
 
     def prep_data(self, recon_period=None, calib_period=None, verbose=False):
+        ''' A shortcut of the steps for data preparation
+        '''
         if recon_period is None:
             recon_period = self.configs['recon_period']
         else:
@@ -310,6 +320,8 @@ class ReconJob:
         if verbose: p_success(f'GraphEM: job.prep_data() >>> job.lonlat created')
 
     def run_solver(self, save_path, verbose=False):
+        ''' Run the GraphEM solver
+        '''
         if os.path.exists(save_path):
             self.G = pd.read_pickle(save_path)
             if verbose: p_success(f'GraphEM: job.run_solver() >>> job.G created with the existing result at: {save_path}')
@@ -326,6 +338,8 @@ class ReconJob:
         if verbose: p_success(f'GraphEM: job.run_solver() >>> job.recon created')
 
     def save(self, prep_savepath=None, verbose=False):
+        ''' Save the job object for later use
+        '''
         if prep_savepath is None:
             prep_savepath = os.path.join(self.configs['job_dirpath'], f'job.pkl')
 
@@ -337,6 +351,8 @@ class ReconJob:
             p_header(f'LMRt: job.save_job() >>> job.configs["prep_savepath"] = {prep_savepath}')
 
     def save_recon(self, save_path, compress_dict={'zlib': True, 'least_significant_digit': 1}, verbose=False):
+        ''' Save the reconstruction to a netCDF file
+        '''
         output_dict = {}
         output_dict['recon'] = (('year', 'lat', 'lon'), self.recon)
 
@@ -363,6 +379,8 @@ class ReconJob:
 
     def run_cfg(self, cfg_path, job_dirpath=None, save_G_path=None, save_recon_path=None,
                 verbose=False, obs_varname=None):
+        ''' The top-level workflow to get reconstruction based on a configuration file directly
+        '''
         self.load_configs(cfg_path, verbose=verbose)
 
         if job_dirpath is None:
