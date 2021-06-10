@@ -1,4 +1,4 @@
-.. image:: https://img.shields.io/github/last-commit/fzhu2e/GraphEM/master
+.. image:: https://img.shields.io/github/last-commit/fzhu2e/GraphEM/main
     :target: https://github.com/fzhu2e/GraphEM
 
 .. image:: https://img.shields.io/github/license/fzhu2e/GraphEM

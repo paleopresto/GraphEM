@@ -3,7 +3,7 @@ from distutils.core import setup, Extension
 from distutils import sysconfig
 from Cython.Distutils import build_ext
 import os
-__version__ = '0.1.1'
+__version__ = '0.1.2'
 
 with open('README.rst', 'r') as fh:
     long_description = fh.read()
