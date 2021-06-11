@@ -63,7 +63,7 @@ Then install several dependencies that is not able to be installed via :code:`pi
 
 .. code-block:: bash
 
-    conda install -c conda-forge cartopy pyspharm jupyterlab
+    conda install -c conda-forge Cython cartopy pyspharm jupyterlab
 
 Once the above dependencies have been installed, simply
 
