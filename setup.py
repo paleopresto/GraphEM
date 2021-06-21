@@ -3,12 +3,15 @@ from distutils.core import setup, Extension
 from distutils import sysconfig
 from Cython.Distutils import build_ext
 import os
-__version__ = '0.1.2'
+__version__ = '0.1.3'
 
 with open('README.rst', 'r') as fh:
     long_description = fh.read()
 
-quiclib = Extension('quiclib', sources=['./GraphEM/QUIC.cpp'])
+quiclib = Extension(
+    'quiclib', sources=['./GraphEM/QUIC.cpp'],
+    extra_link_args=['-llapack', '-lblas', '-lstdc++', '-fPIC'],
+)
 
 class NoSuffixBuilder(build_ext):
     def get_ext_filename(self, ext_name):
