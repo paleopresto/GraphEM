@@ -136,7 +136,7 @@ def neighbor_graph(lonlat, ind_T, ind_P, distance = 1000):
 	return [adj, sparsity]
 
 
-def great_circle_distance(lat1, lon1, lat2, lon2):
+def great_circle_distance(lon1, lat1, lon2, lat2):
 	'''
 	Calculate the great circle distance between two points
 	on the earth (specified in decimal degrees)

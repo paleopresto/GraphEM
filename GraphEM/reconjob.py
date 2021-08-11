@@ -319,7 +319,7 @@ class ReconJob:
         self.lonlat = lonlat
         if verbose: p_success(f'GraphEM: job.prep_data() >>> job.lonlat created')
 
-    def run_solver(self, save_path, verbose=False):
+    def run_solver(self, save_path, verbose=False, **fit_kws):
         ''' Run the GraphEM solver
         '''
         if os.path.exists(save_path):
@@ -327,7 +327,7 @@ class ReconJob:
             if verbose: p_success(f'GraphEM: job.run_solver() >>> job.G created with the existing result at: {save_path}')
         else:
             G = GraphEM()
-            G.fit(self.temp, self.proxy, self.calib_idx, lonlat=self.lonlat, graph_method='neighborhood')
+            G.fit(self.temp, self.proxy, self.calib_idx, lonlat=self.lonlat, graph_method='neighborhood', **fit_kws)
             self.G = G
             pd.to_pickle(self.G, save_path)
             if verbose: p_success(f'GraphEM: job.run_solver() >>> job.G created and saved to: {save_path}')
