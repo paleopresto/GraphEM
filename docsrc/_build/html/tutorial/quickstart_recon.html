@@ -451,7 +451,7 @@ div.rendered_html tbody tr:hover {
 </style>
 <div class="section" id="Reconstruction-using-GraphEM">
 <h1>Reconstruction using GraphEM<a class="headerlink" href="#Reconstruction-using-GraphEM" title="Permalink to this headline">¶</a></h1>
-<p><strong>Expected time to run through: 10 mins</strong></p>
+<p><strong>Expected time to run through: 5 hrs</strong></p>
 <p>This tutorial demonstrates how to get a reconstruction using GraphEM, leveraging HadCRUT4 and PAGES2k.</p>
 <div class="section" id="Test-data-preparation">
 <h2>Test data preparation<a class="headerlink" href="#Test-data-preparation" title="Permalink to this headline">¶</a></h2>
@@ -509,7 +509,7 @@ div.rendered_html tbody tr:hover {
 {&#39;anom_period&#39;: [1951, 1980],
  &#39;calib_period&#39;: [1930, 2000],
  &#39;job_dirpath&#39;: &#39;/Users/fzhu/Github/GraphEM/docsrc/tutorial/testcases/PAGES2k_HadCRUT/recon&#39;,
- &#39;job_id&#39;: &#39;LMRt_quickstart&#39;,
+ &#39;job_id&#39;: &#39;GraphEM_tutorial&#39;,
  &#39;obs_path&#39;: {&#39;tas&#39;: &#39;./data/obs/HadCRUT.5.0.1.0.analysis.anomalies.ensemble_mean.nc&#39;},
  &#39;obs_varname&#39;: {&#39;lat&#39;: &#39;latitude&#39;, &#39;lon&#39;: &#39;longitude&#39;, &#39;tas&#39;: &#39;tas_mean&#39;},
  &#39;proxydb_path&#39;: &#39;./data/proxy/pages2k_dataset.pkl&#39;,
@@ -522,7 +522,7 @@ div.rendered_html tbody tr:hover {
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -541,7 +541,7 @@ div.rendered_html tbody tr:hover {
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -555,11 +555,11 @@ div.rendered_html tbody tr:hover {
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 <span class="ansi-cyan-intense-fg ansi-bold">GraphEM: job.filter_proxydb() &gt;&gt;&gt; filtering proxy records according to: [&#39;coral.d18O&#39;, &#39;coral.SrCa&#39;, &#39;coral.calc&#39;, &#39;tree.TRW&#39;, &#39;tree.MXD&#39;]</span>
-<span class="ansi-green-intense-fg ansi-bold">GraphEM: job.filter_proxydb() &gt;&gt;&gt; 510 records remaining</span>
+<span class="ansi-green-intense-fg ansi-bold">GraphEM: job.filter_proxydb() &gt;&gt;&gt; 519 records remaining</span>
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -579,12 +579,12 @@ div.rendered_html tbody tr:hover {
 <div class="highlight"><pre>
 <span class="ansi-cyan-intense-fg ansi-bold">GraphEM: job.seasonalize_proxydb() &gt;&gt;&gt; job.configs[&#34;ptype_season&#34;] = {&#39;coral.d18O&#39;: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], &#39;coral.SrCa&#39;: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], &#39;coral.calc&#39;: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], &#39;tree.TRW&#39;: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], &#39;tree.MXD&#39;: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]}</span>
 <span class="ansi-cyan-intense-fg ansi-bold">GraphEM: job.seasonalize_proxydb() &gt;&gt;&gt; seasonalizing proxy records according to: {&#39;coral.d18O&#39;: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], &#39;coral.SrCa&#39;: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], &#39;coral.calc&#39;: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], &#39;tree.TRW&#39;: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], &#39;tree.MXD&#39;: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]}</span>
-<span class="ansi-green-intense-fg ansi-bold">GraphEM: job.seasonalize_proxydb() &gt;&gt;&gt; 510 records remaining</span>
+<span class="ansi-green-intense-fg ansi-bold">GraphEM: job.seasonalize_proxydb() &gt;&gt;&gt; 519 records remaining</span>
 <span class="ansi-green-intense-fg ansi-bold">GraphEM: job.seasonalize_proxydb() &gt;&gt;&gt; job.proxydb updated</span>
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -602,7 +602,7 @@ div.rendered_html tbody tr:hover {
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -631,12 +631,12 @@ Dataset Overview
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-/Users/fzhu/Github/LMRt/LMRt/utils.py:258: RuntimeWarning: Mean of empty slice
+/Users/fzhu/Github/LMRt/LMRt/utils.py:261: RuntimeWarning: Mean of empty slice
   tmp = np.nanmean(var[inds, ...], axis=0)
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -659,7 +659,7 @@ Dataset Overview
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -668,7 +668,7 @@ Dataset Overview
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -980,11 +980,11 @@ Dataset Overview
     </tr>
   </tbody>
 </table>
-<p>501 rows × 510 columns</p>
+<p>501 rows × 519 columns</p>
 </div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1000,12 +1000,12 @@ Dataset Overview
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 (501, 2592)
-(501, 510)
-(3102, 2)
+(501, 519)
+(3111, 2)
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1023,7 +1023,7 @@ Dataset Overview
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1039,14 +1039,95 @@ Dataset Overview
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-<span class="ansi-green-intense-fg ansi-bold">GraphEM: job.run_solver() &gt;&gt;&gt; job.G created with the existing result at: ./testcases/PAGES2k_HadCRUT/recon/G.pkl</span>
+Estimating graph using neighborhood method
+Running GraphEM:
+
+Iter     dXmis     rdXmis
+
+001     0.3304     0.0900
+002     0.3269     0.0914
+003     0.1768     0.0516
+004     0.1376     0.0413
+005     0.1085     0.0331
+006     0.1010     0.0307
+007     0.1025     0.0309
+008     0.1075     0.0318
+009     0.1023     0.0297
+010     0.0868     0.0247
+011     0.0694     0.0194
+012     0.0563     0.0156
+013     0.0486     0.0134
+014     0.0469     0.0128
+015     0.0476     0.0130
+016     0.0478     0.0130
+017     0.0497     0.0135
+018     0.0498     0.0135
+019     0.0498     0.0135
+020     0.0507     0.0137
+021     0.0496     0.0134
+022     0.0489     0.0132
+023     0.0483     0.0131
+024     0.0480     0.0130
+025     0.0481     0.0130
+026     0.0490     0.0133
+027     0.0495     0.0134
+028     0.0500     0.0135
+029     0.0502     0.0136
+030     0.0503     0.0136
+031     0.0500     0.0135
+032     0.0495     0.0134
+033     0.0488     0.0132
+034     0.0468     0.0126
+035     0.0458     0.0124
+036     0.0444     0.0120
+037     0.0430     0.0116
+038     0.0416     0.0112
+039     0.0403     0.0108
+040     0.0390     0.0104
+041     0.0378     0.0101
+042     0.0377     0.0100
+043     0.0352     0.0094
+044     0.0341     0.0090
+045     0.0331     0.0087
+046     0.0322     0.0085
+047     0.0313     0.0082
+048     0.0305     0.0080
+049     0.0298     0.0078
+050     0.0291     0.0076
+051     0.0284     0.0074
+052     0.0277     0.0072
+053     0.0271     0.0070
+054     0.0265     0.0068
+055     0.0259     0.0067
+056     0.0253     0.0065
+057     0.0248     0.0064
+058     0.0243     0.0062
+059     0.0239     0.0061
+060     0.0235     0.0060
+061     0.0231     0.0059
+062     0.0227     0.0058
+063     0.0224     0.0057
+064     0.0221     0.0056
+065     0.0218     0.0055
+066     0.0216     0.0054
+067     0.0214     0.0054
+068     0.0212     0.0053
+069     0.0210     0.0053
+070     0.0208     0.0052
+071     0.0207     0.0052
+072     0.0328     0.0082
+073     0.0239     0.0059
+074     0.0217     0.0054
+075     0.0207     0.0051
+076     0.0201     0.0050
+<span class="ansi-green-intense-fg ansi-bold">GraphEM: job.run_solver() &gt;&gt;&gt; job.G created and saved to: ./testcases/PAGES2k_HadCRUT/recon/G.pkl</span>
 <span class="ansi-green-intense-fg ansi-bold">GraphEM: job.run_solver() &gt;&gt;&gt; job.recon created</span>
-CPU times: user 1.15 ms, sys: 107 ms, total: 108 ms
-Wall time: 108 ms
+CPU times: user 1d 5h 1min 54s, sys: 1h 51min 56s, total: 1d 6h 53min 50s
+Wall time: 4h 38min 47s
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1055,7 +1136,7 @@ Wall time: 108 ms
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
@@ -1064,7 +1145,7 @@ Wall time: 108 ms
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1174,7 +1255,7 @@ Dataset Overview
 <div class="section" id="Validation">
 <h2>Validation<a class="headerlink" href="#Validation" title="Permalink to this headline">¶</a></h2>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[32]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1206,7 +1287,7 @@ Data variables:
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[23]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[33]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1234,7 +1315,7 @@ Data variables:
 </pre></div></div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[30]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[34]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1243,7 +1324,7 @@ Data variables:
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[33]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[35]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1264,7 +1345,7 @@ Data variables:
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[35]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[44]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1272,7 +1353,7 @@ Data variables:
 <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">ts_recon</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">mute</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;recon.&#39;</span><span class="p">)</span>
 <span class="n">ts_lmr</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="mi">1500</span><span class="p">,</span> <span class="mi">2000</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;GMST&#39;</span><span class="p">)</span>
 <span class="n">ts_hadcrut</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
 <span class="n">LMRt</span><span class="o">.</span><span class="n">showfig</span><span class="p">(</span><span class="n">fig</span><span class="p">)</span>
@@ -1285,6 +1366,27 @@ Data variables:
 <div class="output_area docutils container">
 <img alt="../_images/tutorial_quickstart_recon_26_0.png" src="../_images/tutorial_quickstart_recon_26_0.png" />
 </div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[54]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">corr</span> <span class="o">=</span> <span class="n">ts_lmr</span><span class="o">.</span><span class="n">slice</span><span class="p">([</span><span class="mi">1500</span><span class="p">,</span> <span class="mi">1800</span><span class="p">])</span><span class="o">.</span><span class="n">correlation</span><span class="p">(</span><span class="n">ts_recon</span><span class="o">.</span><span class="n">slice</span><span class="p">([</span><span class="mi">1500</span><span class="p">,</span> <span class="mi">1800</span><span class="p">]))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">corr</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+  correlation    p-value  signif. (α: 0.05)
+-------------  ---------  -------------------
+   -0.0116929       0.97  False
+
+</pre></div></div>
 </div>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
