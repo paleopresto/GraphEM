@@ -327,7 +327,12 @@ class ReconJob:
             if verbose: p_success(f'GraphEM: job.run_solver() >>> job.G created with the existing result at: {save_path}')
         else:
             G = GraphEM()
-            G.fit(self.temp, self.proxy, self.calib_idx, lonlat=self.lonlat, graph_method='neighborhood', **fit_kws)
+            fit_kwargs = {
+                'lonlat': self.lonlat,
+                'graph_method': 'neighborhood',
+            }
+            fit_kwargs.update(fit_kws)
+            G.fit(self.temp, self.proxy, self.calib_idx, **fit_kwargs)
             self.G = G
             pd.to_pickle(self.G, save_path)
             if verbose: p_success(f'GraphEM: job.run_solver() >>> job.G created and saved to: {save_path}')
