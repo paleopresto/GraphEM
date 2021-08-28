@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>A Pseudoproxy Experiment with GraphEM and pseudoPAGES2k &mdash; GraphEM  documentation</title>
+  <title>Reconstruction over a smaller domain using GraphEM &mdash; GraphEM  documentation</title>
   
 
   
@@ -44,8 +44,8 @@
     
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Reconstruction using GraphEM" href="quickstart_recon.html" />
-    <link rel="prev" title="A Pseudoproxy Experiment with GraphEM" href="quickstart_ppe.html" /> 
+    <link rel="next" title="API" href="../api.html" />
+    <link rel="prev" title="Reconstruction using GraphEM" href="quickstart_recon.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -97,14 +97,16 @@
 <li class="toctree-l2 current"><a class="reference internal" href="../tutorial.html#quickstart">Quickstart</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="quickstart_solver.html">A quickstart of the GraphEM solver</a></li>
 <li class="toctree-l3"><a class="reference internal" href="quickstart_ppe.html">A Pseudoproxy Experiment with GraphEM</a></li>
-<li class="toctree-l3 current"><a class="current reference internal" href="#">A Pseudoproxy Experiment with GraphEM and pseudoPAGES2k</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="quickstart_ppe_pages2k.html">A Pseudoproxy Experiment with GraphEM and pseudoPAGES2k</a></li>
+<li class="toctree-l3"><a class="reference internal" href="quickstart_recon.html">Reconstruction using GraphEM</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Reconstruction over a smaller domain using GraphEM</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#Test-data-preparation">Test data preparation</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#Reconstruction">Reconstruction</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Low-level-workflow">Low-level workflow</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Cropping-the-domain">Cropping the domain</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Data-preparation">Data preparation</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#Validation">Validation</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="quickstart_recon.html">Reconstruction using GraphEM</a></li>
-<li class="toctree-l3"><a class="reference internal" href="quickstart_recon_cropped_domain.html">Reconstruction over a smaller domain using GraphEM</a></li>
 </ul>
 </li>
 </ul>
@@ -160,13 +162,13 @@
         
           <li><a href="../tutorial.html">Tutorial</a> &raquo;</li>
         
-      <li>A Pseudoproxy Experiment with GraphEM and pseudoPAGES2k</li>
+      <li>Reconstruction over a smaller domain using GraphEM</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
           
-            <a href="../_sources/tutorial/quickstart_ppe_pages2k.ipynb.txt" rel="nofollow"> View page source</a>
+            <a href="../_sources/tutorial/quickstart_recon_cropped_domain.ipynb.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -449,14 +451,14 @@ div.rendered_html tbody tr:hover {
     text-align: unset;
 }
 </style>
-<div class="section" id="A-Pseudoproxy-Experiment-with-GraphEM-and-pseudoPAGES2k">
-<h1>A Pseudoproxy Experiment with GraphEM and pseudoPAGES2k<a class="headerlink" href="#A-Pseudoproxy-Experiment-with-GraphEM-and-pseudoPAGES2k" title="Permalink to this headline">¶</a></h1>
-<p><strong>Expected time to run through: 30 mins</strong></p>
-<p>This tutorial demonstrates how to get a reconstruction using GraphEM, leveraging a simple pseudoproxy dataset generated from iCESM gridded, with the realistic spatiotemporal availability of the PAGES2kv2 dataset. The pseudoproxy are generated based on the original iCESM simulated <code class="docutils literal notranslate"><span class="pre">tas</span></code> plus white noise with <code class="docutils literal notranslate"><span class="pre">SNR=10</span></code>, using below code block:</p>
+<div class="section" id="Reconstruction-over-a-smaller-domain-using-GraphEM">
+<h1>Reconstruction over a smaller domain using GraphEM<a class="headerlink" href="#Reconstruction-over-a-smaller-domain-using-GraphEM" title="Permalink to this headline">¶</a></h1>
+<p><strong>Expected time to run through: 1 hrs</strong></p>
+<p>This tutorial demonstrates how to get a reconstruction over a smaller domain using GraphEM, leveraging HadCRUT4 and PAGES2k.</p>
 <div class="section" id="Test-data-preparation">
 <h2>Test data preparation<a class="headerlink" href="#Test-data-preparation" title="Permalink to this headline">¶</a></h2>
 <p>To go through this tutorial, please prepare test data following the steps:</p>
-<p>Download the test case named “PPE_PAGES2k” with this <a class="reference external" href="https://drive.google.com/drive/folders/1_h6o_gDR6xLX50c_Ad-lzRoWwHlAgBnK?usp=sharing">link</a>. Create a directory named “testcases” in the same directory where this notebook sits. Put the unzipped direcotry “PPE_PAGES2k” into “testcases”.</p>
+<p>Download the test case named “PAGES2k_HadCRUT” with this <a class="reference external" href="https://drive.google.com/drive/folders/12V0Ny4eO2HKU40-Iy5Jiw2SAfVNzXXcd?usp=sharing">link</a>. Create a directory named “testcases” in the same directory where this notebook sits. Put the unzipped direcotry “PAGES2k_HadCRUT_cropped_domain” into “testcases”.</p>
 <p>Below, we first load some useful packages, including our <code class="docutils literal notranslate"><span class="pre">GraphEM</span></code>.</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
@@ -477,8 +479,8 @@ div.rendered_html tbody tr:hover {
 </div>
 </div>
 </div>
-<div class="section" id="Reconstruction">
-<h2>Reconstruction<a class="headerlink" href="#Reconstruction" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="Low-level-workflow">
+<h2>Low-level workflow<a class="headerlink" href="#Low-level-workflow" title="Permalink to this headline">¶</a></h2>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
@@ -493,7 +495,7 @@ div.rendered_html tbody tr:hover {
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">job</span><span class="o">.</span><span class="n">load_configs</span><span class="p">(</span><span class="s1">&#39;./testcases/PPE_PAGES2k/configs.yml&#39;</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span></span><span class="n">job</span><span class="o">.</span><span class="n">load_configs</span><span class="p">(</span><span class="s1">&#39;./testcases/PAGES2k_HadCRUT_cropped_domain/configs.yml&#39;</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -502,20 +504,23 @@ div.rendered_html tbody tr:hover {
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-<span class="ansi-cyan-intense-fg ansi-bold">GraphEM: job.load_configs() &gt;&gt;&gt; loading reconstruction configurations from: ./testcases/PPE_PAGES2k/configs.yml</span>
+<span class="ansi-cyan-intense-fg ansi-bold">GraphEM: job.load_configs() &gt;&gt;&gt; loading reconstruction configurations from: ./testcases/PAGES2k_HadCRUT_cropped_domain/configs.yml</span>
 <span class="ansi-green-intense-fg ansi-bold">GraphEM: job.load_configs() &gt;&gt;&gt; job.configs created</span>
-<span class="ansi-cyan-intense-fg ansi-bold">GraphEM: job.load_configs() &gt;&gt;&gt; job.configs[&#34;job_dirpath&#34;] = /Users/fzhu/Github/GraphEM/docsrc/tutorial/testcases/PPE_PAGES2k/recon</span>
-<span class="ansi-green-intense-fg ansi-bold">GraphEM: job.load_configs() &gt;&gt;&gt; /Users/fzhu/Github/GraphEM/docsrc/tutorial/testcases/PPE_PAGES2k/recon created</span>
+<span class="ansi-cyan-intense-fg ansi-bold">GraphEM: job.load_configs() &gt;&gt;&gt; job.configs[&#34;job_dirpath&#34;] = /Users/fzhu/Github/GraphEM/docsrc/tutorial/testcases/PAGES2k_HadCRUT_cropped_domain/recon</span>
+<span class="ansi-green-intense-fg ansi-bold">GraphEM: job.load_configs() &gt;&gt;&gt; /Users/fzhu/Github/GraphEM/docsrc/tutorial/testcases/PAGES2k_HadCRUT_cropped_domain/recon created</span>
 {&#39;anom_period&#39;: [1951, 1980],
- &#39;calib_period&#39;: [1900, 2000],
- &#39;job_dirpath&#39;: &#39;/Users/fzhu/Github/GraphEM/docsrc/tutorial/testcases/PPE_PAGES2k/recon&#39;,
+ &#39;calib_period&#39;: [1930, 2000],
+ &#39;job_dirpath&#39;: &#39;/Users/fzhu/Github/GraphEM/docsrc/tutorial/testcases/PAGES2k_HadCRUT_cropped_domain/recon&#39;,
  &#39;job_id&#39;: &#39;GraphEM_tutorial&#39;,
- &#39;obs_path&#39;: {&#39;tas&#39;: &#39;./data/obs/iCESM_ann.nc&#39;},
- &#39;obs_regrid_ntrunc&#39;: 21,
- &#39;obs_varname&#39;: {&#39;lat&#39;: &#39;lat&#39;, &#39;lon&#39;: &#39;lon&#39;, &#39;tas&#39;: &#39;tas&#39;},
- &#39;proxydb_path&#39;: &#39;./data/proxy/pseudoPAGES2k_dataset_tas_wn_SNR10_full_temporal_availability.pkl&#39;,
- &#39;ptype_list&#39;: &#39;all&#39;,
- &#39;recon_period&#39;: [1000, 2000]}
+ &#39;obs_path&#39;: {&#39;tas&#39;: &#39;./data/obs/HadCRUT.5.0.1.0.analysis.anomalies.ensemble_mean.nc&#39;},
+ &#39;obs_varname&#39;: {&#39;lat&#39;: &#39;latitude&#39;, &#39;lon&#39;: &#39;longitude&#39;, &#39;tas&#39;: &#39;tas_mean&#39;},
+ &#39;proxydb_path&#39;: &#39;./data/proxy/pages2k_dataset.pkl&#39;,
+ &#39;ptype_list&#39;: [&#39;coral.d18O&#39;,
+                &#39;coral.SrCa&#39;,
+                &#39;coral.calc&#39;,
+                &#39;tree.TRW&#39;,
+                &#39;tree.MXD&#39;],
+ &#39;recon_period&#39;: [1500, 2000]}
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
@@ -532,7 +537,7 @@ div.rendered_html tbody tr:hover {
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-<span class="ansi-cyan-intense-fg ansi-bold">GraphEM: job.load_proxydb() &gt;&gt;&gt; job.configs[&#34;proxydb_path&#34;] = /Users/fzhu/Github/GraphEM/docsrc/tutorial/testcases/PPE_PAGES2k/data/proxy/pseudoPAGES2k_dataset_tas_wn_SNR10_full_temporal_availability.pkl</span>
+<span class="ansi-cyan-intense-fg ansi-bold">GraphEM: job.load_proxydb() &gt;&gt;&gt; job.configs[&#34;proxydb_path&#34;] = /Users/fzhu/Github/GraphEM/docsrc/tutorial/testcases/PAGES2k_HadCRUT_cropped_domain/data/proxy/pages2k_dataset.pkl</span>
 <span class="ansi-green-intense-fg ansi-bold">GraphEM: job.load_proxydb() &gt;&gt;&gt; 692 records loaded</span>
 <span class="ansi-green-intense-fg ansi-bold">GraphEM: job.load_proxydb() &gt;&gt;&gt; job.proxydb created</span>
 </pre></div></div>
@@ -542,7 +547,14 @@ div.rendered_html tbody tr:hover {
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">job</span><span class="o">.</span><span class="n">proxydb</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+<span></span><span class="c1"># filter the proxy database by spatial region</span>
+<span class="n">assim_pids</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">pid</span><span class="p">,</span> <span class="n">pobj</span> <span class="ow">in</span> <span class="n">job</span><span class="o">.</span><span class="n">proxydb</span><span class="o">.</span><span class="n">records</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="k">if</span> <span class="n">pobj</span><span class="o">.</span><span class="n">lat</span> <span class="o">&gt;=</span> <span class="mi">30</span> <span class="ow">and</span> <span class="n">pobj</span><span class="o">.</span><span class="n">lat</span> <span class="o">&lt;=</span> <span class="mi">70</span> <span class="ow">and</span> <span class="n">pobj</span><span class="o">.</span><span class="n">lon</span> <span class="o">&gt;=</span> <span class="n">np</span><span class="o">.</span><span class="n">mod</span><span class="p">(</span><span class="o">-</span><span class="mi">130</span><span class="p">,</span> <span class="mi">360</span><span class="p">)</span> <span class="ow">and</span> <span class="n">pobj</span><span class="o">.</span><span class="n">lon</span> <span class="o">&lt;=</span> <span class="n">np</span><span class="o">.</span><span class="n">mod</span><span class="p">(</span><span class="o">-</span><span class="mi">70</span><span class="p">,</span> <span class="mi">360</span><span class="p">):</span>
+        <span class="n">assim_pids</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">pid</span><span class="p">)</span>
+
+<span class="n">job</span><span class="o">.</span><span class="n">proxydb</span><span class="o">.</span><span class="n">filter_pids</span><span class="p">(</span><span class="n">assim_pids</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">job</span><span class="o">.</span><span class="n">proxydb</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -550,15 +562,127 @@ div.rendered_html tbody tr:hover {
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/tutorial_quickstart_ppe_pages2k_8_0.png" src="../_images/tutorial_quickstart_ppe_pages2k_8_0.png" />
-</div>
+<div class="highlight"><pre>
+Proxy Database Overview
+-----------------------
+     Source:        /Users/fzhu/Github/GraphEM/docsrc/tutorial/testcases/PAGES2k_HadCRUT_cropped_domain/data/proxy/pages2k_dataset.pkl
+       Size:        128
+Proxy types:        {&#39;tree.TRW&#39;: 70, &#39;tree.MXD&#39;: 41, &#39;lake.pollen&#39;: 10, &#39;marine.alkenone&#39;: 1, &#39;marine.MgCa&#39;: 3, &#39;lake.chironomid&#39;: 1, &#39;speleothem.d18O&#39;: 1, &#39;lake.varve_thickness&#39;: 1}
+</pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[24]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">job</span><span class="o">.</span><span class="n">load_obs</span><span class="p">(</span><span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span></span><span class="n">ptype_season</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">job</span><span class="o">.</span><span class="n">proxydb</span><span class="o">.</span><span class="n">type_dict</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="n">ptype_season</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">13</span><span class="p">))</span> <span class="c1"># annual</span>
+
+<span class="n">job</span><span class="o">.</span><span class="n">seasonalize_proxydb</span><span class="p">(</span><span class="n">ptype_season</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">job</span><span class="o">.</span><span class="n">filter_proxydb</span><span class="p">(</span><span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+<span class="ansi-cyan-intense-fg ansi-bold">GraphEM: job.seasonalize_proxydb() &gt;&gt;&gt; job.configs[&#34;ptype_season&#34;] = {&#39;tree.TRW&#39;: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], &#39;tree.MXD&#39;: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], &#39;lake.pollen&#39;: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], &#39;marine.alkenone&#39;: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], &#39;marine.MgCa&#39;: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], &#39;lake.chironomid&#39;: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], &#39;speleothem.d18O&#39;: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], &#39;lake.varve_thickness&#39;: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]}</span>
+<span class="ansi-cyan-intense-fg ansi-bold">GraphEM: job.seasonalize_proxydb() &gt;&gt;&gt; seasonalizing proxy records according to: {&#39;tree.TRW&#39;: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], &#39;tree.MXD&#39;: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], &#39;lake.pollen&#39;: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], &#39;marine.alkenone&#39;: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], &#39;marine.MgCa&#39;: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], &#39;lake.chironomid&#39;: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], &#39;speleothem.d18O&#39;: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], &#39;lake.varve_thickness&#39;: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]}</span>
+<span class="ansi-green-intense-fg ansi-bold">GraphEM: job.seasonalize_proxydb() &gt;&gt;&gt; 128 records remaining</span>
+<span class="ansi-green-intense-fg ansi-bold">GraphEM: job.seasonalize_proxydb() &gt;&gt;&gt; job.proxydb updated</span>
+<span class="ansi-cyan-intense-fg ansi-bold">GraphEM: job.filter_proxydb() &gt;&gt;&gt; filtering proxy records according to: [&#39;coral.d18O&#39;, &#39;coral.SrCa&#39;, &#39;coral.calc&#39;, &#39;tree.TRW&#39;, &#39;tree.MXD&#39;]</span>
+<span class="ansi-green-intense-fg ansi-bold">GraphEM: job.filter_proxydb() &gt;&gt;&gt; 111 records remaining</span>
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[26]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">job</span><span class="o">.</span><span class="n">load_obs</span><span class="p">(</span><span class="n">varname_dict</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;lat&#39;</span><span class="p">:</span> <span class="s1">&#39;latitude&#39;</span><span class="p">,</span> <span class="s1">&#39;lon&#39;</span><span class="p">:</span> <span class="s1">&#39;longitude&#39;</span><span class="p">,</span> <span class="s1">&#39;tas&#39;</span><span class="p">:</span> <span class="s1">&#39;tas_mean&#39;</span><span class="p">},</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+<span class="ansi-cyan-intense-fg ansi-bold">GraphEM: job.load_obs() &gt;&gt;&gt; loading instrumental observation fields from: {&#39;tas&#39;: &#39;/Users/fzhu/Github/GraphEM/docsrc/tutorial/testcases/PAGES2k_HadCRUT_cropped_domain/data/obs/HadCRUT.5.0.1.0.analysis.anomalies.ensemble_mean.nc&#39;}</span>
+<span class="ansi-green-intense-fg ansi-bold">GraphEM: job.load_obs() &gt;&gt;&gt; job.obs created</span>
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[27]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">job</span><span class="o">.</span><span class="n">seasonalize_obs</span><span class="p">(</span><span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+<span class="ansi-black-intense-fg ansi-bold">GraphEM: job.seasonalize_obs() &gt;&gt;&gt; seasonalized obs w/ season [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]</span>
+Dataset Overview
+-----------------------
+
+     Name:  tas
+   Source:  /Users/fzhu/Github/GraphEM/docsrc/tutorial/testcases/PAGES2k_HadCRUT_cropped_domain/data/obs/HadCRUT.5.0.1.0.analysis.anomalies.ensemble_mean.nc
+    Shape:  time:171, lat:36, lon:72
+<span class="ansi-green-intense-fg ansi-bold">GraphEM: job.seasonalize_obs() &gt;&gt;&gt; job.obs updated</span>
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+/Users/fzhu/Github/LMRt/LMRt/utils.py:261: RuntimeWarning: Mean of empty slice
+  tmp = np.nanmean(var[inds, ...], axis=0)
+</pre></div></div>
+</div>
+</div>
+<div class="section" id="Cropping-the-domain">
+<h2>Cropping the domain<a class="headerlink" href="#Cropping-the-domain" title="Permalink to this headline">¶</a></h2>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[28]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="nb">print</span><span class="p">(</span><span class="n">job</span><span class="o">.</span><span class="n">obs</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Dataset Overview
+-----------------------
+
+     Name:  tas
+   Source:  /Users/fzhu/Github/GraphEM/docsrc/tutorial/testcases/PAGES2k_HadCRUT_cropped_domain/data/obs/HadCRUT.5.0.1.0.analysis.anomalies.ensemble_mean.nc
+    Shape:  time:171, lat:36, lon:72
+</pre></div></div>
+</div>
+<p>The current domain is global. We may call the <code class="docutils literal notranslate"><span class="pre">job.obs.crop()</span></code> method with the <code class="docutils literal notranslate"><span class="pre">domain_range</span></code> parameter to crop the domain.</p>
+<p>There are two ways of cropping the domain: + crop only the latitudes with the input argument <code class="docutils literal notranslate"><span class="pre">domain_range</span> <span class="pre">=</span> <span class="pre">[lat_min,</span> <span class="pre">lat_max]</span></code> + crop both the latitudes and longitudes the input argument <code class="docutils literal notranslate"><span class="pre">domain_range</span> <span class="pre">=</span> <span class="pre">[lat_min,</span> <span class="pre">lat_max,</span> <span class="pre">lon_min,</span> <span class="pre">lon_max]</span></code></p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[29]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># crop the 30N-70N, 70W-130W region</span>
+
+<span class="n">job</span><span class="o">.</span><span class="n">obs</span><span class="o">.</span><span class="n">crop</span><span class="p">([</span><span class="mi">30</span><span class="p">,</span> <span class="mi">70</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">mod</span><span class="p">(</span><span class="o">-</span><span class="mi">130</span><span class="p">,</span> <span class="mi">360</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">mod</span><span class="p">(</span><span class="o">-</span><span class="mi">70</span><span class="p">,</span> <span class="mi">360</span><span class="p">)],</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">job</span><span class="o">.</span><span class="n">obs</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -568,44 +692,19 @@ div.rendered_html tbody tr:hover {
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-<span class="ansi-cyan-intense-fg ansi-bold">GraphEM: job.load_obs() &gt;&gt;&gt; loading instrumental observation fields from: {&#39;tas&#39;: &#39;/Users/fzhu/Github/GraphEM/docsrc/tutorial/testcases/PPE_PAGES2k/data/obs/iCESM_ann.nc&#39;}</span>
-<span class="ansi-green-intense-fg ansi-bold">GraphEM: job.load_obs() &gt;&gt;&gt; job.obs created</span>
 Dataset Overview
 -----------------------
 
      Name:  tas
-   Source:  /Users/fzhu/Github/GraphEM/docsrc/tutorial/testcases/PPE_PAGES2k/data/obs/iCESM_ann.nc
-    Shape:  time:1156, lat:96, lon:144
+   Source:  /Users/fzhu/Github/GraphEM/docsrc/tutorial/testcases/PAGES2k_HadCRUT_cropped_domain/data/obs/HadCRUT.5.0.1.0.analysis.anomalies.ensemble_mean.nc
+    Shape:  time:171, lat:8, lon:12
 </pre></div></div>
 </div>
+</div>
+<div class="section" id="Data-preparation">
+<h2>Data preparation<a class="headerlink" href="#Data-preparation" title="Permalink to this headline">¶</a></h2>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="c1"># regrid obs to make the problem size smaller</span>
-<span class="n">job</span><span class="o">.</span><span class="n">regrid_obs</span><span class="p">(</span><span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-<span class="ansi-black-intense-fg ansi-bold">LMRt: job.regrid_obs() &gt;&gt;&gt; regridded obs</span>
-Dataset Overview
------------------------
-
-     Name:  tas
-   Source:  /Users/fzhu/Github/GraphEM/docsrc/tutorial/testcases/PPE_PAGES2k/data/obs/iCESM_ann.nc
-    Shape:  time:1156, lat:22, lon:33
-<span class="ansi-green-intense-fg ansi-bold">LMRt: job.regrid_obs() &gt;&gt;&gt; job.obs updated</span>
-</pre></div></div>
-</div>
-<p>Since the loaded iCESM simulation and the pseudoproxy dataset are already annualized, we can skip the <code class="docutils literal notranslate"><span class="pre">.seasonalize()</span></code> steps and run <code class="docutils literal notranslate"><span class="pre">.prep_data()</span></code> directly.</p>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[30]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -628,7 +727,7 @@ Dataset Overview
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[31]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -637,7 +736,7 @@ Dataset Overview
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[31]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -660,148 +759,148 @@ Dataset Overview
     <tr style="text-align: right;">
       <th></th>
       <th>NAm_153</th>
-      <th>Asi_245</th>
       <th>NAm_165</th>
-      <th>Asi_178</th>
-      <th>Asi_174</th>
-      <th>Eur_016</th>
-      <th>Asi_198</th>
-      <th>NAm_145</th>
-      <th>Arc_070</th>
-      <th>Arc_071</th>
+      <th>NAm_046</th>
+      <th>NAm_193</th>
+      <th>NAm_194</th>
+      <th>NAm_188</th>
+      <th>NAm_156</th>
+      <th>NAm_154</th>
+      <th>NAm_122</th>
+      <th>NAm_186</th>
       <th>...</th>
-      <th>Asi_119</th>
-      <th>Ocn_153</th>
-      <th>NAm_074</th>
-      <th>Asi_026</th>
-      <th>Ocn_169</th>
-      <th>Asi_201</th>
-      <th>Asi_179</th>
-      <th>Arc_014</th>
-      <th>Ocn_071</th>
-      <th>Ocn_072</th>
+      <th>NAm_172</th>
+      <th>NAm_201</th>
+      <th>NAm_202</th>
+      <th>NAm_136</th>
+      <th>NAm_137</th>
+      <th>NAm_203</th>
+      <th>NAm_204</th>
+      <th>NAm_108</th>
+      <th>NAm_018</th>
+      <th>NAm_143</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <th>1000.0</th>
-      <td>2.049447</td>
-      <td>1.206348</td>
-      <td>-0.028154</td>
-      <td>0.354423</td>
-      <td>0.164291</td>
-      <td>0.700894</td>
-      <td>0.420136</td>
-      <td>1.610386</td>
-      <td>1.250028</td>
-      <td>1.241505</td>
+      <th>1500</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>1.026</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>0.613</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
       <td>...</td>
-      <td>0.828330</td>
-      <td>0.074526</td>
-      <td>1.969163</td>
-      <td>0.165617</td>
-      <td>0.331053</td>
-      <td>-0.578854</td>
-      <td>0.188152</td>
-      <td>1.255906</td>
-      <td>0.304311</td>
-      <td>0.425676</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>0.764</td>
+      <td>NaN</td>
+      <td>0.814</td>
+      <td>0.901</td>
+      <td>NaN</td>
+      <td>0.769</td>
+      <td>NaN</td>
     </tr>
     <tr>
-      <th>1001.0</th>
-      <td>0.014990</td>
-      <td>0.708525</td>
-      <td>0.246777</td>
-      <td>-0.057988</td>
-      <td>-0.127694</td>
-      <td>-0.077910</td>
-      <td>0.477898</td>
-      <td>-1.579350</td>
-      <td>-1.453855</td>
-      <td>1.689047</td>
+      <th>1501</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>1.058</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>0.592</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
       <td>...</td>
-      <td>0.986828</td>
-      <td>-0.319637</td>
-      <td>1.589055</td>
-      <td>0.146957</td>
-      <td>-0.345228</td>
-      <td>-0.449773</td>
-      <td>0.128710</td>
-      <td>1.697772</td>
-      <td>-0.457480</td>
-      <td>-0.352040</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>0.928</td>
+      <td>NaN</td>
+      <td>0.946</td>
+      <td>0.863</td>
+      <td>NaN</td>
+      <td>1.060</td>
+      <td>NaN</td>
     </tr>
     <tr>
-      <th>1002.0</th>
-      <td>-1.114598</td>
-      <td>-0.355595</td>
-      <td>-0.903415</td>
-      <td>-0.370463</td>
-      <td>-0.170471</td>
-      <td>0.018887</td>
-      <td>0.820904</td>
-      <td>0.335598</td>
-      <td>0.658790</td>
-      <td>-1.006825</td>
+      <th>1502</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>1.088</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>0.633</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
       <td>...</td>
-      <td>-0.571258</td>
-      <td>-0.268028</td>
-      <td>-2.308910</td>
-      <td>0.313561</td>
-      <td>-0.265528</td>
-      <td>-0.357028</td>
-      <td>0.152346</td>
-      <td>-0.037280</td>
-      <td>-0.357438</td>
-      <td>-0.312209</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>0.937</td>
+      <td>NaN</td>
+      <td>0.969</td>
+      <td>0.914</td>
+      <td>NaN</td>
+      <td>0.953</td>
+      <td>NaN</td>
     </tr>
     <tr>
-      <th>1003.0</th>
-      <td>0.921028</td>
-      <td>0.761262</td>
-      <td>-0.241008</td>
-      <td>-0.612394</td>
-      <td>-0.198821</td>
-      <td>0.600541</td>
-      <td>0.038012</td>
-      <td>1.649567</td>
-      <td>0.484537</td>
-      <td>-0.694430</td>
+      <th>1503</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>0.875</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>0.675</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
       <td>...</td>
-      <td>0.332292</td>
-      <td>0.469818</td>
-      <td>1.270690</td>
-      <td>-0.172501</td>
-      <td>0.210101</td>
-      <td>-0.619913</td>
-      <td>-0.157362</td>
-      <td>-0.393430</td>
-      <td>0.248620</td>
-      <td>0.292726</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>0.775</td>
+      <td>NaN</td>
+      <td>1.109</td>
+      <td>0.927</td>
+      <td>NaN</td>
+      <td>1.230</td>
+      <td>NaN</td>
     </tr>
     <tr>
-      <th>1004.0</th>
-      <td>0.292958</td>
-      <td>-0.005126</td>
-      <td>0.781568</td>
-      <td>-0.169216</td>
-      <td>0.314034</td>
-      <td>-0.194410</td>
-      <td>0.990756</td>
-      <td>-0.391326</td>
-      <td>-1.263733</td>
-      <td>1.176845</td>
+      <th>1504</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>1.139</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>0.882</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
       <td>...</td>
-      <td>0.160528</td>
-      <td>-0.084175</td>
-      <td>0.971972</td>
-      <td>0.342813</td>
-      <td>-0.134291</td>
-      <td>1.254460</td>
-      <td>0.379938</td>
-      <td>1.061491</td>
-      <td>-0.126194</td>
-      <td>-0.164533</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>0.834</td>
+      <td>NaN</td>
+      <td>1.090</td>
+      <td>0.838</td>
+      <td>NaN</td>
+      <td>1.203</td>
+      <td>NaN</td>
     </tr>
     <tr>
       <th>...</th>
@@ -828,132 +927,132 @@ Dataset Overview
       <td>...</td>
     </tr>
     <tr>
-      <th>1996.0</th>
-      <td>0.596161</td>
-      <td>0.397911</td>
-      <td>-0.213472</td>
-      <td>-0.375964</td>
-      <td>0.110367</td>
-      <td>-0.175807</td>
-      <td>1.092398</td>
-      <td>2.554041</td>
-      <td>2.983670</td>
-      <td>-0.233084</td>
+      <th>1996</th>
+      <td>1.346</td>
+      <td>NaN</td>
+      <td>1.373</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>0.823</td>
+      <td>NaN</td>
+      <td>1.159</td>
+      <td>NaN</td>
+      <td>1.354</td>
       <td>...</td>
-      <td>0.086505</td>
-      <td>0.938570</td>
-      <td>-0.516218</td>
-      <td>0.099238</td>
-      <td>0.489292</td>
-      <td>0.470537</td>
-      <td>-0.122144</td>
-      <td>-0.671030</td>
-      <td>0.416049</td>
-      <td>0.440858</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>0.773</td>
+      <td>0.978</td>
+      <td>0.648</td>
+      <td>1.018</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
     </tr>
     <tr>
-      <th>1997.0</th>
-      <td>0.708165</td>
-      <td>-0.204674</td>
-      <td>0.940863</td>
-      <td>-0.811482</td>
-      <td>-0.402413</td>
-      <td>0.229789</td>
-      <td>1.386490</td>
-      <td>0.106067</td>
-      <td>-0.278486</td>
-      <td>-0.677213</td>
+      <th>1997</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>1.153</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>0.564</td>
+      <td>NaN</td>
+      <td>1.358</td>
+      <td>NaN</td>
+      <td>1.134</td>
       <td>...</td>
-      <td>-0.236382</td>
-      <td>0.109457</td>
-      <td>-0.916285</td>
-      <td>-0.319777</td>
-      <td>-0.009780</td>
-      <td>0.513189</td>
-      <td>-0.707492</td>
-      <td>-1.106939</td>
-      <td>-0.174881</td>
-      <td>-0.218647</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>0.602</td>
+      <td>1.017</td>
+      <td>0.752</td>
+      <td>0.976</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
     </tr>
     <tr>
-      <th>1998.0</th>
-      <td>0.502749</td>
-      <td>-0.240407</td>
-      <td>1.346490</td>
-      <td>0.595868</td>
-      <td>0.373318</td>
-      <td>0.085835</td>
-      <td>0.838359</td>
-      <td>0.328611</td>
-      <td>1.795783</td>
-      <td>2.179380</td>
+      <th>1998</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>1.369</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>0.886</td>
+      <td>NaN</td>
+      <td>1.575</td>
+      <td>NaN</td>
+      <td>1.368</td>
       <td>...</td>
-      <td>-0.454328</td>
-      <td>0.489631</td>
-      <td>0.177895</td>
-      <td>0.388473</td>
-      <td>0.009699</td>
-      <td>0.821627</td>
-      <td>0.307725</td>
-      <td>1.840054</td>
-      <td>-0.005446</td>
-      <td>0.060198</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>0.974</td>
+      <td>1.029</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
     </tr>
     <tr>
-      <th>1999.0</th>
-      <td>1.476074</td>
-      <td>-0.101115</td>
-      <td>0.071156</td>
-      <td>0.010010</td>
-      <td>0.215712</td>
-      <td>-0.452304</td>
-      <td>-0.450495</td>
-      <td>2.144862</td>
-      <td>1.877791</td>
-      <td>-0.456210</td>
+      <th>1999</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>1.502</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>0.798</td>
+      <td>NaN</td>
+      <td>1.050</td>
+      <td>NaN</td>
+      <td>0.830</td>
       <td>...</td>
-      <td>0.340616</td>
-      <td>0.543951</td>
-      <td>0.590506</td>
-      <td>0.229498</td>
-      <td>0.373771</td>
-      <td>0.036311</td>
-      <td>-0.097946</td>
-      <td>-0.597891</td>
-      <td>0.509028</td>
-      <td>0.404405</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>0.702</td>
+      <td>1.031</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
     </tr>
     <tr>
-      <th>2000.0</th>
-      <td>-0.227916</td>
-      <td>-0.418627</td>
-      <td>0.600212</td>
-      <td>1.064158</td>
-      <td>0.782957</td>
-      <td>1.423108</td>
-      <td>1.178986</td>
-      <td>-0.110369</td>
-      <td>1.205325</td>
-      <td>-0.306477</td>
+      <th>2000</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>1.674</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>0.720</td>
+      <td>NaN</td>
+      <td>1.237</td>
+      <td>NaN</td>
+      <td>1.254</td>
       <td>...</td>
-      <td>-0.156622</td>
-      <td>0.445898</td>
-      <td>0.449710</td>
-      <td>0.121985</td>
-      <td>0.304760</td>
-      <td>1.010402</td>
-      <td>0.186142</td>
-      <td>1.766690</td>
-      <td>0.499660</td>
-      <td>0.453703</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>0.998</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
     </tr>
   </tbody>
 </table>
-<p>1001 rows × 692 columns</p>
+<p>501 rows × 111 columns</p>
 </div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[32]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -968,13 +1067,13 @@ Dataset Overview
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-(1001, 726)
-(1001, 692)
-(1418, 2)
+(501, 96)
+(501, 111)
+(207, 2)
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[33]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -987,20 +1086,19 @@ Dataset Overview
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-<span class="ansi-cyan-intense-fg ansi-bold">LMRt: job.save_job() &gt;&gt;&gt; Prepration data saved to: /Users/fzhu/Github/GraphEM/docsrc/tutorial/testcases/PPE_PAGES2k/recon/job.pkl</span>
-<span class="ansi-cyan-intense-fg ansi-bold">LMRt: job.save_job() &gt;&gt;&gt; job.configs[&#34;prep_savepath&#34;] = /Users/fzhu/Github/GraphEM/docsrc/tutorial/testcases/PPE_PAGES2k/recon/job.pkl</span>
+<span class="ansi-cyan-intense-fg ansi-bold">LMRt: job.save_job() &gt;&gt;&gt; Prepration data saved to: /Users/fzhu/Github/GraphEM/docsrc/tutorial/testcases/PAGES2k_HadCRUT_cropped_domain/recon/job.pkl</span>
+<span class="ansi-cyan-intense-fg ansi-bold">LMRt: job.save_job() &gt;&gt;&gt; job.configs[&#34;prep_savepath&#34;] = /Users/fzhu/Github/GraphEM/docsrc/tutorial/testcases/PAGES2k_HadCRUT_cropped_domain/recon/job.pkl</span>
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[53]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="o">%%time</span>
 
-<span class="c1"># need to remove G.pkl if the previous run is problematic</span>
-<span class="n">save_path</span> <span class="o">=</span> <span class="s1">&#39;./testcases/PPE_PAGES2k/recon/G.pkl&#39;</span>
-<span class="n">job</span><span class="o">.</span><span class="n">run_solver</span><span class="p">(</span><span class="n">save_path</span><span class="o">=</span><span class="n">save_path</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">distance</span><span class="o">=</span><span class="mf">5e3</span><span class="p">)</span>
+<span class="n">save_path</span> <span class="o">=</span> <span class="s1">&#39;./testcases/PAGES2k_HadCRUT_cropped_domain/recon/G.pkl&#39;</span>
+<span class="n">job</span><span class="o">.</span><span class="n">run_solver</span><span class="p">(</span><span class="n">save_path</span><span class="o">=</span><span class="n">save_path</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">distance</span><span class="o">=</span><span class="mf">1e3</span><span class="p">,</span> <span class="n">maxit</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1014,121 +1112,123 @@ Running GraphEM:
 
 Iter     dXmis     rdXmis
 
-001     0.0876     0.6708
-002     0.4915     3.0970
-003     0.1681     0.3053
-004     0.1048     0.1687
-005     0.0731     0.1107
-006     0.0542     0.0788
-007     0.0430     0.0606
-008     0.0344     0.0474
-009     0.0292     0.0395
-010     0.0256     0.0341
-011     0.0229     0.0300
-012     0.0208     0.0270
-013     0.0191     0.0245
-014     0.0178     0.0226
-015     0.0167     0.0210
-016     0.0157     0.0197
-017     0.0150     0.0186
-018     0.0183     0.0226
-019     0.0150     0.0184
-020     0.0137     0.0167
-021     0.0129     0.0157
-022     0.0123     0.0149
-023     0.0118     0.0142
-024     0.0114     0.0137
-025     0.0110     0.0132
-026     0.0106     0.0127
-027     0.0103     0.0123
-028     0.0101     0.0120
-029     0.0098     0.0116
-030     0.0096     0.0113
-031     0.0094     0.0110
-032     0.0092     0.0108
-033     0.0090     0.0105
-034     0.0088     0.0103
-035     0.0086     0.0101
-036     0.0085     0.0099
-037     0.0083     0.0097
-038     0.0082     0.0096
-039     0.0081     0.0094
-040     0.0080     0.0092
-041     0.0078     0.0091
-042     0.0077     0.0090
-043     0.0076     0.0088
-044     0.0075     0.0087
-045     0.0074     0.0086
-046     0.0074     0.0085
-047     0.0073     0.0084
-048     0.0072     0.0083
-049     0.0071     0.0082
-050     0.0070     0.0081
-051     0.0069     0.0080
-052     0.0068     0.0079
-053     0.0068     0.0078
-054     0.0067     0.0077
-055     0.0066     0.0076
-056     0.0065     0.0075
-057     0.0065     0.0074
-058     0.0064     0.0073
-059     0.0063     0.0072
-060     0.0063     0.0072
-061     0.0062     0.0071
-062     0.0061     0.0070
-063     0.0061     0.0069
-064     0.0060     0.0069
-065     0.0059     0.0068
-066     0.0059     0.0067
-067     0.0058     0.0066
-068     0.0058     0.0066
-069     0.0057     0.0065
-070     0.0057     0.0065
-071     0.0056     0.0064
-072     0.0056     0.0063
-073     0.0055     0.0063
-074     0.0055     0.0062
-075     0.0054     0.0062
-076     0.0054     0.0061
-077     0.0053     0.0060
-078     0.0053     0.0060
-079     0.0052     0.0059
-080     0.0052     0.0059
-081     0.0051     0.0058
-082     0.0051     0.0058
-083     0.0051     0.0058
-084     0.0050     0.0057
-085     0.0050     0.0057
-086     0.0050     0.0056
-087     0.0049     0.0056
-088     0.0049     0.0055
-089     0.0049     0.0055
-090     0.0048     0.0055
-091     0.0048     0.0054
-092     0.0048     0.0054
-093     0.0047     0.0054
-094     0.0047     0.0053
-095     0.0047     0.0053
-096     0.0046     0.0052
-097     0.0046     0.0052
-098     0.0046     0.0052
-099     0.0045     0.0051
-100     0.0045     0.0051
-101     0.0045     0.0051
-102     0.0044     0.0050
-103     0.0044     0.0050
-<span class="ansi-green-intense-fg ansi-bold">GraphEM: job.run_solver() &gt;&gt;&gt; job.G created and saved to: ./testcases/PPE_PAGES2k/recon/G.pkl</span>
+001     0.0386     0.0930
+002     0.0959     0.2285
+003     0.1653     0.3785
+004     0.1087     0.2143
+005     0.0851     0.1510
+006     0.0792     0.1310
+007     0.0694     0.1079
+008     0.0585     0.0861
+009     0.0493     0.0694
+010     0.0429     0.0581
+011     0.0385     0.0505
+012     0.0356     0.0455
+013     0.0351     0.0437
+014     0.0330     0.0401
+015     0.0317     0.0377
+016     0.0306     0.0356
+017     0.0294     0.0336
+018     0.0283     0.0318
+019     0.0273     0.0300
+020     0.0262     0.0283
+021     0.0252     0.0267
+022     0.0242     0.0253
+023     0.0232     0.0239
+024     0.0223     0.0227
+025     0.0215     0.0215
+026     0.0207     0.0204
+027     0.0199     0.0194
+028     0.0192     0.0185
+029     0.0186     0.0177
+030     0.0212     0.0199
+031     0.0190     0.0177
+032     0.0196     0.0180
+033     0.0183     0.0167
+034     0.0186     0.0167
+035     0.0163     0.0145
+036     0.0156     0.0138
+037     0.0151     0.0132
+038     0.0147     0.0127
+039     0.0143     0.0123
+040     0.0140     0.0119
+041     0.0137     0.0115
+042     0.0134     0.0112
+043     0.0131     0.0109
+044     0.0129     0.0106
+045     0.0126     0.0104
+046     0.0124     0.0101
+047     0.0122     0.0099
+048     0.0120     0.0097
+049     0.0118     0.0094
+050     0.0117     0.0092
+051     0.0115     0.0091
+052     0.0113     0.0089
+053     0.0112     0.0087
+054     0.0110     0.0085
+055     0.0109     0.0084
+056     0.0108     0.0082
+057     0.0106     0.0081
+058     0.0105     0.0079
+059     0.0104     0.0078
+060     0.0102     0.0076
+061     0.0101     0.0075
+062     0.0100     0.0074
+063     0.0099     0.0073
+064     0.0097     0.0071
+065     0.0096     0.0070
+066     0.0095     0.0069
+067     0.0094     0.0068
+068     0.0093     0.0067
+069     0.0092     0.0066
+070     0.0091     0.0065
+071     0.0089     0.0064
+072     0.0088     0.0063
+073     0.0087     0.0062
+074     0.0086     0.0061
+075     0.0085     0.0060
+076     0.0084     0.0059
+077     0.0083     0.0058
+078     0.0082     0.0057
+079     0.0081     0.0056
+080     0.0080     0.0055
+081     0.0080     0.0054
+082     0.0079     0.0054
+083     0.0078     0.0053
+084     0.0077     0.0052
+085     0.0076     0.0051
+086     0.0075     0.0050
+087     0.0074     0.0050
+<span class="ansi-green-intense-fg ansi-bold">GraphEM: job.run_solver() &gt;&gt;&gt; job.G created and saved to: ./testcases/PAGES2k_HadCRUT_cropped_domain/recon/G.pkl</span>
 <span class="ansi-green-intense-fg ansi-bold">GraphEM: job.run_solver() &gt;&gt;&gt; job.recon created</span>
-CPU times: user 1h 12min 41s, sys: 2min 26s, total: 1h 15min 8s
-Wall time: 10min 39s
+CPU times: user 1min 29s, sys: 24.7 s, total: 1min 54s
+Wall time: 15.8 s
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[54]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">job</span><span class="o">.</span><span class="n">save_recon</span><span class="p">(</span><span class="s1">&#39;./testcases/PPE_PAGES2k/recon/recon.nc&#39;</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span></span><span class="n">np</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">job</span><span class="o">.</span><span class="n">recon</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[54]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+(501, 8, 12)
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[55]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">job</span><span class="o">.</span><span class="n">save_recon</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;./testcases/PAGES2k_HadCRUT_cropped_domain/recon/recon.nc&#39;</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1137,19 +1237,23 @@ Wall time: 10min 39s
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-<span class="ansi-cyan-intense-fg ansi-bold">LMRt: job.save_recon() &gt;&gt;&gt; Reconstruction saved to: ./testcases/PPE_PAGES2k/recon/recon.nc</span>
+<span class="ansi-cyan-intense-fg ansi-bold">LMRt: job.save_recon() &gt;&gt;&gt; Reconstruction saved to: ./testcases/PAGES2k_HadCRUT_cropped_domain/recon/recon.nc</span>
 </pre></div></div>
 </div>
 </div>
 <div class="section" id="Validation">
 <h2>Validation<a class="headerlink" href="#Validation" title="Permalink to this headline">¶</a></h2>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[56]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="k">with</span> <span class="n">xr</span><span class="o">.</span><span class="n">open_dataset</span><span class="p">(</span><span class="s1">&#39;./testcases/PPE_PAGES2k/recon/recon.nc&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">ds</span><span class="p">:</span>
+<span></span><span class="k">with</span> <span class="n">xr</span><span class="o">.</span><span class="n">open_dataset</span><span class="p">(</span><span class="s1">&#39;./testcases/PAGES2k_HadCRUT_cropped_domain/recon/recon.nc&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">ds</span><span class="p">:</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">ds</span><span class="p">)</span>
+    <span class="n">recon</span> <span class="o">=</span> <span class="n">ds</span><span class="p">[</span><span class="s1">&#39;recon&#39;</span><span class="p">]</span>
+    <span class="n">lat</span> <span class="o">=</span> <span class="n">ds</span><span class="p">[</span><span class="s1">&#39;lat&#39;</span><span class="p">]</span>
+    <span class="n">lon</span> <span class="o">=</span> <span class="n">ds</span><span class="p">[</span><span class="s1">&#39;lon&#39;</span><span class="p">]</span>
+    <span class="n">year</span> <span class="o">=</span> <span class="n">ds</span><span class="p">[</span><span class="s1">&#39;year&#39;</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
@@ -1159,23 +1263,23 @@ Wall time: 10min 39s
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 &lt;xarray.Dataset&gt;
-Dimensions:  (lat: 22, lon: 33, year: 1001)
+Dimensions:  (lat: 8, lon: 12, year: 501)
 Coordinates:
-  * year     (year) int64 1000 1001 1002 1003 1004 ... 1996 1997 1998 1999 2000
-  * lat      (lat) float64 -85.91 -77.73 -69.55 -61.36 ... 69.55 77.73 85.91
-  * lon      (lon) float64 0.0 10.91 21.82 32.73 ... 316.4 327.3 338.2 349.1
+  * year     (year) int64 1500 1501 1502 1503 1504 ... 1996 1997 1998 1999 2000
+  * lat      (lat) float64 32.5 37.5 42.5 47.5 52.5 57.5 62.5 67.5
+  * lon      (lon) float64 232.5 237.5 242.5 247.5 ... 272.5 277.5 282.5 287.5
 Data variables:
     recon    (year, lat, lon) float64 ...
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[57]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">mask</span> <span class="o">=</span> <span class="p">(</span><span class="n">job</span><span class="o">.</span><span class="n">obs</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s1">&#39;tas&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">time</span> <span class="o">&gt;=</span> <span class="mi">1000</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">job</span><span class="o">.</span><span class="n">obs</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s1">&#39;tas&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">time</span> <span class="o">&lt;=</span> <span class="mi">2000</span><span class="p">)</span>
-<span class="n">target</span> <span class="o">=</span> <span class="n">job</span><span class="o">.</span><span class="n">obs</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s1">&#39;tas&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">target</span><span class="p">))</span>
+<span></span><span class="n">mask</span> <span class="o">=</span> <span class="p">(</span><span class="n">ds</span><span class="p">[</span><span class="s1">&#39;recon&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">year</span><span class="o">&gt;=</span><span class="mi">1850</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">ds</span><span class="p">[</span><span class="s1">&#39;recon&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">year</span><span class="o">&lt;=</span><span class="mi">1930</span><span class="p">)</span>
+<span class="n">tas_recon</span> <span class="o">=</span> <span class="n">ds</span><span class="p">[</span><span class="s1">&#39;recon&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">tas_recon</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
@@ -1184,20 +1288,17 @@ Data variables:
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-(1001, 22, 33)
+(81, 8, 12)
 </pre></div></div>
 </div>
-<div class="section" id="Mean-Statistics">
-<h3>Mean Statistics<a class="headerlink" href="#Mean-Statistics" title="Permalink to this headline">¶</a></h3>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[58]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">nt</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="n">ds</span><span class="p">[</span><span class="s1">&#39;year&#39;</span><span class="p">])</span>
-<span class="n">temp_r</span> <span class="o">=</span> <span class="n">job</span><span class="o">.</span><span class="n">recon</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="n">nt</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">))</span>
-<span class="n">V</span> <span class="o">=</span> <span class="n">GraphEM</span><span class="o">.</span><span class="n">solver</span><span class="o">.</span><span class="n">verif_stats</span><span class="p">(</span><span class="n">temp_r</span><span class="p">,</span> <span class="n">target</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="n">nt</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)),</span> <span class="n">job</span><span class="o">.</span><span class="n">calib_idx</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">V</span><span class="p">)</span>
+<span></span><span class="n">tas_obs</span> <span class="o">=</span> <span class="n">job</span><span class="o">.</span><span class="n">obs</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s1">&#39;tas&#39;</span><span class="p">]</span>
+<span class="n">mask</span> <span class="o">=</span> <span class="p">(</span><span class="n">tas_obs</span><span class="o">.</span><span class="n">time</span><span class="o">&gt;=</span><span class="mi">1850</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">tas_obs</span><span class="o">.</span><span class="n">time</span><span class="o">&lt;=</span><span class="mi">1930</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">tas_obs</span><span class="o">.</span><span class="n">value</span><span class="p">[</span><span class="n">mask</span><span class="p">]))</span>
 </pre></div>
 </div>
 </div>
@@ -1206,32 +1307,21 @@ Data variables:
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-Mean MSE = 0.5291, Mean RE = 0.1882, Mean CE = -0.0223, Mean R2 = 0.3907
+(81, 8, 12)
 </pre></div></div>
 </div>
-</div>
-<div class="section" id="Map-of-CE">
-<h3>Map of CE<a class="headerlink" href="#Map-of-CE" title="Permalink to this headline">¶</a></h3>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[59]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">ce</span> <span class="o">=</span> <span class="n">LMRt</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">coefficient_efficiency</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="n">ds</span><span class="p">[</span><span class="s1">&#39;recon&#39;</span><span class="p">])</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">ce</span><span class="p">))</span>
+<span></span><span class="n">ce</span> <span class="o">=</span> <span class="n">LMRt</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">coefficient_efficiency</span><span class="p">(</span><span class="n">tas_recon</span><span class="p">,</span> <span class="n">tas_obs</span><span class="o">.</span><span class="n">value</span><span class="p">[</span><span class="n">mask</span><span class="p">])</span>
+
 </pre></div>
 </div>
 </div>
-<div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-(22, 33)
-</pre></div></div>
-</div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[60]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1243,7 +1333,8 @@ Mean MSE = 0.5291, Mean RE = 0.1882, Mean CE = -0.0223, Mean R2 = 0.3907
 <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">[</span><span class="mi">8</span><span class="p">,</span> <span class="mi">8</span><span class="p">])</span>
 <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="n">projection</span><span class="o">=</span><span class="n">ccrs</span><span class="o">.</span><span class="n">PlateCarree</span><span class="p">(</span><span class="n">central_longitude</span><span class="o">=</span><span class="mi">180</span><span class="p">))</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Coefficient of Efficiency&#39;</span><span class="p">)</span>
-<span class="n">latlon_range</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">360</span><span class="p">,</span> <span class="o">-</span><span class="mi">90</span><span class="p">,</span> <span class="mi">90</span><span class="p">]</span>
+<span class="c1"># latlon_range = [0, 360, -90, 90]</span>
+<span class="n">latlon_range</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">mod</span><span class="p">(</span><span class="o">-</span><span class="mi">130</span><span class="p">,</span> <span class="mi">360</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">mod</span><span class="p">(</span><span class="o">-</span><span class="mi">70</span><span class="p">,</span> <span class="mi">360</span><span class="p">),</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">70</span><span class="p">]</span>
 <span class="n">transform</span><span class="o">=</span><span class="n">ccrs</span><span class="o">.</span><span class="n">PlateCarree</span><span class="p">()</span>
 
 <span class="n">ax</span><span class="o">.</span><span class="n">set_extent</span><span class="p">(</span><span class="n">latlon_range</span><span class="p">,</span> <span class="n">crs</span><span class="o">=</span><span class="n">transform</span><span class="p">)</span>
@@ -1290,71 +1381,11 @@ Mean MSE = 0.5291, Mean RE = 0.1882, Mean CE = -0.0223, Mean R2 = 0.3907
 </pre></div>
 </div>
 </div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area stderr docutils container">
-<div class="highlight"><pre>
-/Users/fzhu/Apps/miniconda3/envs/LMRt/lib/python3.8/site-packages/cartopy/mpl/geoaxes.py:834: UserWarning: Attempting to set identical left == right == -180.0 results in singular transformations; automatically expanding.
-  self.set_xlim([x1, x2])
-</pre></div></div>
-</div>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/tutorial_quickstart_ppe_pages2k_25_1.png" src="../_images/tutorial_quickstart_ppe_pages2k_25_1.png" />
-</div>
-</div>
-</div>
-<div class="section" id="Mean-timeseries">
-<h3>Mean timeseries<a class="headerlink" href="#Mean-timeseries" title="Permalink to this headline">¶</a></h3>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">pyleoclim</span> <span class="k">as</span> <span class="nn">pyleo</span>
-</pre></div>
-</div>
-</div>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="k">def</span> <span class="nf">geo_mean</span><span class="p">(</span><span class="n">field</span><span class="p">,</span> <span class="n">lat</span><span class="p">):</span>
-    <span class="n">m</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">average</span><span class="p">(</span>
-        <span class="n">np</span><span class="o">.</span><span class="n">average</span><span class="p">(</span><span class="n">field</span><span class="p">,</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">),</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">weights</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">deg2rad</span><span class="p">(</span><span class="n">lat</span><span class="p">))</span>
-    <span class="p">)</span>
-    <span class="k">return</span> <span class="n">m</span>
-</pre></div>
-</div>
-</div>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="n">m_target</span> <span class="o">=</span> <span class="n">geo_mean</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="n">job</span><span class="o">.</span><span class="n">obs</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s1">&#39;tas&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">lat</span><span class="p">)</span>
-<span class="n">ts_target</span> <span class="o">=</span> <span class="n">pyleo</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">time</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1000</span><span class="p">,</span> <span class="mi">2001</span><span class="p">),</span> <span class="n">value</span><span class="o">=</span><span class="n">m_target</span><span class="p">)</span>
-
-<span class="n">m_recon</span> <span class="o">=</span> <span class="n">geo_mean</span><span class="p">(</span><span class="n">ds</span><span class="p">[</span><span class="s1">&#39;recon&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">ds</span><span class="p">[</span><span class="s1">&#39;lat&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
-<span class="n">ts_recon</span> <span class="o">=</span> <span class="n">pyleo</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">time</span><span class="o">=</span><span class="n">ds</span><span class="p">[</span><span class="s1">&#39;year&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="n">m_recon</span><span class="p">)</span>
-
-<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">ts_target</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">mute</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;target&#39;</span><span class="p">)</span>
-<span class="n">ts_recon</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;recon&#39;</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ds</span><span class="p">[</span><span class="s1">&#39;year&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">m_target</span><span class="o">-</span><span class="n">m_recon</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;diff&#39;</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
-<span class="n">pyleo</span><span class="o">.</span><span class="n">showfig</span><span class="p">(</span><span class="n">fig</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<img alt="../_images/tutorial_quickstart_ppe_pages2k_29_0.png" src="../_images/tutorial_quickstart_ppe_pages2k_29_0.png" />
+<img alt="../_images/tutorial_quickstart_recon_cropped_domain_29_0.png" src="../_images/tutorial_quickstart_recon_cropped_domain_29_0.png" />
 </div>
 </div>
 <div class="nbinput nblast docutils container">
@@ -1368,7 +1399,6 @@ Mean MSE = 0.5291, Mean RE = 0.1882, Mean CE = -0.0223, Mean R2 = 0.3907
 </div>
 </div>
 </div>
-</div>
 
 
            </div>
@@ -1376,8 +1406,8 @@ Mean MSE = 0.5291, Mean RE = 0.1882, Mean CE = -0.0223, Mean R2 = 0.3907
           </div>
           <footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="quickstart_recon.html" class="btn btn-neutral float-right" title="Reconstruction using GraphEM" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
-        <a href="quickstart_ppe.html" class="btn btn-neutral float-left" title="A Pseudoproxy Experiment with GraphEM" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../api.html" class="btn btn-neutral float-right" title="API" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="quickstart_recon.html" class="btn btn-neutral float-left" title="Reconstruction using GraphEM" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
 
   <hr/>

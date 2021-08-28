@@ -11,3 +11,4 @@ Quickstart
     tutorial/quickstart_ppe
     tutorial/quickstart_ppe_pages2k
     tutorial/quickstart_recon
+    tutorial/quickstart_recon_cropped_domain
