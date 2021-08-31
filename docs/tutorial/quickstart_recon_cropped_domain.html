@@ -453,8 +453,8 @@ div.rendered_html tbody tr:hover {
 </style>
 <div class="section" id="Reconstruction-over-a-smaller-domain-using-GraphEM">
 <h1>Reconstruction over a smaller domain using GraphEM<a class="headerlink" href="#Reconstruction-over-a-smaller-domain-using-GraphEM" title="Permalink to this headline">¶</a></h1>
-<p><strong>Expected time to run through: 1 hrs</strong></p>
-<p>This tutorial demonstrates how to get a reconstruction over a smaller domain using GraphEM, leveraging HadCRUT4 and PAGES2k.</p>
+<p><strong>Expected time to run through: 10 mins</strong></p>
+<p>This tutorial demonstrates how to get a reconstruction over a smaller domain (30N-70N, 130W-70W) using GraphEM, leveraging HadCRUT4 and the PAGES2k proxy database.</p>
 <div class="section" id="Test-data-preparation">
 <h2>Test data preparation<a class="headerlink" href="#Test-data-preparation" title="Permalink to this headline">¶</a></h2>
 <p>To go through this tutorial, please prepare test data following the steps:</p>
@@ -543,14 +543,14 @@ div.rendered_html tbody tr:hover {
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="c1"># filter the proxy database by spatial region</span>
+<span></span><span class="c1"># filter the proxy database by spatial region larger than the target (30N-70N, 130W-70W); using (10N-90N, 150W-60W)</span>
 <span class="n">assim_pids</span> <span class="o">=</span> <span class="p">[]</span>
 <span class="k">for</span> <span class="n">pid</span><span class="p">,</span> <span class="n">pobj</span> <span class="ow">in</span> <span class="n">job</span><span class="o">.</span><span class="n">proxydb</span><span class="o">.</span><span class="n">records</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-    <span class="k">if</span> <span class="n">pobj</span><span class="o">.</span><span class="n">lat</span> <span class="o">&gt;=</span> <span class="mi">30</span> <span class="ow">and</span> <span class="n">pobj</span><span class="o">.</span><span class="n">lat</span> <span class="o">&lt;=</span> <span class="mi">70</span> <span class="ow">and</span> <span class="n">pobj</span><span class="o">.</span><span class="n">lon</span> <span class="o">&gt;=</span> <span class="n">np</span><span class="o">.</span><span class="n">mod</span><span class="p">(</span><span class="o">-</span><span class="mi">130</span><span class="p">,</span> <span class="mi">360</span><span class="p">)</span> <span class="ow">and</span> <span class="n">pobj</span><span class="o">.</span><span class="n">lon</span> <span class="o">&lt;=</span> <span class="n">np</span><span class="o">.</span><span class="n">mod</span><span class="p">(</span><span class="o">-</span><span class="mi">70</span><span class="p">,</span> <span class="mi">360</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">pobj</span><span class="o">.</span><span class="n">lat</span> <span class="o">&gt;=</span> <span class="mi">10</span> <span class="ow">and</span> <span class="n">pobj</span><span class="o">.</span><span class="n">lat</span> <span class="o">&lt;=</span> <span class="mi">90</span> <span class="ow">and</span> <span class="n">pobj</span><span class="o">.</span><span class="n">lon</span> <span class="o">&gt;=</span> <span class="n">np</span><span class="o">.</span><span class="n">mod</span><span class="p">(</span><span class="o">-</span><span class="mi">150</span><span class="p">,</span> <span class="mi">360</span><span class="p">)</span> <span class="ow">and</span> <span class="n">pobj</span><span class="o">.</span><span class="n">lon</span> <span class="o">&lt;=</span> <span class="n">np</span><span class="o">.</span><span class="n">mod</span><span class="p">(</span><span class="o">-</span><span class="mi">60</span><span class="p">,</span> <span class="mi">360</span><span class="p">):</span>
         <span class="n">assim_pids</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">pid</span><span class="p">)</span>
 
 <span class="n">job</span><span class="o">.</span><span class="n">proxydb</span><span class="o">.</span><span class="n">filter_pids</span><span class="p">(</span><span class="n">assim_pids</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -566,12 +566,12 @@ div.rendered_html tbody tr:hover {
 Proxy Database Overview
 -----------------------
      Source:        /Users/fzhu/Github/GraphEM/docsrc/tutorial/testcases/PAGES2k_HadCRUT_cropped_domain/data/proxy/pages2k_dataset.pkl
-       Size:        128
-Proxy types:        {&#39;tree.TRW&#39;: 70, &#39;tree.MXD&#39;: 41, &#39;lake.pollen&#39;: 10, &#39;marine.alkenone&#39;: 1, &#39;marine.MgCa&#39;: 3, &#39;lake.chironomid&#39;: 1, &#39;speleothem.d18O&#39;: 1, &#39;lake.varve_thickness&#39;: 1}
+       Size:        111
+Proxy types:        {&#39;tree.TRW&#39;: 70, &#39;tree.MXD&#39;: 41}
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[24]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -589,16 +589,16 @@ Proxy types:        {&#39;tree.TRW&#39;: 70, &#39;tree.MXD&#39;: 41, &#39;lake.p
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-<span class="ansi-cyan-intense-fg ansi-bold">GraphEM: job.seasonalize_proxydb() &gt;&gt;&gt; job.configs[&#34;ptype_season&#34;] = {&#39;tree.TRW&#39;: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], &#39;tree.MXD&#39;: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], &#39;lake.pollen&#39;: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], &#39;marine.alkenone&#39;: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], &#39;marine.MgCa&#39;: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], &#39;lake.chironomid&#39;: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], &#39;speleothem.d18O&#39;: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], &#39;lake.varve_thickness&#39;: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]}</span>
-<span class="ansi-cyan-intense-fg ansi-bold">GraphEM: job.seasonalize_proxydb() &gt;&gt;&gt; seasonalizing proxy records according to: {&#39;tree.TRW&#39;: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], &#39;tree.MXD&#39;: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], &#39;lake.pollen&#39;: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], &#39;marine.alkenone&#39;: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], &#39;marine.MgCa&#39;: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], &#39;lake.chironomid&#39;: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], &#39;speleothem.d18O&#39;: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], &#39;lake.varve_thickness&#39;: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]}</span>
-<span class="ansi-green-intense-fg ansi-bold">GraphEM: job.seasonalize_proxydb() &gt;&gt;&gt; 128 records remaining</span>
+<span class="ansi-cyan-intense-fg ansi-bold">GraphEM: job.seasonalize_proxydb() &gt;&gt;&gt; job.configs[&#34;ptype_season&#34;] = {&#39;tree.TRW&#39;: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], &#39;tree.MXD&#39;: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]}</span>
+<span class="ansi-cyan-intense-fg ansi-bold">GraphEM: job.seasonalize_proxydb() &gt;&gt;&gt; seasonalizing proxy records according to: {&#39;tree.TRW&#39;: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], &#39;tree.MXD&#39;: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]}</span>
+<span class="ansi-green-intense-fg ansi-bold">GraphEM: job.seasonalize_proxydb() &gt;&gt;&gt; 111 records remaining</span>
 <span class="ansi-green-intense-fg ansi-bold">GraphEM: job.seasonalize_proxydb() &gt;&gt;&gt; job.proxydb updated</span>
 <span class="ansi-cyan-intense-fg ansi-bold">GraphEM: job.filter_proxydb() &gt;&gt;&gt; filtering proxy records according to: [&#39;coral.d18O&#39;, &#39;coral.SrCa&#39;, &#39;coral.calc&#39;, &#39;tree.TRW&#39;, &#39;tree.MXD&#39;]</span>
 <span class="ansi-green-intense-fg ansi-bold">GraphEM: job.filter_proxydb() &gt;&gt;&gt; 111 records remaining</span>
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[26]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -616,7 +616,7 @@ Proxy types:        {&#39;tree.TRW&#39;: 70, &#39;tree.MXD&#39;: 41, &#39;lake.p
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[27]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -652,7 +652,7 @@ Dataset Overview
 <div class="section" id="Cropping-the-domain">
 <h2>Cropping the domain<a class="headerlink" href="#Cropping-the-domain" title="Permalink to this headline">¶</a></h2>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[28]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -676,7 +676,7 @@ Dataset Overview
 <p>The current domain is global. We may call the <code class="docutils literal notranslate"><span class="pre">job.obs.crop()</span></code> method with the <code class="docutils literal notranslate"><span class="pre">domain_range</span></code> parameter to crop the domain.</p>
 <p>There are two ways of cropping the domain: + crop only the latitudes with the input argument <code class="docutils literal notranslate"><span class="pre">domain_range</span> <span class="pre">=</span> <span class="pre">[lat_min,</span> <span class="pre">lat_max]</span></code> + crop both the latitudes and longitudes the input argument <code class="docutils literal notranslate"><span class="pre">domain_range</span> <span class="pre">=</span> <span class="pre">[lat_min,</span> <span class="pre">lat_max,</span> <span class="pre">lon_min,</span> <span class="pre">lon_max]</span></code></p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[29]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -704,7 +704,7 @@ Dataset Overview
 <div class="section" id="Data-preparation">
 <h2>Data preparation<a class="headerlink" href="#Data-preparation" title="Permalink to this headline">¶</a></h2>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[30]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -727,7 +727,7 @@ Dataset Overview
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[31]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -736,7 +736,7 @@ Dataset Overview
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[31]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -1052,7 +1052,7 @@ Dataset Overview
 </div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[32]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1073,7 +1073,7 @@ Dataset Overview
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[33]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1091,7 +1091,7 @@ Dataset Overview
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[53]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1201,12 +1201,12 @@ Iter     dXmis     rdXmis
 087     0.0074     0.0050
 <span class="ansi-green-intense-fg ansi-bold">GraphEM: job.run_solver() &gt;&gt;&gt; job.G created and saved to: ./testcases/PAGES2k_HadCRUT_cropped_domain/recon/G.pkl</span>
 <span class="ansi-green-intense-fg ansi-bold">GraphEM: job.run_solver() &gt;&gt;&gt; job.recon created</span>
-CPU times: user 1min 29s, sys: 24.7 s, total: 1min 54s
-Wall time: 15.8 s
+CPU times: user 1min 26s, sys: 24 s, total: 1min 50s
+Wall time: 15.2 s
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[54]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1215,7 +1215,7 @@ Wall time: 15.8 s
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[54]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
@@ -1224,7 +1224,7 @@ Wall time: 15.8 s
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[55]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[23]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1244,7 +1244,7 @@ Wall time: 15.8 s
 <div class="section" id="Validation">
 <h2>Validation<a class="headerlink" href="#Validation" title="Permalink to this headline">¶</a></h2>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[56]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[24]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1273,7 +1273,7 @@ Data variables:
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[57]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[25]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1292,7 +1292,7 @@ Data variables:
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[58]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[26]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1311,7 +1311,7 @@ Data variables:
 </pre></div></div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[59]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[27]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1321,7 +1321,7 @@ Data variables:
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[60]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[28]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
