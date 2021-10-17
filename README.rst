@@ -1,8 +1,8 @@
-.. image:: https://img.shields.io/github/last-commit/fzhu2e/GraphEM/main
-    :target: https://github.com/fzhu2e/GraphEM
+.. image:: https://img.shields.io/github/last-commit/paleopresto/GraphEM/main
+    :target: https://github.com/paleopresto/GraphEM
 
-.. image:: https://img.shields.io/github/license/fzhu2e/GraphEM
-    :target: https://github.com/fzhu2e/GraphEM/blob/master/LICENSE
+.. image:: https://img.shields.io/github/license/paleopresto/GraphEM
+    :target: https://github.com/paleopresto/GraphEM/blob/master/LICENSE
 
 .. image:: https://img.shields.io/pypi/pyversions/GraphEM
     :target: https://pypi.org/project/GraphEM
@@ -19,10 +19,10 @@ GraphEM refers to the climate field reconstruction approach proposed by `Guillot
 Documentation
 =============
 
-+ Homepage: https://fzhu2e.github.io/GraphEM
-+ Installation: https://fzhu2e.github.io/GraphEM/installation.html
-+ Tutorial (html): https://fzhu2e.github.io/GraphEM/tutorial.html
-+ Tutorial (Jupyter notebooks): https://github.com/fzhu2e/GraphEM/tree/master/docsrc/tutorial
++ Homepage: https://paleopresto.github.io/GraphEM
++ Installation: https://paleopresto.github.io/GraphEM/installation.html
++ Tutorial (html): https://paleopresto.github.io/GraphEM/tutorial.html
++ Tutorial (Jupyter notebooks): https://github.com/paleopresto/GraphEM/tree/master/docsrc/tutorial
 
 Reference of the GraphEM algorithm
 ==================================
