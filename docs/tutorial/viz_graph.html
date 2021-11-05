@@ -1,0 +1,992 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Visualization of a graph &mdash; GraphEM  documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="API" href="../api.html" />
+    <link rel="prev" title="Reconstruction over a smaller domain using GraphEM" href="quickstart_recon_cropped_domain.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> GraphEM
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../tutorial.html">Tutorial</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../tutorial.html#quickstart">Quickstart</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../tutorial.html#visualization">Visualization</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Visualization of a graph</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#Data-preparation">Data preparation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Creating-a-graph-object">Creating a graph object</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Visualizing-the-neighbors-of-a-target-proxy-within-a-certain-distance">Visualizing the neighbors of a target proxy within a certain distance</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Visualizing-the-neighbors-and-the-correlation-to-the-target-proxy">Visualizing the neighbors and the correlation to the target proxy</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../api.html">API</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">GraphEM</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../tutorial.html">Tutorial</a> &raquo;</li>
+      <li>Visualization of a graph</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/tutorial/viz_graph.ipynb.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput.container div.prompt *,
+div.nboutput.container div.prompt *,
+div.nbinput.container div.input_area pre,
+div.nboutput.container div.output_area pre,
+div.nbinput.container div.input_area .highlight,
+div.nboutput.container div.output_area .highlight {
+    border: none;
+    padding: 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+div.nbinput.container > div[class*=highlight],
+div.nboutput.container > div[class*=highlight] {
+    margin: 0;
+}
+
+div.nbinput.container div.prompt *,
+div.nboutput.container div.prompt * {
+    background: none;
+}
+
+div.nboutput.container div.output_area .highlight,
+div.nboutput.container div.output_area pre {
+    background: unset;
+}
+
+div.nboutput.container div.output_area div.highlight {
+    color: unset;  /* override Pygments text color */
+}
+
+/* avoid gaps between output lines */
+div.nboutput.container div[class*=highlight] pre {
+    line-height: normal;
+}
+
+/* input/output containers */
+div.nbinput.container,
+div.nboutput.container {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+    width: 100%;
+}
+@media (max-width: 540px) {
+    div.nbinput.container,
+    div.nboutput.container {
+        flex-direction: column;
+    }
+}
+
+/* input container */
+div.nbinput.container {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast.container {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput.container div.prompt pre {
+    color: #307FC1;
+}
+
+/* output prompt */
+div.nboutput.container div.prompt pre {
+    color: #BF5B3D;
+}
+
+/* all prompts */
+div.nbinput.container div.prompt,
+div.nboutput.container div.prompt {
+    width: 4.5ex;
+    padding-top: 5px;
+    position: relative;
+    user-select: none;
+}
+
+div.nbinput.container div.prompt > div,
+div.nboutput.container div.prompt > div {
+    position: absolute;
+    right: 0;
+    margin-right: 0.3ex;
+}
+
+@media (max-width: 540px) {
+    div.nbinput.container div.prompt,
+    div.nboutput.container div.prompt {
+        width: unset;
+        text-align: left;
+        padding: 0.4em;
+    }
+    div.nboutput.container div.prompt.empty {
+        padding: 0;
+    }
+
+    div.nbinput.container div.prompt > div,
+    div.nboutput.container div.prompt > div {
+        position: unset;
+    }
+}
+
+/* disable scrollbars on prompts */
+div.nbinput.container div.prompt pre,
+div.nboutput.container div.prompt pre {
+    overflow: hidden;
+}
+
+/* input/output area */
+div.nbinput.container div.input_area,
+div.nboutput.container div.output_area {
+    -webkit-flex: 1;
+    flex: 1;
+    overflow: auto;
+}
+@media (max-width: 540px) {
+    div.nbinput.container div.input_area,
+    div.nboutput.container div.output_area {
+        width: 100%;
+    }
+}
+
+/* input area */
+div.nbinput.container div.input_area {
+    border: 1px solid #e0e0e0;
+    border-radius: 2px;
+    /*background: #f5f5f5;*/
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput.container div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.imgmath center alignment in output cells */
+div.nboutput.container div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput.container div.output_area.stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-default-inverse-fg { color: #FFFFFF; }
+.ansi-default-inverse-bg { background-color: #000000; }
+
+.ansi-bold { font-weight: bold; }
+.ansi-underline { text-decoration: underline; }
+
+
+div.nbinput.container div.input_area div[class*=highlight] > pre,
+div.nboutput.container div.output_area div[class*=highlight] > pre,
+div.nboutput.container div.output_area div[class*=highlight].math,
+div.nboutput.container div.output_area.rendered_html,
+div.nboutput.container div.output_area > div.output_javascript,
+div.nboutput.container div.output_area:not(.rendered_html) > img{
+    padding: 5px;
+    margin: 0;
+}
+
+/* fix copybtn overflow problem in chromium (needed for 'sphinx_copybutton') */
+div.nbinput.container div.input_area > div[class^='highlight'],
+div.nboutput.container div.output_area > div[class^='highlight']{
+    overflow-y: hidden;
+}
+
+/* hide copybtn icon on prompts (needed for 'sphinx_copybutton') */
+.prompt a.copybtn {
+    display: none;
+}
+
+/* Some additional styling taken form the Jupyter notebook CSS */
+div.rendered_html table {
+  border: none;
+  border-collapse: collapse;
+  border-spacing: 0;
+  color: black;
+  font-size: 12px;
+  table-layout: fixed;
+}
+div.rendered_html thead {
+  border-bottom: 1px solid black;
+  vertical-align: bottom;
+}
+div.rendered_html tr,
+div.rendered_html th,
+div.rendered_html td {
+  text-align: right;
+  vertical-align: middle;
+  padding: 0.5em 0.5em;
+  line-height: normal;
+  white-space: normal;
+  max-width: none;
+  border: none;
+}
+div.rendered_html th {
+  font-weight: bold;
+}
+div.rendered_html tbody tr:nth-child(odd) {
+  background: #f5f5f5;
+}
+div.rendered_html tbody tr:hover {
+  background: rgba(66, 165, 245, 0.2);
+}
+
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast.container,
+.nboutput.nblast.container {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast.container + .nbinput.container {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<section id="Visualization-of-a-graph">
+<h1>Visualization of a graph<a class="headerlink" href="#Visualization-of-a-graph" title="Permalink to this headline"></a></h1>
+<section id="Data-preparation">
+<h2>Data preparation<a class="headerlink" href="#Data-preparation" title="Permalink to this headline"></a></h2>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="o">%</span><span class="k">load_ext</span> autoreload
+<span class="o">%</span><span class="k">autoreload</span> 2
+
+<span class="kn">import</span> <span class="nn">GraphEM</span>
+<span class="kn">import</span> <span class="nn">pyleoclim</span> <span class="k">as</span> <span class="nn">pyleo</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">job</span> <span class="o">=</span> <span class="n">GraphEM</span><span class="o">.</span><span class="n">ReconJob</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">job</span><span class="o">.</span><span class="n">load_configs</span><span class="p">(</span><span class="s1">&#39;./testcases/PPE_PAGES2k/configs.yml&#39;</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+<span class="ansi-cyan-intense-fg ansi-bold">GraphEM: job.load_configs() &gt;&gt;&gt; loading reconstruction configurations from: ./testcases/PPE_PAGES2k/configs.yml</span>
+<span class="ansi-green-intense-fg ansi-bold">GraphEM: job.load_configs() &gt;&gt;&gt; job.configs created</span>
+<span class="ansi-cyan-intense-fg ansi-bold">GraphEM: job.load_configs() &gt;&gt;&gt; job.configs[&#34;job_dirpath&#34;] = /Users/fzhu/SynologyDrive/Academic-sync/Projects/GraphEM/testcases/PPE_PAGES2k/recon</span>
+<span class="ansi-green-intense-fg ansi-bold">GraphEM: job.load_configs() &gt;&gt;&gt; /Users/fzhu/SynologyDrive/Academic-sync/Projects/GraphEM/testcases/PPE_PAGES2k/recon created</span>
+{&#39;anom_period&#39;: [1951, 1980],
+ &#39;calib_period&#39;: [1900, 2000],
+ &#39;job_dirpath&#39;: &#39;/Users/fzhu/SynologyDrive/Academic-sync/Projects/GraphEM/testcases/PPE_PAGES2k/recon&#39;,
+ &#39;job_id&#39;: &#39;GraphEM_tutorial&#39;,
+ &#39;obs_path&#39;: {&#39;tas&#39;: &#39;./data/obs/iCESM_ann.nc&#39;},
+ &#39;obs_regrid_ntrunc&#39;: 21,
+ &#39;obs_varname&#39;: {&#39;lat&#39;: &#39;lat&#39;, &#39;lon&#39;: &#39;lon&#39;, &#39;tas&#39;: &#39;tas&#39;},
+ &#39;proxydb_path&#39;: &#39;./data/proxy/pseudoPAGES2k_dataset_tas_wn_SNR10_full_temporal_availability.pkl&#39;,
+ &#39;ptype_list&#39;: &#39;all&#39;,
+ &#39;recon_period&#39;: [1000, 2000]}
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">job</span><span class="o">.</span><span class="n">load_proxydb</span><span class="p">(</span><span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+<span class="ansi-cyan-intense-fg ansi-bold">GraphEM: job.load_proxydb() &gt;&gt;&gt; job.configs[&#34;proxydb_path&#34;] = /Users/fzhu/SynologyDrive/Academic-sync/Projects/GraphEM/testcases/PPE_PAGES2k/data/proxy/pseudoPAGES2k_dataset_tas_wn_SNR10_full_temporal_availability.pkl</span>
+<span class="ansi-green-intense-fg ansi-bold">GraphEM: job.load_proxydb() &gt;&gt;&gt; 692 records loaded</span>
+<span class="ansi-green-intense-fg ansi-bold">GraphEM: job.load_proxydb() &gt;&gt;&gt; job.proxydb created</span>
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">job</span><span class="o">.</span><span class="n">load_obs</span><span class="p">(</span><span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">job</span><span class="o">.</span><span class="n">regrid_obs</span><span class="p">(</span><span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+<span class="ansi-cyan-intense-fg ansi-bold">GraphEM: job.load_obs() &gt;&gt;&gt; loading instrumental observation fields from: {&#39;tas&#39;: &#39;/Users/fzhu/SynologyDrive/Academic-sync/Projects/GraphEM/testcases/PPE_PAGES2k/data/obs/iCESM_ann.nc&#39;}</span>
+<span class="ansi-green-intense-fg ansi-bold">GraphEM: job.load_obs() &gt;&gt;&gt; job.obs created</span>
+<span class="ansi-black-intense-fg ansi-bold">LMRt: job.regrid_obs() &gt;&gt;&gt; regridded obs</span>
+Dataset Overview
+-----------------------
+
+     Name:  tas
+   Source:  /Users/fzhu/SynologyDrive/Academic-sync/Projects/GraphEM/testcases/PPE_PAGES2k/data/obs/iCESM_ann.nc
+    Shape:  time:1156, lat:22, lon:33
+<span class="ansi-green-intense-fg ansi-bold">LMRt: job.regrid_obs() &gt;&gt;&gt; job.obs updated</span>
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">job</span><span class="o">.</span><span class="n">prep_data</span><span class="p">(</span><span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+<span class="ansi-green-intense-fg ansi-bold">GraphEM: job.prep_data() &gt;&gt;&gt; job.recon_time created</span>
+<span class="ansi-green-intense-fg ansi-bold">GraphEM: job.prep_data() &gt;&gt;&gt; job.calib_time created</span>
+<span class="ansi-green-intense-fg ansi-bold">GraphEM: job.prep_data() &gt;&gt;&gt; job.calib_idx created</span>
+<span class="ansi-green-intense-fg ansi-bold">GraphEM: job.prep_data() &gt;&gt;&gt; job.temp created</span>
+<span class="ansi-green-intense-fg ansi-bold">GraphEM: job.prep_data() &gt;&gt;&gt; job.df_proxy created</span>
+<span class="ansi-green-intense-fg ansi-bold">GraphEM: job.prep_data() &gt;&gt;&gt; job.proxy created</span>
+<span class="ansi-green-intense-fg ansi-bold">GraphEM: job.prep_data() &gt;&gt;&gt; job.lonlat created</span>
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">job</span><span class="o">.</span><span class="n">lonlat</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="mi">22</span><span class="o">*</span><span class="mi">33</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+(1418, 2)
+726
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">job</span><span class="o">.</span><span class="n">df_proxy</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>NAm_153</th>
+      <th>Asi_245</th>
+      <th>NAm_165</th>
+      <th>Asi_178</th>
+      <th>Asi_174</th>
+      <th>Eur_016</th>
+      <th>Asi_198</th>
+      <th>NAm_145</th>
+      <th>Arc_070</th>
+      <th>Arc_071</th>
+      <th>...</th>
+      <th>Asi_119</th>
+      <th>Ocn_153</th>
+      <th>NAm_074</th>
+      <th>Asi_026</th>
+      <th>Ocn_169</th>
+      <th>Asi_201</th>
+      <th>Asi_179</th>
+      <th>Arc_014</th>
+      <th>Ocn_071</th>
+      <th>Ocn_072</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1000.0</th>
+      <td>2.049447</td>
+      <td>1.206348</td>
+      <td>-0.028154</td>
+      <td>0.354423</td>
+      <td>0.164291</td>
+      <td>0.700894</td>
+      <td>0.420136</td>
+      <td>1.610386</td>
+      <td>1.250028</td>
+      <td>1.241505</td>
+      <td>...</td>
+      <td>0.828330</td>
+      <td>0.074526</td>
+      <td>1.969163</td>
+      <td>0.165617</td>
+      <td>0.331053</td>
+      <td>-0.578854</td>
+      <td>0.188152</td>
+      <td>1.255906</td>
+      <td>0.304311</td>
+      <td>0.425676</td>
+    </tr>
+    <tr>
+      <th>1001.0</th>
+      <td>0.014990</td>
+      <td>0.708525</td>
+      <td>0.246777</td>
+      <td>-0.057988</td>
+      <td>-0.127694</td>
+      <td>-0.077910</td>
+      <td>0.477898</td>
+      <td>-1.579350</td>
+      <td>-1.453855</td>
+      <td>1.689047</td>
+      <td>...</td>
+      <td>0.986828</td>
+      <td>-0.319637</td>
+      <td>1.589055</td>
+      <td>0.146957</td>
+      <td>-0.345228</td>
+      <td>-0.449773</td>
+      <td>0.128710</td>
+      <td>1.697772</td>
+      <td>-0.457480</td>
+      <td>-0.352040</td>
+    </tr>
+    <tr>
+      <th>1002.0</th>
+      <td>-1.114598</td>
+      <td>-0.355595</td>
+      <td>-0.903415</td>
+      <td>-0.370463</td>
+      <td>-0.170471</td>
+      <td>0.018887</td>
+      <td>0.820904</td>
+      <td>0.335598</td>
+      <td>0.658790</td>
+      <td>-1.006825</td>
+      <td>...</td>
+      <td>-0.571258</td>
+      <td>-0.268028</td>
+      <td>-2.308910</td>
+      <td>0.313561</td>
+      <td>-0.265528</td>
+      <td>-0.357028</td>
+      <td>0.152346</td>
+      <td>-0.037280</td>
+      <td>-0.357438</td>
+      <td>-0.312209</td>
+    </tr>
+    <tr>
+      <th>1003.0</th>
+      <td>0.921028</td>
+      <td>0.761262</td>
+      <td>-0.241008</td>
+      <td>-0.612394</td>
+      <td>-0.198821</td>
+      <td>0.600541</td>
+      <td>0.038012</td>
+      <td>1.649567</td>
+      <td>0.484537</td>
+      <td>-0.694430</td>
+      <td>...</td>
+      <td>0.332292</td>
+      <td>0.469818</td>
+      <td>1.270690</td>
+      <td>-0.172501</td>
+      <td>0.210101</td>
+      <td>-0.619913</td>
+      <td>-0.157362</td>
+      <td>-0.393430</td>
+      <td>0.248620</td>
+      <td>0.292726</td>
+    </tr>
+    <tr>
+      <th>1004.0</th>
+      <td>0.292958</td>
+      <td>-0.005126</td>
+      <td>0.781568</td>
+      <td>-0.169216</td>
+      <td>0.314034</td>
+      <td>-0.194410</td>
+      <td>0.990756</td>
+      <td>-0.391326</td>
+      <td>-1.263733</td>
+      <td>1.176845</td>
+      <td>...</td>
+      <td>0.160528</td>
+      <td>-0.084175</td>
+      <td>0.971972</td>
+      <td>0.342813</td>
+      <td>-0.134291</td>
+      <td>1.254460</td>
+      <td>0.379938</td>
+      <td>1.061491</td>
+      <td>-0.126194</td>
+      <td>-0.164533</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>1996.0</th>
+      <td>0.596161</td>
+      <td>0.397911</td>
+      <td>-0.213472</td>
+      <td>-0.375964</td>
+      <td>0.110367</td>
+      <td>-0.175807</td>
+      <td>1.092398</td>
+      <td>2.554041</td>
+      <td>2.983670</td>
+      <td>-0.233084</td>
+      <td>...</td>
+      <td>0.086505</td>
+      <td>0.938570</td>
+      <td>-0.516218</td>
+      <td>0.099238</td>
+      <td>0.489292</td>
+      <td>0.470537</td>
+      <td>-0.122144</td>
+      <td>-0.671030</td>
+      <td>0.416049</td>
+      <td>0.440858</td>
+    </tr>
+    <tr>
+      <th>1997.0</th>
+      <td>0.708165</td>
+      <td>-0.204674</td>
+      <td>0.940863</td>
+      <td>-0.811482</td>
+      <td>-0.402413</td>
+      <td>0.229789</td>
+      <td>1.386490</td>
+      <td>0.106067</td>
+      <td>-0.278486</td>
+      <td>-0.677213</td>
+      <td>...</td>
+      <td>-0.236382</td>
+      <td>0.109457</td>
+      <td>-0.916285</td>
+      <td>-0.319777</td>
+      <td>-0.009780</td>
+      <td>0.513189</td>
+      <td>-0.707492</td>
+      <td>-1.106939</td>
+      <td>-0.174881</td>
+      <td>-0.218647</td>
+    </tr>
+    <tr>
+      <th>1998.0</th>
+      <td>0.502749</td>
+      <td>-0.240407</td>
+      <td>1.346490</td>
+      <td>0.595868</td>
+      <td>0.373318</td>
+      <td>0.085835</td>
+      <td>0.838359</td>
+      <td>0.328611</td>
+      <td>1.795783</td>
+      <td>2.179380</td>
+      <td>...</td>
+      <td>-0.454328</td>
+      <td>0.489631</td>
+      <td>0.177895</td>
+      <td>0.388473</td>
+      <td>0.009699</td>
+      <td>0.821627</td>
+      <td>0.307725</td>
+      <td>1.840054</td>
+      <td>-0.005446</td>
+      <td>0.060198</td>
+    </tr>
+    <tr>
+      <th>1999.0</th>
+      <td>1.476074</td>
+      <td>-0.101115</td>
+      <td>0.071156</td>
+      <td>0.010010</td>
+      <td>0.215712</td>
+      <td>-0.452304</td>
+      <td>-0.450495</td>
+      <td>2.144862</td>
+      <td>1.877791</td>
+      <td>-0.456210</td>
+      <td>...</td>
+      <td>0.340616</td>
+      <td>0.543951</td>
+      <td>0.590506</td>
+      <td>0.229498</td>
+      <td>0.373771</td>
+      <td>0.036311</td>
+      <td>-0.097946</td>
+      <td>-0.597891</td>
+      <td>0.509028</td>
+      <td>0.404405</td>
+    </tr>
+    <tr>
+      <th>2000.0</th>
+      <td>-0.227916</td>
+      <td>-0.418627</td>
+      <td>0.600212</td>
+      <td>1.064158</td>
+      <td>0.782957</td>
+      <td>1.423108</td>
+      <td>1.178986</td>
+      <td>-0.110369</td>
+      <td>1.205325</td>
+      <td>-0.306477</td>
+      <td>...</td>
+      <td>-0.156622</td>
+      <td>0.445898</td>
+      <td>0.449710</td>
+      <td>0.121985</td>
+      <td>0.304760</td>
+      <td>1.010402</td>
+      <td>0.186142</td>
+      <td>1.766690</td>
+      <td>0.499660</td>
+      <td>0.453703</td>
+    </tr>
+  </tbody>
+</table>
+<p>1001 rows × 692 columns</p>
+</div></div>
+</div>
+</section>
+<section id="Creating-a-graph-object">
+<h2>Creating a graph object<a class="headerlink" href="#Creating-a-graph-object" title="Permalink to this headline"></a></h2>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="o">%%time</span>
+
+<span class="n">g</span> <span class="o">=</span> <span class="n">GraphEM</span><span class="o">.</span><span class="n">Graph</span><span class="p">(</span><span class="n">job</span><span class="o">.</span><span class="n">lonlat</span><span class="p">,</span> <span class="n">job</span><span class="o">.</span><span class="n">temp</span><span class="p">,</span> <span class="n">job</span><span class="o">.</span><span class="n">proxy</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+CPU times: user 9 µs, sys: 0 ns, total: 9 µs
+Wall time: 12.9 µs
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="o">%%time</span>
+
+<span class="n">g</span><span class="o">.</span><span class="n">calc_distance</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+CPU times: user 36.7 s, sys: 126 ms, total: 36.8 s
+Wall time: 37 s
+</pre></div></div>
+</div>
+</section>
+<section id="Visualizing-the-neighbors-of-a-target-proxy-within-a-certain-distance">
+<h2>Visualizing the neighbors of a target proxy within a certain distance<a class="headerlink" href="#Visualizing-the-neighbors-of-a-target-proxy-within-a-certain-distance" title="Permalink to this headline"></a></h2>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="o">%%time</span>
+
+<span class="n">g</span><span class="o">.</span><span class="n">calc_adj</span><span class="p">(</span><span class="n">distance</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">plot_neighbors</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">pyleo</span><span class="o">.</span><span class="n">showfig</span><span class="p">(</span><span class="n">fig</span><span class="p">)</span>
+
+<span class="n">g</span><span class="o">.</span><span class="n">calc_adj</span><span class="p">(</span><span class="n">distance</span><span class="o">=</span><span class="mi">3000</span><span class="p">)</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">plot_neighbors</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">pyleo</span><span class="o">.</span><span class="n">showfig</span><span class="p">(</span><span class="n">fig</span><span class="p">)</span>
+
+<span class="n">pyleo</span><span class="o">.</span><span class="n">closefig</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/tutorial_viz_graph_14_0.png" src="../_images/tutorial_viz_graph_14_0.png" />
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/tutorial_viz_graph_14_1.png" src="../_images/tutorial_viz_graph_14_1.png" />
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+CPU times: user 5.4 s, sys: 111 ms, total: 5.51 s
+Wall time: 5.58 s
+</pre></div></div>
+</div>
+</section>
+<section id="Visualizing-the-neighbors-and-the-correlation-to-the-target-proxy">
+<h2>Visualizing the neighbors and the correlation to the target proxy<a class="headerlink" href="#Visualizing-the-neighbors-and-the-correlation-to-the-target-proxy" title="Permalink to this headline"></a></h2>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[28]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="o">%%time</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">plot_neighbors_corr</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">pyleo</span><span class="o">.</span><span class="n">showfig</span><span class="p">(</span><span class="n">fig</span><span class="p">)</span>
+
+<span class="n">pyleo</span><span class="o">.</span><span class="n">closefig</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/tutorial_viz_graph_16_0.png" src="../_images/tutorial_viz_graph_16_0.png" />
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+CPU times: user 1.72 s, sys: 25.3 ms, total: 1.75 s
+Wall time: 1.75 s
+</pre></div></div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span>
+</pre></div>
+</div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="quickstart_recon_cropped_domain.html" class="btn btn-neutral float-left" title="Reconstruction over a smaller domain using GraphEM" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../api.html" class="btn btn-neutral float-right" title="API" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, Feng Zhu, Dominique Guillot, Julien Emile-Geay.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
