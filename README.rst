@@ -14,7 +14,7 @@
 GraphEM
 *******
 
-GraphEM refers to the climate field reconstruction approach proposed by `Guillot et al. (2015) <https://doi.org/10.1214/14-AOAS794>`_, and its name means Gaussian Markov random ﬁelds embedded within an EM algorithm.
+GraphEM refers to the climate field reconstruction approach proposed by `Guillot et al. (2015) <https://doi.org/10.1214/14-AOAS794>`_. Its name stems from the use of Gaussian graphical models (aka Markov random ﬁelds) within an Expectation Maximization (EM) algorithm.
 
 Documentation
 =============
@@ -36,4 +36,3 @@ Published studies using GraphEM
 + Neukom, R., Steiger, N., Gómez-Navarro, J. J., Wang, J., & Werner, J. P. (2019). No evidence for globally coherent warm and cold periods over the preindustrial Common Era. Nature, 571(7766), 550–554. https://doi.org/10.1038/s41586-019-1401-2
 + Wang, Jianghao, Emile-Geay, J., Guillot, D., McKay, N. P., & Rajaratnam, B. (2015). Fragility of reconstructed temperature patterns over the Common Era: Implications for model evaluation. Geophysical Research Letters, 42(17), 7162–7170. https://doi.org/10.1002/2015GL065265
 + Wang, J., Emile-Geay, J., Guillot, D., Smerdon, J. E., & Rajaratnam, B. (2014). Evaluating climate field reconstruction techniques using improved emulations of real-world conditions. Clim. Past, 10(1), 1–19. https://doi.org/10.5194/cp-10-1-2014
-
