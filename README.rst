@@ -14,7 +14,7 @@
 GraphEM
 *******
 
-GraphEM refers to the climate field reconstruction approach proposed by `Guillot et al. (2015) <https://doi.org/10.1214/14-AOAS794>`_, and its name means Gaussian Markov random ﬁelds embedded within an EM algorithm.
+GraphEM refers to the climate field reconstruction approach proposed by `Guillot et al. (2015) <https://doi.org/10.1214/14-AOAS794>`_, and its name means Gaussian graphical models embedded within an EM (Expectation-Maximization) algorithm.
 
 Documentation
 =============
