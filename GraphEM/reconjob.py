@@ -320,7 +320,29 @@ class ReconJob:
         if verbose: p_success(f'GraphEM: job.prep_data() >>> job.lonlat created')
 
     def run_solver(self, save_path, verbose=False, **fit_kws):
-        ''' Run the GraphEM solver
+        ''' Run the GraphEM solver, essentially the :py:meth: `GraphEM.solver.GraphEM.fit` method
+
+        Note that the arguments for :py:meth: `GraphEM.solver.GraphEM.fit` can be appended in the
+        argument list of this function directly. For instance, to pass a pre-calculated graph, use
+        `estimate_graph=False` and `graph=g.adj`, where `g` is the :py:`Graph` object.
+
+        Parameters
+        ----------
+
+        save_path : str
+            the path to save the fitting result
+
+        verbose : bool
+            if True, print verbose messages
+
+        fit_kws : args
+            the arguments for :py:meth: `GraphEM.solver.GraphEM.fit`
+
+        See also
+        --------
+
+        GraphEM.solver.GraphEM.fit : fitting the GraphEM method
+
         '''
         if os.path.exists(save_path):
             self.G = pd.read_pickle(save_path)

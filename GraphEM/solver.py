@@ -42,7 +42,7 @@ class GraphEM(object):
 		self.mu = []
 
 	def fit(self, temp, proxy, calib, graph=[], lonlat=[], sp_TT=3.0, sp_TP=3.0, sp_PP=3.0, N_graph=30, C0=[], M0=[], maxit=200,
-		bootstrap = False, N_boot = 20, distance = 1000, graph_method = 'neighborhood', estimate_graph = True, save_graphs = False):
+		bootstrap=False, N_boot=20, distance=1000, graph_method='neighborhood', estimate_graph=True, save_graphs=False):
 		'''
 		Estimates the parameters of the GraphEM model and reconstruct the missing values of the temperature
 		and proxy fields.

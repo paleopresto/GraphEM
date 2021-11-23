@@ -144,7 +144,7 @@ class Graph:
     def plot_neighbors_corr(self, idx, time_idx_range=None, figsize=(4, 4), ms=50, title=None,
         cmap='RdBu_r', target_clr='k', edge_clr='w', marker='o',  levels=np.linspace(-1, 1, 21),
         cbar_pad=0.1, cbar_orientation='horizontal', cbar_aspect=10, cbar_labels=[-1, -0.5, 0, 0.5, 1],
-        cbar_fraction=0.15, cbar_shrink=0.5, cbar_title='Correlation'):
+        cbar_fraction=0.15, cbar_shrink=0.5, cbar_title='Correlation', plot_cbar=True):
         ''' Plot the location of the neighbors according to the adjacency matrix
 
         Parameters
@@ -177,6 +177,9 @@ class Graph:
         marker : str
             the marker symbol
 
+        plot_cbar : bool
+            if True, plot the colorbar
+
         Returns
         ----------
 
@@ -205,8 +208,10 @@ class Graph:
         fig, ax = self.plot_neighbors(idx, figsize=figsize, ms=ms, title=title, neighbor_clr=corrs, target_clr=target_clr, edge_clr=edge_clr, marker=marker, cmap=cmap, norm=norm)
 
         smap = plt.cm.ScalarMappable(cmap=cmap, norm=norm)
-        cbar = fig.colorbar(smap, ax=ax, orientation=cbar_orientation, pad=cbar_pad, aspect=cbar_aspect, extend='neither', fraction=cbar_fraction, shrink=cbar_shrink)
-        cbar.ax.set_title(cbar_title)
-        cbar.set_ticks(cbar_labels)
+
+        if plot_cbar:
+            cbar = fig.colorbar(smap, ax=ax, orientation=cbar_orientation, pad=cbar_pad, aspect=cbar_aspect, extend='neither', fraction=cbar_fraction, shrink=cbar_shrink)
+            cbar.ax.set_title(cbar_title)
+            cbar.set_ticks(cbar_labels)
 
         return fig, ax
