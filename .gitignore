@@ -131,3 +131,5 @@ dmypy.json
 # for macOS
 **/.DS_Store
 
+*.pkl
+docsrc/tutorial/testcases/PPE_PAGES2k/data/proxy/pseudoPAGES2k_dataset_tas_wn.pkl

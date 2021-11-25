@@ -40,7 +40,7 @@ class Graph:
         self.D = dMat(self.lonlat)
 
     def calc_adj(self, distance=1000):
-        ''' Calculate the adjacency matrix
+        ''' Calculate the adjacency matrix for a neighborhood graph
 
         Parameters
         ----------
